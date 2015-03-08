@@ -1,0 +1,23 @@
+1/17 
+
+1. simulated with more basic level classes, 
+	in particular, sup:bas:sub = 3:4:2， ∂ － 0.005	
+
+	results: early sup adv. occurred, however, the magnitude of bas_adv is low, about 		the same with sup.act value. sub_act converges with bas_act. 
+	Conclusion: 
+	idea: try lower learning rate (DONE)
+
+
+
+
+2. simulated ∂ = 0.001 
+	results: ep100 & 200 -> sup_adv  +  ep500 -> sub_adv
+		basic < sub very early
+		i.e. no basic level advantage?!
+	conclusion: ?
+	idea: increase the number of sub instances 
+
+
+
+	
+

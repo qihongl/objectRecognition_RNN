@@ -1,0 +1,4 @@
+previous model (10)
+when training, used the patterns that train: visual to 3 levels of names
+
+in current simulation, I want to see what if I eliminate this condition in the training set

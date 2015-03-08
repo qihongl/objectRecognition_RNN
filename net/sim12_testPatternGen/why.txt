@@ -1,0 +1,4 @@
+test my pattern generation program! 
+	See if I can replicate the previous simulation results
+
+

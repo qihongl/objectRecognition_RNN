@@ -1,0 +1,2 @@
+this is a control simulation for sim 10. 
+it eliminate the effect of high basic level frequency 
