@@ -75,7 +75,7 @@ set(gca,'FontSize',11)
 legend('Superordinate', 'Basic', 'Subordinate', 'location', 'southeast')
 % legend('superordinate', 'basic', 'location', 'southeast')
 set(legend,'FontSize',18);
-% title('Temporal dynamics of different level of concepts', 'fontSize', 18);
+title('Temporal dynamics of different level of concepts, 1000 epoch', 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 
