@@ -28,7 +28,7 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         numCategory.bas = temp(1,5);
         numCategory.sub = temp(1,6);
         % the rest is the prototype
-        numInstances = size(temp,1) - 1; % -1, as 1st row is metadata
+        numInstances = size(temp,1) - 2; % -1, as 1st row is metadata, 2nd row has indices
         % skip the 1st, 2nd line (2nd line has indices)
         prototype = temp(3:end,:);
         % compute the threshold mask 

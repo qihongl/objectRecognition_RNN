@@ -3,7 +3,7 @@ clear; clc;
 
 %% Parameters
 % get full patterns 
-protoName = 'PROTO3.xlsx';
+protoName = 'PROTO1.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
