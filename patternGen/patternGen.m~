@@ -32,14 +32,13 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         % skip the 1st, 2nd line (2nd line has indices)
         prototype = temp(3:end,:);
         % compute the threshold mask 
-        % random value smaller the entry here will be assign 1; 0 otherwise
+        % value exceed
         mask = prototype * (thres1 - thres0) + thres0;
     end
     
     % construct the patterns by compute the direct sum 
-    % rand ~ uniform[0,1] in matlab
     randomMatrix = rand(size(prototype,1),size(prototype,2));
-    % blur prototype pattern
+%     blankMatrix = zeros(size(prototype,1),size(prototype,2));
     distortedProto = bsxfun(@gt, mask, randomMatrix);
     pattern.full = distortedProto;
     
