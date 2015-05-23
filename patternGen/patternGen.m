@@ -41,8 +41,9 @@ function [pattern, numCategory] = patternGen(filename, thres1)
     randomMatrix = rand(size(prototype,1),size(prototype,2));
     % blur prototype pattern
     distortedProto = bsxfun(@gt, mask, randomMatrix);
-    pattern.full = distortedProto;
     
+    % construct patterns each category, separately
+    pattern.full = distortedProto;
     pattern.sup = [pattern.full(:,1: numUnits.sup) , zeros(numInstances, numUnits.bas + numUnits.sub)];    
     pattern.bas = [zeros(numInstances, numUnits.sup), pattern.full(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] ;
     pattern.sub = [zeros(numInstances, numUnits.sup + numUnits.bas), pattern.full(:, numUnits.sup + numUnits.bas + 1: end)];   
