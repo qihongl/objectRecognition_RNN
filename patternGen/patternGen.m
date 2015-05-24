@@ -9,12 +9,12 @@
 %   It assumes every superordinate categories uses the SAME prototype, 
 %   which is an oversimplification
 
-function [pattern, numCategory] = patternGen(filename, thres1)
+function [pattern] = patternGen(filename, thres1)
 
     % Constants 
     thres0 = 1 - thres1;
 
-    % read the prototype file
+    %% read the prototype file
     if exist(filename, 'file') == 0
         error([ 'File ' filename ' not found. Please make sure the '...
         'prototype file is in the working directory.'])
@@ -36,7 +36,7 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         mask = prototype * (thres1 - thres0) + thres0;
     end
     
-    % check some input parameters
+    %% check some input parameters
     if sum(struct2array(numUnits)) ~= size(temp,2)
         error('The Pattern Size is inconsistent with the parameter <numUnits>.')
     end
@@ -44,33 +44,41 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         error('The number of instances is inconsistent with the parameters that indicate number of categories.')
     end
     
-    % construct the patterns by compute the direct sum 
-    % rand ~ uniform[0,1] in matlab
+    %% get blurred patterns
+    % get a random matrix, where entries are given by uniform[0,1] 
     randomMatrix = rand(size(prototype,1),size(prototype,2));
     % blur prototype pattern
     distortedProto = bsxfun(@gt, mask, randomMatrix);
     
+    %% get sub patterns
     % construct patterns each category, separately
-    fullPattern = distortedProto;
-    pattern = computeSubpatterns(fullPattern, numUnits)
+    pattern = computeSubpatterns(distortedProto, numUnits);
     
+    %% expand it according to the number of superordinate categories
     % compute the direct sum of pattern matrix 
     % for full matrix, sup, bas and sub matrix, respectively 
     for i = 1: numCategory.sup - 1
+        % re-generate a random matrix everytime to ensure every
+        % super-category has slightly different similiarity structure
         randomMatrix = rand(size(prototype,1), size(prototype,2));
         distortedProto = bsxfun(@gt, mask, randomMatrix);
         pattern.full = dsum(pattern.full, distortedProto);
+        
         % compute subset patterns
         pattern.sup = dsum( pattern.sup, [distortedProto(:,1: numUnits.sup) , zeros(numInstances, numUnits.bas + numUnits.sub)] );
         pattern.bas = dsum( pattern.bas, [zeros(numInstances, numUnits.sup), distortedProto(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
         pattern.sub = dsum( pattern.sub, [zeros(numInstances, numUnits.sup + numUnits.bas), distortedProto(:, numUnits.sup + numUnits.bas + 1: end)]);   
         pattern.sup_bas = dsum( pattern.sup_bas, [distortedProto(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
     end
-  
+   
+    % comptue other parameters
+    pattern.numCategory = numCategory;
+    pattern.numUnits = numUnits;
+    pattern.numTotalUnits = sum(struct2array(numUnits)) * numCategory.sup;
+    pattern.numTotalInstances = numInstances * numCategory.sup;
+end
 
-
-
-% This function constructs "sub-patterns"
+%% This function constructs "sub-patterns"
 function pattern = computeSubpatterns(fullPattern, numUnits)
     % full pattern
     pattern.full = fullPattern;
@@ -87,6 +95,4 @@ function pattern = computeSubpatterns(fullPattern, numUnits)
     % superordiante and basic pattern
     pattern.sup_bas = fullPattern;
     pattern.sup_bas(:,numUnits.sup + numUnits.bas + 1 :end) = 0;
-end
-
 end

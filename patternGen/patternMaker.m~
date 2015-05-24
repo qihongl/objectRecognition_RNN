@@ -36,10 +36,10 @@ parameters.grace = 0.5;
 %% get patterns
 [visualPatterns] = patternGen(protoName, parameters.visualThres);
 [verbalPatterns] = patternGen(protoName, parameters.verbalThres);
-% generate names for all patterns
+
+% create names 
 visualPatterns.names = nameGen(visualPatterns.numCategory);
 verbalPatterns.names = nameGen(verbalPatterns.numCategory);
-
 
 
 %% write all patterns to a file
@@ -90,7 +90,7 @@ clear names;
 
 
 
-%% manipulate frequency (add more basic training patterns)
+%% manipulate frequency ()
 
 addTitle(filename, '# visual full -> verbal bas' )
 names = addPrefix('visual', visualPatterns.names, 'bas');
