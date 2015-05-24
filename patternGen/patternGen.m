@@ -36,6 +36,14 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         mask = prototype * (thres1 - thres0) + thres0;
     end
     
+    % check some input parameters
+    if sum(struct2array(numUnits)) ~= size(temp,2)
+        error('The Pattern Size is inconsistent with the parameter <numUnits>.')
+    end
+    if numCategory.bas * numCategory.sub ~=  numInstances
+        error('The number of instances is inconsistent with the parameters that indicate number of categories.')
+    end
+    
     % construct the patterns by compute the direct sum 
     % rand ~ uniform[0,1] in matlab
     randomMatrix = rand(size(prototype,1),size(prototype,2));
@@ -43,11 +51,8 @@ function [pattern, numCategory] = patternGen(filename, thres1)
     distortedProto = bsxfun(@gt, mask, randomMatrix);
     
     % construct patterns each category, separately
-    pattern.full = distortedProto;
-    pattern.sup = [pattern.full(:,1: numUnits.sup) , zeros(numInstances, numUnits.bas + numUnits.sub)];    
-    pattern.bas = [zeros(numInstances, numUnits.sup), pattern.full(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] ;
-    pattern.sub = [zeros(numInstances, numUnits.sup + numUnits.bas), pattern.full(:, numUnits.sup + numUnits.bas + 1: end)];   
-    pattern.bas_sup = [pattern.full(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] ;
+    fullPattern = distortedProto;
+    pattern = computeSubpatterns(fullPattern, numUnits)
     
     % compute the direct sum of pattern matrix 
     % for full matrix, sup, bas and sub matrix, respectively 
@@ -55,11 +60,33 @@ function [pattern, numCategory] = patternGen(filename, thres1)
         randomMatrix = rand(size(prototype,1), size(prototype,2));
         distortedProto = bsxfun(@gt, mask, randomMatrix);
         pattern.full = dsum(pattern.full, distortedProto);
-        
+        % compute subset patterns
         pattern.sup = dsum( pattern.sup, [distortedProto(:,1: numUnits.sup) , zeros(numInstances, numUnits.bas + numUnits.sub)] );
         pattern.bas = dsum( pattern.bas, [zeros(numInstances, numUnits.sup), distortedProto(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
         pattern.sub = dsum( pattern.sub, [zeros(numInstances, numUnits.sup + numUnits.bas), distortedProto(:, numUnits.sup + numUnits.bas + 1: end)]);   
-        pattern.bas_sup = dsum( pattern.bas_sup, [distortedProto(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
+        pattern.sup_bas = dsum( pattern.sup_bas, [distortedProto(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
     end
   
+
+
+
+% This function constructs "sub-patterns"
+function pattern = computeSubpatterns(fullPattern, numUnits)
+    % full pattern
+    pattern.full = fullPattern;
+    % superordinate pattern
+    pattern.sup = fullPattern;
+    pattern.sup(:, (numUnits.sup + 1) : end) = 0;
+    % basic pattern
+    pattern.bas = fullPattern;
+    pattern.bas(:, 1: numUnits.sup) = 0;
+    pattern.bas(:, numUnits.sup + numUnits.bas + 1 : end) = 0;
+    % subordinate pattern
+    pattern.sub = fullPattern;
+    pattern.sub(:, 1: numUnits.sup + numUnits.bas) = 0;
+    % superordiante and basic pattern
+    pattern.sup_bas = fullPattern;
+    pattern.sup_bas(:,numUnits.sup + numUnits.bas + 1 :end) = 0;
+end
+
 end

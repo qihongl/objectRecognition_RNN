@@ -1,9 +1,11 @@
 %% Generate the stimuli file for my PDP model for semantics
-clear; clc;
+% clear; clc;
+
+function patternMaker()
 
 %% Parameters
 % get full patterns 
-protoName = 'PROTO1.xlsx';
+protoName = 'PROTO3.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
@@ -35,6 +37,7 @@ parameters.grace = 0.5;
 %% get patterns
 [visualPatterns, numCategoryVis] = patternGen(protoName, parameters.visualThres);
 [verbalPatterns, numCategoryVer] = patternGen(protoName, parameters.verbalThres);
+
 % create names 
 visualNames = nameGen(numCategoryVis);
 verbalNames = nameGen(numCategoryVer);
