@@ -1,0 +1,3 @@
+use patternMaker program to replicate previous results
+
+with 3-2-2 super-bas-sub (numCategories)

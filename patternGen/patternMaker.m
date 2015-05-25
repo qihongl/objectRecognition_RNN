@@ -1,11 +1,8 @@
 %% Generate the stimuli file for my PDP model for semantics
-% clear; clc;
-
 function patternMaker()
-
 %% Parameters
 % get full patterns 
-protoName = 'PROTO1.xlsx';
+protoName = 'PROTO2.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
@@ -16,7 +13,7 @@ rng(parameters.seed);% TODO consider move it to patternGen
 
 % the threshold is "P(being ON)" for all unit that "suppose" to be on
 % (defined by the prototype)
-parameters.visualThres = 1;   
+parameters.visualThres = 0.9;   
 % verbal threshold is always on. For basic and superordiante category, name
 % should be the same for all members of the category
 parameters.verbalThres = 1; 
@@ -43,8 +40,8 @@ verbalPatterns.names = nameGen(verbalPatterns.numCategory);
 
 
 %% write all patterns to a file
-writeParameters(filename, parameters, visualPatterns.numCategory);
-writeParameters(filenameTest, parameters, visualPatterns.numCategory);
+writeParameters(filename, parameters, visualPatterns);
+writeParameters(filenameTest, parameters, visualPatterns);
 
 % verbal -> visual
 addTitle(filename, '# verbal sup -> visual sup features' )
@@ -86,7 +83,6 @@ addTitle(filename, '# visual full -> verbal sub' )
 names = addPrefix('visual', visualPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, verbalPatterns.sub, 1)
 clear names;
-
 
 
 
