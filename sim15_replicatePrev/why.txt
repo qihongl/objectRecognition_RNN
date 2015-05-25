@@ -1,0 +1,4 @@
+when changing all ‘0’ to ‘-‘, the model activates all categories uniformly
+so I want to switch back to using ‘0’ 
+
+results: 

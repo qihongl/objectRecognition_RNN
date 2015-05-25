@@ -1,3 +1,8 @@
 use patternMaker program to replicate previous results
 
 with 3-2-2 super-bas-sub (numCategories)
+
+
+results: 
+	failed
+	when changing ‘0’ to ‘-’, the model simply activates everything uniformly

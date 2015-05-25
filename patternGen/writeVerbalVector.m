@@ -8,6 +8,7 @@
 function writeVerbalVector(filename, vector)
     
     separator = ' ';
+    zero = '0';
 
     for i = 1: size(vector,2)
         if vector(i)~= 1 && vector(i)~= 0   % make sure the input is 1 or 0
@@ -15,7 +16,7 @@ function writeVerbalVector(filename, vector)
         elseif vector(i) == 1               % print '1' iff input is 1
             fprintf(filename, '%d', vector(i));
         elseif vector(i) == 0               % print '-' iff input is 0
-            fprintf(filename, '%s', '-');
+            fprintf(filename, '%s', zero);
         end
         fprintf(filename, separator); % sep by space
     end

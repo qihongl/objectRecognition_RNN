@@ -3,22 +3,29 @@ clear;clc;clf;
 % this program relies on the output file of 'testAllActs'
 % it is designed to process the output for the verbal representation layer
 
-% constants
+%% constants
 interval = 26;
 
-% read the data file 
-outputFile = tdfread('sim14_testPatternGen/verbalAll_e02.txt');
+% provide the NAMEs of the data files
+DATAPATH = 'sim12_testPatternGen';
+FILENAME = 'verbalAll_e1.txt';
+PROTOTYPE = 'PROTO.xlsx';
+EPOCH = 0;
+
+%% read data
+% read the output data
+outputFile = tdfread([DATAPATH '/' FILENAME]);
 name = char(fieldnames(outputFile));
-% outputFile = outputFile.{name};
 output = getfield(outputFile, name);
 % output = output(547:end,:); % replicate on previous data set
+
 % read the prototype pattern 
-proto = xlsread('sim14_testPatternGen/PROTO2.xlsx');
+proto = xlsread([DATAPATH '/' PROTOTYPE]);
 proto = proto(2:end,:);
 proto = logical(proto);
-numInstances = size(proto,1);
+numInstances = size(proto,1) - 1;
 
-% preprocessing 
+%% preprocessing 
 % add a zero row at the beginning so that every pattern has equal time
 % length of 26
 output = vertcat( zeros(1,size(output,2)), output);
@@ -69,6 +76,8 @@ mBas = mean(bas,2);
 mSub = mean(sub,2);
 
 
+
+%% plot the data
 hold on 
 plot(mSup,'g', 'linewidth', 2) 
 plot(mBas,'r', 'linewidth', 2)
@@ -80,7 +89,8 @@ set(gca,'FontSize',11)
 legend('Superordinate', 'Basic', 'Subordinate', 'location', 'southeast')
 % legend('superordinate', 'basic', 'location', 'southeast')
 set(legend,'FontSize',18);
-title('Temporal dynamics of different level of concepts, 1000 epoch', 'fontSize', 18);
+TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH); 
+title(TITLE, 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 
