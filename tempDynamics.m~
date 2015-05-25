@@ -17,12 +17,14 @@ FILENAME.VERBAL = 'verbalAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 1000;
 
-if exist([PATH.FULL '/' FILENAME.VERBAL], 'file') == 0
-    
 
 %% read data
 % read the output data
 PATH.FULL = [PATH.ABS PATH.DATA];
+% check if the data file exists
+if exist([PATH.FULL '/' FILENAME.VERBAL], 'file') == 0
+    error([ 'File ' FILENAME.VERBAL ' not found.'])
+end
 outputFile = tdfread([PATH.FULL '/' FILENAME.VERBAL]);
 name = char(fieldnames(outputFile));
 output = getfield(outputFile, name);
@@ -101,8 +103,11 @@ a = 0;
 %%  divide the data according to super, basic, and sub level (across all stimuli)
 
 % the parameters here depends on the number of units that suppose to be on
-% for each concept level
-% TODO come up with better ways to do that! 
+% for each concept level. 
+% This can be seen from every prototype pattern. (It assumes every pattern activates the same number of super, basic, sub units)
+% so I pick the first one 
+prototype(1,:)
+
 sup = filteredData{1}(:,1:4);
 bas = filteredData{1}(:,5:8);
 sub = filteredData{1}(:,9:10);
@@ -136,6 +141,3 @@ xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 
 hold off
-
-
-

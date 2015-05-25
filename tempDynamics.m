@@ -98,29 +98,38 @@ end
 %     imagesc(filteredData{i})
 % end
 
-a = 0;
 
 %%  divide the data according to super, basic, and sub level (across all stimuli)
 
 % the parameters here depends on the number of units that suppose to be on
-% for each concept level
-% TODO come up with better ways to do that! 
-sup = filteredData{1}(:,1:4);
-bas = filteredData{1}(:,5:8);
-sub = filteredData{1}(:,9:10);
-for i = 2:12;
-    sup = [sup, filteredData{i}(:,1:4)];
-    bas = [bas, filteredData{i}(:,5:8)];
-    sub = [sub, filteredData{i}(:,9:10)];
+% for each concept level. 
+% This can be seen from every prototype pattern. 
+% (It assumes every pattern activates the same number of super, basic, sub units)
+
+% pick whatever prototype pattern
+onePrototype = prototype(1,:);
+% compute the number of units that are on for every conpcet level
+on.sup = sum(onePrototype(1:numUnits.sup));
+on.bas = sum(onePrototype(numUnits.sup + 1 : numUnits.sup + numUnits.bas));
+on.sub = sum(onePrototype(numUnits.sup + numUnits.bas + 1 : numTotalUnits));
+
+% divide the data according to the concept level
+sup = filteredData{1}(:,1:on.sup);
+bas = filteredData{1}(:,on.sup + 1 : on.sup + on.bas);
+sub = filteredData{1}(:,on.sup + on.bas + 1 : on.sub);
+for i = 2:numStimuli;
+    sup = [sup, filteredData{i}(:,1:on.sup)];
+    bas = [bas, filteredData{i}(:,on.sup + 1 : on.sup + on.bas)];
+    sub = [sub, filteredData{i}(:,on.sup + on.bas + 1 : on.sup + on.bas + on.sub)];
 end
 
+%%  compute the mean activation value for all time points
 mSup = mean(sup,2);
 mBas = mean(bas,2);
 mSub = mean(sub,2);
 
 
-
-%% plot the data
+%% plot the data! 
 hold on
 plot(mSup,'g', 'linewidth', 2)
 plot(mBas,'r', 'linewidth', 2)
