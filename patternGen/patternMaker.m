@@ -1,17 +1,17 @@
 %% Generate the stimuli file for my PDP model for semantics
-function patternMaker(seed)
+function patternMaker()
 % CONSTANTS
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/patternGen';
 
 %% Parameters
 % get full patterns 
-protoName = 'PROTO2.xlsx';
+protoName = 'PROTO3.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
 
 % set a seed (for replicability )
-parameters.seed = seed;
+parameters.seed = 2;
 rng(parameters.seed);% TODO consider move it to patternGen
 
 % the threshold is "P(being ON)" for all unit that "suppose" to be on

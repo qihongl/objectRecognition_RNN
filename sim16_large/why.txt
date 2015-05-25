@@ -1,0 +1,6 @@
+conduct simulation on larger network
+1. too see if the bas-sup differentiation becomes larger
+2. too see if ‘-‘ all non-1 units work as expected
+
+
+results
