@@ -1,3 +1,5 @@
 I want to fix the problem with simulation 15, i changed the seed value to 3, in order to see if the phenomenon occurs for other seed value
 
-results: 
+
+results: the model still doesn’t activate the subordinate features at all
+conclusion: changing the seed doesn’t matters

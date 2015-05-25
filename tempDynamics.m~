@@ -17,14 +17,12 @@ FILENAME.VERBAL = 'verbalAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 1000;
 
+if exist([PATH.FULL '/' FILENAME.VERBAL], 'file') == 0
+    
 
 %% read data
 % read the output data
 PATH.FULL = [PATH.ABS PATH.DATA];
-% check if the data file exists
-if exist([PATH.FULL '/' FILENAME.VERBAL], 'file') == 0
-    error([ 'File ' FILENAME.VERBAL ' not found.'])
-end
 outputFile = tdfread([PATH.FULL '/' FILENAME.VERBAL]);
 name = char(fieldnames(outputFile));
 output = getfield(outputFile, name);
@@ -138,3 +136,6 @@ xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 
 hold off
+
+
+

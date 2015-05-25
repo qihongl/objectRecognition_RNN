@@ -1,5 +1,8 @@
 %% Generate the stimuli file for my PDP model for semantics
 function patternMaker(seed)
+% CONSTANTS
+PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/patternGen';
+
 %% Parameters
 % get full patterns 
 protoName = 'PROTO2.xlsx';
@@ -36,7 +39,6 @@ parameters.grace = 0.5;
 % generate names for all patterns
 visualPatterns.names = nameGen(visualPatterns.numCategory);
 verbalPatterns.names = nameGen(verbalPatterns.numCategory);
-
 
 
 %% write all patterns to a file

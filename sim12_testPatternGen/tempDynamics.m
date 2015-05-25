@@ -4,14 +4,14 @@ clear;clc;clf;
 interval = 26;
 
 % read the data file 
-temp = tdfread('verbalRepOut_e1.txt');
+temp = tdfread('verbalRepOut_e05.txt');
 temp = temp.x0_0_00x2E000_00x2E000_00x2E000_00x2E000_00x2E000_00x2E000_00x2;
 % temp = temp(547:end,:); % replicate on previous data set
 % read the prototype pattern 
 proto = xlsread('PROTO.xlsx');
 proto = proto(2:end,:);
 proto = logical(proto);
-numInstances = size(proto,1);
+numInstances = size(proto,1) - 1;
 
 % preprocessing 
 % add a zero row at the beginning so that every pattern has equal time

@@ -4,11 +4,13 @@ clear;clc;clf;
 interval = 26;
 
 % read the data file 
-temp = tdfread('verbalRepOut_e01a001.txt');
+% temp = tdfread('verbalRepOut_e05a001.txt');
+temp = tdfread('/Users/Qihong/Dropbox/github/PDPmodel_Categorization/sim15.1_repPrev/verbalAll_e1.txt');
 temp = temp.x0_0_00x2E000_00x2E000_00x2E000_00x2E000_00x2E000_00x2E000_00x2;
 % temp = temp(547:end,:); % replicate on previous data set
 % read the prototype pattern 
-temp2 = xlsread('PROTO3.xlsx');
+temp2 = xlsread('/Users/Qihong/Dropbox/github/PDPmodel_Categorization/sim15.1_repPrev/PROTO.xlsx');
+% temp2 = xlsread('PROTO3.xlsx');
 numUnits.sup = temp2(1,1);
 numUnits.bas = temp2(1,2);
 numUnits.sub = temp2(1,3);
@@ -18,7 +20,7 @@ numCategory.sub = temp2(1,6);
 numUnits.all = numUnits.sup + numUnits.bas + numUnits.sub;
 proto = temp2(2:end,:);
 proto = logical(proto);
-numInstances = size(proto,1);
+numInstances = size(proto,1) - 1;
 
 % preprocessing 
 % add a zero row at the beginning so that every pattern has equal time
