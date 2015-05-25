@@ -1,0 +1,3 @@
+I want to fix the problem with simulation 15, i changed the seed value to 3, in order to see if the phenomenon occurs for other seed value
+
+results: 

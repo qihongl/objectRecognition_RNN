@@ -1,0 +1,1 @@
+This folder serves as a dividing line. Simulations numbered 12 or smaller were conducted before summer 2015. 

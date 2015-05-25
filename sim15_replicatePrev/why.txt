@@ -1,4 +1,6 @@
 when changing all ‘0’ to ‘-‘, the model activates all categories uniformly
 so I want to switch back to using ‘0’ 
 
-results: 
+results: superordinate and basic dynamics are correct, but failed to replicate what I got in the PDP course
+
+ADDITIONAL PROBLEM: the model never activates subordinate units

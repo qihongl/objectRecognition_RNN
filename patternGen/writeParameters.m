@@ -2,6 +2,9 @@
 function writeParameters(filename, parameters, pattern)    
 
     fprintf(filename, '# Some modeling details:\n');
+    
+    fprintf(filename, '# Seed value = %d \n', parameters.seed);
+    
     fprintf(filename, '# total number of units: %d \n', pattern.numTotalUnits);
     fprintf(filename, '# - number of superordinate units: %d \n', pattern.numUnits.sup);
     fprintf(filename, '# - number of basic units: %d \n', pattern.numUnits.bas);

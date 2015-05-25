@@ -7,10 +7,10 @@ clear;clc;clf;
 interval = 26;
 
 % provide the NAMEs of the data files
-DATAPATH = 'sim12_testPatternGen';
+DATAPATH = 'sim15.1_repPrev';
 FILENAME = 'verbalAll_e1.txt';
 PROTOTYPE = 'PROTO.xlsx';
-EPOCH = 0;
+EPOCH = 1000;
 
 %% read data
 % read the output data
