@@ -11,6 +11,7 @@ else
     numUnits.sup = temp(1,1);
     numUnits.bas = temp(1,2);
     numUnits.sub = temp(1,3);
+    numUnits.total = sum(struct2array(numUnits));
     numCategory.sup = temp(1,4);
     numCategory.bas = temp(1,5);
     numCategory.sub = temp(1,6);

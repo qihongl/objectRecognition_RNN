@@ -1,6 +1,19 @@
-conduct simulation on larger network
+Conduct simulation on larger a network, 156 units
+
 1. too see if the bas-sup differentiation becomes larger
 2. too see if ‘-‘ all non-1 units work as expected
 
 
-results
+results: replicated previous temporal pattern and nothing really special 
+
+
+
+TODO LIST: 
+	- 16.1 lower learning rate
+	- 16.2 with momentum 
+	- 16.3 with ‘-’
+
+
+FUTHER DIRECTION: 
+	implement a linear SVM
+	logistic regression w/ & w/o lasso regularizer

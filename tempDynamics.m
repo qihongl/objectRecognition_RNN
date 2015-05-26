@@ -12,10 +12,10 @@ INTERVAL = 26;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim16_large';
-FILENAME.VERBAL = 'verbalAll_e3.txt';
+PATH.DATA= 'sim10_9Ze2Da_good';
+FILENAME.VERBAL = 'verbalRepOut_e3a005.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-EPOCH = 1000;
+EPOCH = 100;
 
 
 %% read data
@@ -28,12 +28,12 @@ end
 outputFile = tdfread([PATH.FULL '/' FILENAME.VERBAL]);
 name = char(fieldnames(outputFile));
 output = getfield(outputFile, name);
-% output = output(547:end,:); % replicate on previous data set
+
+% output = output(547:end,:); % if run on old data set
 
 % read the prototype pattern, to get some parameters of the simulation
 [numUnits, numCategory, numInstances, prototype] = readPrototype ([PATH.FULL '/' FILENAME.PROTOTYPE]);
 numStimuli = numInstances * numCategory.sup;
-numTotalUnits = sum(struct2array(numUnits));
 prototype = logical(prototype);
 
 %% preprocessing
@@ -75,8 +75,8 @@ for i = 1 : numStimuli
     end
     
     % subset the data using the 'right' part of the units
-    first = (currClass - 1) * numTotalUnits + 1;
-    last = numTotalUnits + (currClass -1) * numTotalUnits;
+    first = (currClass - 1) * numUnits.total + 1;
+    last = numUnits.total + (currClass -1) * numUnits.total;
     % filter by the 'right' class
     filteredData{i} = data{i}(:, first : last);
     % filter by the 'right' set of units
@@ -111,7 +111,7 @@ onePrototype = prototype(1,:);
 % compute the number of units that are on for every conpcet level
 on.sup = sum(onePrototype(1:numUnits.sup));
 on.bas = sum(onePrototype(numUnits.sup + 1 : numUnits.sup + numUnits.bas));
-on.sub = sum(onePrototype(numUnits.sup + numUnits.bas + 1 : numTotalUnits));
+on.sub = sum(onePrototype(numUnits.sup + numUnits.bas + 1 : numUnits.total));
 
 % divide the data according to the concept level
 sup = filteredData{1}(:,1:on.sup);

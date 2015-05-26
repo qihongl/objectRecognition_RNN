@@ -1,0 +1,13 @@
+continuation of simulation 16: Large network, 156 units
+
+what’s new: 
+	- use LOWER learning rate too see if converges at better point
+	- previous: 0.001
+	- now: 0.00001
+
+
+results: 
+	learning is too slow
+	not realistic unless there is way of boosting the speed of convergence
+
+
