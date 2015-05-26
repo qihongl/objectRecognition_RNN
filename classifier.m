@@ -24,6 +24,5 @@ name = char(fieldnames(outputFile));
 output = getfield(outputFile, name);
 
 % read the prototype pattern, to get some parameters of the simulation
-[numUnits, numCategory, numInstances, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
-numStimuli = numInstances * numCategory.sup;
+[param, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
 prototype = logical(prototype);

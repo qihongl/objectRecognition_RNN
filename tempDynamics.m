@@ -12,8 +12,8 @@ INTERVAL = 26;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim10_9Ze2Da_good';
-FILENAME.VERBAL = 'verbalRepOut_e3a005.txt';
+PATH.DATA= 'sim16_large';
+FILENAME.VERBAL = 'verbalAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 100;
 
@@ -32,28 +32,28 @@ output = getfield(outputFile, name);
 % output = output(547:end,:); % if run on old data set
 
 % read the prototype pattern, to get some parameters of the simulation
-[numUnits, numCategory, numInstances, prototype] = readPrototype ([PATH.FULL '/' FILENAME.PROTOTYPE]);
-numStimuli = numInstances * numCategory.sup;
+[param, prototype] = readPrototype ([PATH.FULL '/' FILENAME.PROTOTYPE]);
+% param.numStimuli = param.numInstances * param.numCategory.sup;
 prototype = logical(prototype);
 
 %% preprocessing
 % add a zero row at the beginning so that every pattern has equal numRows
 output = vertcat( zeros(1,size(output,2)), output);
 % split the data
-data = mat2cell(output, repmat(INTERVAL, [1 numStimuli]), size(output,2) );
+data = mat2cell(output, repmat(INTERVAL, [1 param.numStimuli]), size(output,2) );
 for i = 1 : size(data,1)
     data{i} = data{i}(:, 3:end);    % remove the 1st & 2nd columns
     data{i} = data{i}(2:end,:);     % remove the 1st row of zeros
 end
 
 % check the number of stimuli
-if numStimuli ~= size(output,1) / INTERVAL
+if param.numStimuli ~= size(output,1) / INTERVAL
     error ('number of stimuli are wrong')
 end
 
 % % plot the data
-% for i = 1 : numStimuli
-%     subplot(numCategory.sup,numInstances,i)
+% for i = 1 : param.numStimuli
+%     subplot(param.numCategory.sup,param.numInstances,i)
 %     imagesc(data{i})
 % end
 
@@ -65,18 +65,18 @@ end
 
 filteredData = cell(12,1);
 currClass = 1;
-for i = 1 : numStimuli
+for i = 1 : param.numStimuli
     % increment the index that controls the peudo-inner loop
-    index = mod(i - 1,numInstances) + 1;
+    index = mod(i - 1,param.numInstances) + 1;
     
     % check if current class is bigger than the number of super.category
-    if(currClass > numCategory.sup)
+    if(currClass > param.numCategory.sup)
         error('wtf')
     end
     
     % subset the data using the 'right' part of the units
-    first = (currClass - 1) * numUnits.total + 1;
-    last = numUnits.total + (currClass -1) * numUnits.total;
+    first = (currClass - 1) * param.numUnits.total + 1;
+    last = param.numUnits.total + (currClass -1) * param.numUnits.total;
     % filter by the 'right' class
     filteredData{i} = data{i}(:, first : last);
     % filter by the 'right' set of units
@@ -86,15 +86,15 @@ for i = 1 : numStimuli
     % fprintf('%d %d %d to %d\n', i, index, first, last)
     
     % if I have went through all instances in a class...
-    if(index == numInstances)
+    if(index == param.numInstances)
         currClass = currClass + 1;  % go to the next class
     end
 end
 
 % plot the data
 
-% for i = 1 : numStimuli
-%     subplot(numCategory.sup,numInstances,i)
+% for i = 1 : param.numStimuli
+%     subplot(param.numCategory.sup,param.numInstances,i)
 %     imagesc(filteredData{i})
 % end
 
@@ -109,15 +109,15 @@ end
 % pick whatever prototype pattern
 onePrototype = prototype(1,:);
 % compute the number of units that are on for every conpcet level
-on.sup = sum(onePrototype(1:numUnits.sup));
-on.bas = sum(onePrototype(numUnits.sup + 1 : numUnits.sup + numUnits.bas));
-on.sub = sum(onePrototype(numUnits.sup + numUnits.bas + 1 : numUnits.total));
+on.sup = sum(onePrototype(1:param.numUnits.sup));
+on.bas = sum(onePrototype(param.numUnits.sup + 1 : param.numUnits.sup + param.numUnits.bas));
+on.sub = sum(onePrototype(param.numUnits.sup + param.numUnits.bas + 1 : param.numUnits.total));
 
 % divide the data according to the concept level
 sup = filteredData{1}(:,1:on.sup);
 bas = filteredData{1}(:,on.sup + 1 : on.sup + on.bas);
 sub = filteredData{1}(:,on.sup + on.bas + 1 : on.sub);
-for i = 2:numStimuli;
+for i = 2:param.numStimuli;
     sup = [sup, filteredData{i}(:,1:on.sup)];
     bas = [bas, filteredData{i}(:,on.sup + 1 : on.sup + on.bas)];
     sub = [sub, filteredData{i}(:,on.sup + on.bas + 1 : on.sup + on.bas + on.sub)];

@@ -1,6 +1,6 @@
 # Some modeling details:
 # Seed value = 2 
-# total number of units: 156 
+# total number of units: 312 
 # - number of superordinate units: 4 
 # - number of basic units: 16 
 # - number of subordinate units: 32 
