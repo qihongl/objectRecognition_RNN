@@ -1,0 +1,11 @@
+This simulation uses the code from simulation 15. So it is a small network. 
+
+GOAL: to tune the parameters to see what it might lead
+
+* this folder is NOT USED for any parameter tuning experiment. it just keeps the original parameters. the experiment will be conducted in “17.x” folders
+
+parameters to be tuned: 
+	1. ways of learning and momentum 
+	2. train & test groupCrit
+	3. initOutput for all layers
+	4. time length for each trial 
