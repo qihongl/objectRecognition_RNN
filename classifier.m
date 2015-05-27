@@ -26,3 +26,33 @@ output = getfield(outputFile, name);
 % read the prototype pattern, to get some parameters of the simulation
 [param, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
 prototype = logical(prototype);
+
+% compute the target label (super class label)
+target = repmat((1: param.numCategory.sup), [param.numInstances,1]);
+target = target(:); % vectorize the matrix by column 
+
+
+%% preprocessing
+% add a zero row at the beginning so that every pattern has equal numRows
+INTERVAL = 26;
+output = vertcat( zeros(1,size(output,2)), output);
+% split the data
+data = mat2cell(output, repmat(INTERVAL, [1 param.numStimuli]), size(output,2) );
+for i = 1 : size(data,1)
+    data{i} = data{i}(:, 3:end);    % remove the 1st & 2nd columns
+    data{i} = data{i}(2:end,:);     % remove the 1st row of zeros
+end
+
+% % plot the data
+% for i = 1 : param.numStimuli
+%     subplot(param.numCategory.sup,param.numInstances,i)
+%     imagesc(data{i})
+% end
+
+%% perform the classification
+% X: data 
+% Y: target
+% CVBLOCKS
+
+
+
