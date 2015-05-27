@@ -3,7 +3,11 @@ continuation of simulation 16: Large network, 156 units
 what’s new: 
 	- use LOWER learning rate too see if converges at better point
 	- previous: 0.001
-	- now: 0.001
+	- now: 0.0001
 
 
-results: 
+results: at 5000 epochs, the pattern is still not converging to the pattern i saw when the learning rate is 0.001 at 300 epochs… 
+
+NEXT: 
+	1. keep training
+	2. boost up learning speed

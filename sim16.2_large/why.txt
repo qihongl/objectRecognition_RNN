@@ -10,4 +10,7 @@ results:
 	learning is too slow
 	not realistic unless there is way of boosting the speed of convergence
 
+Conclusion: 
+so I decide to drop simulation 16.2. learning rate of 0.00001 is too low if unless there is a way of boosting the speed of convergence
+
 
