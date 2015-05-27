@@ -3,13 +3,13 @@
 % the form of a time series) and outputs a 'class' that represents a
 % superordinate level category
 
-clear;clc;clf;
+clear;clc;
 %% Path information
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim16.1_large';
+PATH.DATA_FOLDER = 'sim15_repPrev';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'verbalAll_e1.txt';
+FILENAME.DATA = 'verbalAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% load the data and the prototype
@@ -53,6 +53,11 @@ end
 % X: data 
 % Y: target
 % CVBLOCKS
+
+
+
+
+disp('done!')
 
 
 
