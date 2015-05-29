@@ -36,17 +36,23 @@ image(distanceMatrix[numPatterns:1,], zlim = c(0,5.5),
       col = heat.colors(10, 1), yaxt = "n", xaxt = "n")
 
 # hclust
-plot.new()
-par(mfrow = c(1,1))
+par(mfrow = c(1,2))
+
+# par(mfrow = c(1,1))
 plot(hclust(dist(hiddenData)), 
      main = 'Hierarchical clustering: hidden layer \nneural representations for all instances',
      xlab = 'instances', ylab = 'distance')
 
 # 2D MDS
 hiddenMDS = cmdscale(distanceMatrix)
+# check the range
+range = max(abs(hiddenMDS));
 plot(hiddenMDS, 
-     main = 'Similarity of representations \nfor different instances in the hidden layer',
+     main = 'MDS: hidden layer neural\n representations for all instances',
      xlab = 'distance', ylab = 'distance',type = 'n',
-     xlim = c(-2.8,2.8), ylim = c(-2.8,2.8))
+     xlim = c(-range,range), ylim = c(-range,range))
 text(hiddenMDS,labels = row.names(hiddenData))
+
+
+
 

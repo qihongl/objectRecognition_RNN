@@ -1,0 +1,7 @@
+This simulation uses the code from simulation 15. So it is a small network. 
+
+GOAL: to let the model hold on to the peaking activation values
+
+incremented the “min” parameter in the environment files
+
+results: OMG! It worked! 
