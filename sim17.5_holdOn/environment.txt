@@ -17,8 +17,8 @@ defI: 0
 defT: - 
 actI: 1 
 actT: 1 
-min: 2
-max: 3.0 
+min: 0.5
+max: 4
 grace: 0.5 
 ;
 

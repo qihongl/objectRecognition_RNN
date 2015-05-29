@@ -1,3 +1,5 @@
 This simulation uses the code from simulation 15. So it is a small network. 
 
 GOAL: tune testGroupCrit and trainGroupCrit
+
+STATUS: TODO
