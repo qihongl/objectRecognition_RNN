@@ -8,12 +8,11 @@
 
 %% CONSTANTS
 clear;clc;clf;
-INTERVAL = 26;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim16.1_large';
-FILENAME.VERBAL = 'verbalAll_e7.txt';
+PATH.DATA= 'sim17.3_interval';
+FILENAME.VERBAL = 'verbalAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 100;
 
@@ -39,6 +38,7 @@ prototype = logical(prototype);
 %% preprocessing
 % add a zero row at the beginning so that every pattern has equal numRows
 output = vertcat( zeros(1,size(output,2)), output);
+INTERVAL = size(output,1) / param.numStimuli;
 % split the data
 data = mat2cell(output, repmat(INTERVAL, [1 param.numStimuli]), size(output,2) );
 for i = 1 : size(data,1)

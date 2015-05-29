@@ -1,5 +1,5 @@
 # makeing the network
-addNet EM -t 5 -i 5 CONTINUOUS
+addNet EM -t 3 -i 5 CONTINUOUS
 
 # specify all layers
 addGroup VerbalIn 60  INPUT

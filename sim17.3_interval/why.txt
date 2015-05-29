@@ -1,3 +1,10 @@
 This simulation uses the code from simulation 15. So it is a small network. 
 
 GOAL: to see if extend or shorten the time interval lead to different outcomes 
+
+results: 
+	when shorten the time interval to 10 or 15, the model activation are at celling at the end of the trial, which looks good. However, more training will let the model the deactivate everything earlier. 
+
+Conclusion: 
+	it seems that changing time interval is not a solution
+	need to figure out a way for model to hold on for the activation values
