@@ -1,5 +1,5 @@
 Conduct simulation on larger a network, 156 units
 
-try min 2, max 3
+try min 0.5, max 4
 
 results: 

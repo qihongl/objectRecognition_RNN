@@ -29,13 +29,14 @@ prototype = logical(prototype);
 
 % compute the target label (super class label)
 target = repmat((1: param.numCategory.sup), [param.numInstances,1]);
-target = target(:); % vectorize the matrix by column 
+% target = target(:); % vectorize the matrix by column 
+target = target';
 
 
 %% preprocessing
 % add a zero row at the beginning so that every pattern has equal numRows
-INTERVAL = 26;
 output = vertcat( zeros(1,size(output,2)), output);
+INTERVAL = size(output,1) / param.numStimuli;
 % split the data
 data = mat2cell(output, repmat(INTERVAL, [1 param.numStimuli]), size(output,2) );
 for i = 1 : size(data,1)
@@ -43,11 +44,20 @@ for i = 1 : size(data,1)
     data{i} = data{i}(2:end,:);     % remove the 1st row of zeros
 end
 
-% % plot the data
-% for i = 1 : param.numStimuli
-%     subplot(param.numCategory.sup,param.numInstances,i)
-%     imagesc(data{i})
-% end
+% plot the data
+for i = 1 : param.numStimuli
+    subplot(param.numCategory.sup,param.numInstances,i)
+    imagesc(data{i})
+end
+
+
+data = reshape(data, param.numCategory.sup, param.numInstances);
+
+%% set up CV blocks
+CVB = zeros(param.numCategory.sup, param.numInstances);
+CVB(:,4) = 1;
+CVB = logical(CVB);
+CVB;
 
 %% perform the classification
 % X: data 
@@ -56,8 +66,16 @@ end
 
 
 
+% 
+% Xtrain = data(:,1:3)
+% Ytrain = target(:,1:3)
+% Xtest = data(:,4)
+% Ytest = target(:,4)
+% 
+% 
+% for i = 1 : 9
+%     subplot(param.numCategory.sup,3,i)
+%     imagesc(Xtrain{i})
+% end
 
 disp('done!')
-
-
-
