@@ -1,4 +1,6 @@
 rm(list = ls())
+library(ggplot2)
+library(ggdendro)
 PROJECT_DIR = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization'
 
 # you need to enter the file name and folder name here!
@@ -35,13 +37,19 @@ range (distanceMatrix[lowerTriangularIndices])
 image(distanceMatrix[numPatterns:1,], zlim = c(0,5.5), 
       col = heat.colors(10, 1), yaxt = "n", xaxt = "n")
 
-# hclust
-par(mfrow = c(1,2))
 
-# par(mfrow = c(1,1))
+
+# hclust
+# par(mfrow = c(1,2))
+
+par(mfrow = c(1,1))
 plot(hclust(dist(hiddenData)), 
      main = 'Hierarchical clustering: hidden layer \nneural representations for all instances',
      xlab = 'instances', ylab = 'distance')
+
+# hc <- hclust(dist(hiddenData), "ave")
+# ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
+
 
 # 2D MDS
 hiddenMDS = cmdscale(distanceMatrix)
@@ -52,7 +60,6 @@ plot(hiddenMDS,
      xlab = 'distance', ylab = 'distance',type = 'n',
      xlim = c(-range,range), ylim = c(-range,range))
 text(hiddenMDS,labels = row.names(hiddenData))
-
 
 
 
