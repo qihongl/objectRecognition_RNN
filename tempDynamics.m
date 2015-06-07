@@ -45,7 +45,7 @@ for i = 1 : size(data,1)
     data{i} = data{i}(:, 3:end);    % remove the 1st & 2nd columns
     data{i} = data{i}(2:end,:);     % remove the 1st row of zeros
 end
-
+ 
 % check the number of stimuli
 if param.numStimuli ~= size(output,1) / INTERVAL
     error ('number of stimuli are wrong')
