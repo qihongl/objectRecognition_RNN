@@ -58,7 +58,7 @@ end
 % comptue other parameters
 pattern.numCategory = numCategory;
 pattern.numUnits = numUnits;
-pattern.numTotalUnits = sum(struct2array(numUnits)) * numCategory.sup;
+pattern.numTotalUnits = numUnits.total * numCategory.sup;
 pattern.numTotalInstances = numInstances * numCategory.sup;
 end
 
