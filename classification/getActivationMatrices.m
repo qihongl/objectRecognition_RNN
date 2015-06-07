@@ -97,5 +97,5 @@ end
 
 activationMatrix = acts;
 % save the activation matrices
-save('activationMatrix')
+save('activationMatrix', 'activationMatrix')
 disp('done!')
