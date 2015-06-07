@@ -33,7 +33,7 @@ prototype = logical(prototype);
 
 % compute the target label (super class label)
 target = repmat((1: param.numCategory.sup), [param.numInstances,1]);
-% target = target(:); % vectorize the matrix by column 
+% target = target(:); % vectorize the matrix by column
 target = target';
 
 
@@ -57,11 +57,11 @@ end
 
 data = reshape(data, param.numCategory.sup, param.numInstances);
 
-% 
+%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% From now on, the code assumes BINARY classification
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
+%
 % %% set up CV blocks
 % k = 4; % determine the number of fold for CV
 % numInstances = size(data,1) * size(data,2);
@@ -76,23 +76,26 @@ INTERVAL = INTERVAL - 1;    % the zero row was eliminated
 acts = cell(INTERVAL,1);    % pre-allocate
 
 % loop over all time points
-for t = 1: INTERVAL
-    for i = 1 : param.numStimuli
-        % check number of total units
-        numTotalUnits = param.numCategory.sup * param.numUnits.total;
-        if numTotalUnits ~= size(data{i},2)
-            warning('number of total units mismatch');
-        end
 
-        % start constructing activation matrices
-        temp = nan(param.numInstances, numTotalUnits);
+for t = 1: INTERVAL
+    % check number of total units
+    numTotalUnits = param.numCategory.sup * param.numUnits.total;
+    if numTotalUnits ~= size(data{i},2)
+        warning('number of total units mismatch');
+    end
+    
+    temp = nan(param.numInstances, numTotalUnits);  % preallocate
+    
+    for i = 1 : param.numStimuli
         fprintf('Time: %d \t numInstace: %d\n',t,i)
+        % constructing activation matrices
         temp(i,:) = data{i}(t,:);
     end
     % save the activation matrix
     acts{t} = temp; clear temp;
-end 
+end
 
 activationMatrix = acts;
+% save the activation matrices
 save('activationMatrix')
 disp('done!')
