@@ -7,36 +7,7 @@
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
 
-clear;clc;
-%% Path information
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim19_twoClasses';
-
-% provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'verbalAll_e2.txt';
-FILENAME.PROTOTYPE = 'PROTO.xlsx';
-
-%% load the data and the prototype
-% read the output data
-PATH.TEMP = [PATH.PROJECT PATH.DATA_FOLDER];
-% check if the data file exists
-if exist([PATH.TEMP '/' FILENAME.DATA], 'file') == 0
-    error([ 'File ' FILENAME.DATA ' not found.'])
-end
-outputFile = tdfread([PATH.TEMP '/' FILENAME.DATA]);
-name = char(fieldnames(outputFile));
-output = getfield(outputFile, name);
-
-% read the prototype pattern, to get some parameters of the simulation
-[param, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
-prototype = logical(prototype);
-
-% compute the target label (super class label)
-target = repmat((1: param.numCategory.sup), [param.numInstances,1]);
-% target = target(:); % vectorize the matrix by column
-target = target';
-
-
+function activationMatrix = getActivationMatrices(output, param)
 %% preprocessing
 % add a zero row at the beginning so that every pattern has equal numRows
 output = vertcat( zeros(1,size(output,2)), output);
@@ -49,10 +20,10 @@ for i = 1 : size(data,1)
 end
 
 % plot the data
-for i = 1 : param.numStimuli
-    subplot(param.numCategory.sup,param.numInstances,i)
-    imagesc(data{i})
-end
+% for i = 1 : param.numStimuli
+%     subplot(param.numCategory.sup,param.numInstances,i)
+%     imagesc(data{i})
+% end
 
 
 data = reshape(data, param.numCategory.sup, param.numInstances);
@@ -61,11 +32,6 @@ data = reshape(data, param.numCategory.sup, param.numInstances);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% From now on, the code assumes BINARY classification
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% %% set up CV blocks
-% k = 4; % determine the number of fold for CV
-% numInstances = size(data,1) * size(data,2);
-% mod(1:param.numStimuli,k)
 
 
 %% construct activation matrices for all time points
@@ -97,5 +63,6 @@ end
 
 activationMatrix = acts;
 % save the activation matrices
-save('activationMatrix', 'activationMatrix')
+% save('activationMatrix', 'activationMatrix')
 disp('done!')
+end
