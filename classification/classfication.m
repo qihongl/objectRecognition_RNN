@@ -10,16 +10,13 @@ clear ; close all; clc
 %% Load Data
 %  The first two columns contains the exam scores and the third column
 %  contains the lab
-
-
 data = load('data.mat');
 data = data.activationMatrix;
 
 %% do the 1st time point! LOOP if i want all time points 
-data = data{1};
+data = data{4};
 X = data(: , 1 : (size(data,2) - 1)); 
 y = data(:, size(data,2));
-
 
 
 %% Compute Cost and Gradient
@@ -40,9 +37,6 @@ fprintf('Cost at initial theta (zeros): %f\n', cost);
 fprintf('Gradient at initial theta (zeros): \n');
 fprintf(' %f \n', grad);
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
-
 
 %% Optimizing using fminunc
 %  In this exercise, you will use a built-in function (fminunc) to find the
@@ -57,9 +51,9 @@ options = optimset('GradObj', 'on', 'MaxIter', 400);
 	fminunc(@(t)(costFunction(t, X, y)), initial_theta, options);
 
 % Print theta to screen
-fprintf('Cost at theta found by fminunc: %f\n', cost);
-fprintf('theta: \n');
-fprintf(' %f \n', theta);
+% fprintf('Cost at theta found by fminunc: %f\n', cost);
+% fprintf('theta: \n');
+% fprintf(' %f \n', theta);
 
 
 %% Predict and Accuracies 
