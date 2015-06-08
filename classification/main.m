@@ -25,7 +25,6 @@ output = getfield(outputFile, name);
 
 % read the prototype pattern, to get some parameters of the simulation
 [param, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
-prototype = logical(prototype);
 
 
 %% data preprocessing
@@ -37,10 +36,14 @@ data = activationMatrix; clear activationMatrix;
 %% Logistic classifier
 numTimePoints = size(data,1);
 accuracy = nan(numTimePoints, 1);
-
-
+% compute the accuracy for all time points
 for i = 1 : numTimePoints
     accuracy(i) = logisticReg(data{i});
 end
 
+%% plot
 plot(accuracy)
+fontsize = 18;
+xlabel('time', 'FontSize', fontsize)
+ylabel('accuracy (%)', 'FontSize', fontsize)
+title('logistic regression classifcation accuracy against time', 'FontSize', fontsize)
