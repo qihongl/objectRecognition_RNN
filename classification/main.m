@@ -9,7 +9,7 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 PATH.DATA_FOLDER = 'sim19_twoClasses';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'verbalAll_e05.txt';
+FILENAME.DATA = 'verbalAll_e01.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% load the data and the prototype

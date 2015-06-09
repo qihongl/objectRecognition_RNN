@@ -5,7 +5,7 @@ PROJECT_DIR = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization'
 
 # you need to enter the file name and folder name here!
 DATA_FOLDER = 'sim19_twoClasses'
-FILENAME = 'hiddenFinal_e05.txt'
+FILENAME = 'hiddenFinal_e01.txt'
 
 # load the data 
 datapath = paste(PROJECT_DIR, DATA_FOLDER, FILENAME, sep="/") 
