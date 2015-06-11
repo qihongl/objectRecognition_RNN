@@ -34,12 +34,18 @@ data = activationMatrix; clear activationMatrix;
 
 
 %% Logistic regression classification 
-numTimePoints = size(data,1);
-accuracy = nan(numTimePoints, 1);
+
+% set up the CV blocks
+k = 2;
+CVB = logical(mod(1:param.numStimuli,4) == 1);
+
+
+numTimePoints = size(data,1);       % preallocation
+accuracy = nan(numTimePoints, 1);   % preallocation
 % loop over time
 for i = 1 : numTimePoints
     % compute the accuracy for every time points
-    accuracy(i) = logisticReg(data{i});
+    accuracy(i) = logisticReg(data{i}, CVB);
 end
 
 %% Plot the accuracy against time
