@@ -1,7 +1,7 @@
 %% Logistic regression classifier
 % it TAKES a data set and a cross-validation block
 % it RETURNS the cross-validated accuracy
-function [accuracy, deviation] = logisticReg(data, CVB)
+function accuracy = logisticReg(data, CVB)
     %% obtain the predictors and responses
     X = data(: , 1 : (size(data,2) - 1));
     y = data(:, size(data,2));   
@@ -30,13 +30,11 @@ function [accuracy, deviation] = logisticReg(data, CVB)
     Xtest = [ones(size(Xtest,1), 1) Xtest]; % add the intercept term
     response = sigmoid(Xtest * beta);
     p  = response >= 0.5;
-    
-    % compute the deviation from the truth, this is more sensitive than
-    % accuracy, as it has no rounding
+    % comparing model response and the truth
+    [response , ytest]
+    % compute the deviation from the truth, this is mores
     deviation = sum(abs(response - ytest));
     
-    % print the comparison between model response and the truth
-    [response , ytest]
     
     % Compute accuracy on our training set
     accuracy = mean(double(p == ytest)) * 100;
