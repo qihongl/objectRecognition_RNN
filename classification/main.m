@@ -4,12 +4,17 @@
 % a superordinate level category
 clear ; close all; clc
 
-%% Specify the Path information
+%% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim19_twoClasses';
+PATH.DATA_FOLDER = 'sim16_large';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'verbalAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
+
+%% specify which class you want to decode! 
+% this doesn't matter for binary classification
+% for multiclass-classification, you might want to loop over all target! 
+TARGET = 1; 
 
 %% load the data and the prototype
 [output, param] = loadData(PATH, FILENAME);
@@ -21,7 +26,7 @@ activationMatrix = getActivationMatrices(output, param);
 [~, Y] = getLabels(param);
 
 % attach labels
-activationMatrix = attachLabels(activationMatrix, Y(:,2));
+activationMatrix = attachLabels(activationMatrix, Y(:,TARGET));
 
 % change to a simpler name... 
 data = activationMatrix; clear activationMatrix;
