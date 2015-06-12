@@ -11,10 +11,13 @@ PATH.DATA_FOLDER = 'sim16_large';
 FILENAME.DATA = 'verbalAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
-%% specify which class you want to decode! 
+%% set some paramters
+% specificy the target class
 % this doesn't matter for binary classification
 % for multiclass-classification, you might want to loop over all target! 
 TARGET = 1; 
+% specifiy the number of folds for CV
+K = 3;
 
 %% load the data and the prototype
 [output, param] = loadData(PATH, FILENAME);
@@ -34,8 +37,7 @@ data = activationMatrix; clear activationMatrix;
 
 %% Cross validation 
 % set up the CV blocks
-k = 2;
-CVB = logical(mod(1:param.numStimuli,k) == 0);
+CVB = logical(mod(1:param.numStimuli,K) == 0);
 
 %% Run Logistic regression classification 
 numTimePoints = size(data,1);       % preallocation
