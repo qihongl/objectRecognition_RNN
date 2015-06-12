@@ -53,5 +53,5 @@ end
 plot(accuracy)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)
-ylabel('accuracy (%)', 'FontSize', fontsize)
-title('logistic regression classifcation accuracy against time', 'FontSize', fontsize)
+ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
+title('logistic regression: accuracy against time', 'FontSize', fontsize)

@@ -9,10 +9,9 @@
 %% CONSTANTS
 clear;clc;clf;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.DATA= 'sim16_large';
-FILENAME.VERBAL = 'verbalAll_e05.txt';
+FILENAME.VERBAL = 'verbalAll_e01.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 100;
 
@@ -131,6 +130,7 @@ mSub = mean(sub,2);
 
 %% plot the data! 
 hold on
+% plot three temporal activation pattern
 plot(mSup,'g', 'linewidth', 2)
 plot(mBas,'r', 'linewidth', 2)
 plot(mSub, 'linewidth', 2)
@@ -139,7 +139,6 @@ plot(mSub, 'linewidth', 2)
 % ylim([0 1]);
 set(gca,'FontSize',11)
 legend('Superordinate', 'Basic', 'Subordinate', 'location', 'southeast')
-% legend('superordinate', 'basic', 'location', 'southeast')
 set(legend,'FontSize',18);
 TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
 title(TITLE, 'fontSize', 18);
