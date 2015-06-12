@@ -9,7 +9,7 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 PATH.DATA_FOLDER = 'sim19_twoClasses';
 
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'verbalAll_e01.txt';
+FILENAME.DATA = 'verbalAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% load the data and the prototype
@@ -32,14 +32,15 @@ activationMatrix = getActivationMatrices(output, param);
 activationMatrix = attachLabels(activationMatrix, param);
 data = activationMatrix; clear activationMatrix;
 
+labels = getLabels(param);
 
-%% Logistic regression classification 
 
+%% Cross validation 
 % set up the CV blocks
 k = 2;
-CVB = logical(mod(1:param.numStimuli,4) == 1);
+CVB = logical(mod(1:param.numStimuli,k) == 0);
 
-
+%% Run Logistic regression classification 
 numTimePoints = size(data,1);       % preallocation
 accuracy = nan(numTimePoints, 1);   % preallocation
 % loop over time
@@ -48,7 +49,8 @@ for i = 1 : numTimePoints
     accuracy(i) = logisticReg(data{i}, CVB);
 end
 
-%% Plot the accuracy against time
+
+%% Plot the CV accuracies against time
 plot(accuracy)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)

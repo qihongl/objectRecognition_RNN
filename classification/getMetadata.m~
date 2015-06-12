@@ -1,0 +1,12 @@
+function metadata = getMetadata(param)
+
+param
+metadata = 0;
+numCategory = param.numCategory
+numCategory = param.numUnits;
+numInstances = param.numInstances
+numS
+
+
+
+end

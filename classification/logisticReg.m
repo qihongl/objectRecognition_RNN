@@ -1,10 +1,12 @@
 %% Logistic regression classifier
+% it TAKES a data set and a cross-validation block
+% it RETURNS the cross-validated accuracy
 function accuracy = logisticReg(data, CVB)
-    %% obtain X and Y
+    %% obtain the predictors and responses
     X = data(: , 1 : (size(data,2) - 1));
     y = data(:, size(data,2));   
     
-    %% separate the train and test sets
+    %% separate the training and testing sets
     Xtest = X(CVB,:);
     ytest = y(CVB,:);
     Xtrain = X(~CVB,:);
@@ -13,25 +15,18 @@ function accuracy = logisticReg(data, CVB)
     %% Compute Cost and Gradient using fminunc
     %  Setup the data matrix appropriately, and add ones for the intercept term
     [m, n] = size(Xtrain);
-    
-    % Add intercept term to the design matrix
+    % Add the intercept term to the design matrix
     Xtrain = [ones(m, 1) Xtrain];
-    Xtest = [ones(size(Xtest,1), 1) Xtest];
     
-    % Initialize fitting parameters
+    % Initialize fitting parameters and options
     initial_beta = zeros(n + 1, 1);
-    %  Set options for fminunc
     options = optimset('GradObj', 'on', 'MaxIter', 400);
-    
     %  Run fminunc to obtain the optimal beta
-    %  This function will return beta and the cost
-    [beta, cost] = ...
-        fminunc(@(t)(costFunction(t, Xtrain, ytrain)), initial_beta, options);
-    
+    beta = fminunc(@(t)(costFunction(t, Xtrain, ytrain)), initial_beta, options);
     
     %% Predict and Accuracies
-    
     % compute the prediction
+    Xtest = [ones(size(Xtest,1), 1) Xtest]; % add the intercept term
     p  = sigmoid(Xtest * beta) >= 0.5; 
     
     % Compute accuracy on our training set
