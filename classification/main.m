@@ -7,32 +7,24 @@ clear ; close all; clc
 %% Specify the Path information
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 PATH.DATA_FOLDER = 'sim19_twoClasses';
-
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'verbalAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% load the data and the prototype
-% read the output data
-PATH.TEMP = [PATH.PROJECT PATH.DATA_FOLDER];
-% check if the data file exists
-if exist([PATH.TEMP '/' FILENAME.DATA], 'file') == 0
-    error([ 'File ' FILENAME.DATA ' not found.'])
-end
-outputFile = tdfread([PATH.TEMP '/' FILENAME.DATA]);
-name = char(fieldnames(outputFile));
-output = getfield(outputFile, name);
-
-% read the prototype pattern, to get some parameters of the simulation
-[param, prototype] = readPrototype ([PATH.TEMP '/' FILENAME.PROTOTYPE]);
-
+[output, param] = loadData(PATH, FILENAME);
 
 %% data preprocessing
+% get activattion matrices
 activationMatrix = getActivationMatrices(output, param);
-activationMatrix = attachLabels(activationMatrix, param);
-data = activationMatrix; clear activationMatrix;
+% get labels
+[~, Y] = getLabels(param);
 
-labels = getLabels(param);
+% attach labels
+activationMatrix = attachLabels(activationMatrix, Y(:,2));
+
+% change to a simpler name... 
+data = activationMatrix; clear activationMatrix;
 
 
 %% Cross validation 

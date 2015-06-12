@@ -2,7 +2,7 @@
 % *: this is designed for one-vs-all classification (binary classification
 % don't really need it).
 
-function labels = getLabels(param)
+function [labels, Y] = getLabels(param)
     %% check parameters
     checkParameters(param)
 

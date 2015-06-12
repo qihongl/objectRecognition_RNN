@@ -4,13 +4,10 @@
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
 
-function activationMatrix = attachLabels(activationMatrix, param)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% assume binary classifcation! This would not generalize
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-y = [ones(param.numInstances,1); zeros(param.numInstances,1)];
-
+function activationMatrix = attachLabels(activationMatrix, y)
+% loop over all activation matrices (all time points)
 for i = 1 : size(activationMatrix,1)
+    % attach a column of response at the end
     activationMatrix{i} = [activationMatrix{i}, y];
 end
 
