@@ -31,6 +31,6 @@ function accuracy = logisticReg(data, CVB)
     
     % Compute accuracy on our training set
     accuracy = mean(double(p == ytest)) * 100;
-    fprintf('Train Accuracy: %f\n', accuracy);
+    fprintf('Cross-validated Accuracy: %.3f\n', accuracy);
     
 end
