@@ -1,0 +1,6 @@
+Conduct simulation on more noise
+
+* adding more noise to the visual patterns. this might reduce the performance, and decrease the classification accuracies
+
+
+visualProb = 0.8
