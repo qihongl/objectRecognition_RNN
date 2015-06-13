@@ -11,7 +11,7 @@ clear;clc;clf;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.DATA= 'sim20.2_noise';
-FILENAME.VERBAL = 'verbalAll_e05.txt';
+FILENAME.VERBAL = 'verbalAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 100;
 

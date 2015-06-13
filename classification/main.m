@@ -8,7 +8,7 @@ clear ; close all; clc
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 PATH.DATA_FOLDER = 'sim20.2_noise';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'verbalAll_e01.txt';
+FILENAME.DATA = 'verbalAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
@@ -52,7 +52,7 @@ end
 
 %% Plot the CV accuracies against time
 plot(accuracy)
-plot(-deviation)
+% plot(-deviation)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
