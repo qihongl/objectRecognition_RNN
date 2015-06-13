@@ -6,7 +6,7 @@ clear ; close all; clc
 
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim16_large';
+PATH.DATA_FOLDER = 'sim20.2_noise';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'verbalAll_e01.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -15,7 +15,7 @@ FILENAME.PROTOTYPE = 'PROTO.xlsx';
 % specificy the target class
 % this doesn't matter for binary classification
 % for multiclass-classification, you might want to loop over all target! 
-TARGET = 2; 
+TARGET = 1; 
 % specifiy the number of folds for CV
 K = 3;
 
@@ -52,7 +52,7 @@ end
 
 %% Plot the CV accuracies against time
 plot(accuracy)
-% plot(-deviation)
+plot(-deviation)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)

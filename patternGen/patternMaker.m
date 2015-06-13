@@ -2,6 +2,7 @@
 clear; clc;
 % CONSTANTS
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/patternGen';
+cd PATH.PROJECT
 
 %% Parameters
 % get full patterns 
@@ -16,7 +17,7 @@ rng(parameters.seed);% TODO consider move it to patternGen
 
 % the threshold is "P(being ON)" for all unit that "suppose" to be on
 % (defined by the prototype)
-parameters.visualThres = 0.8;   
+parameters.visualThres = 0.7;   
 % verbal threshold is always on. For basic and superordiante category, name
 % should be the same for all members of the category
 parameters.verbalThres = 1; 
@@ -99,3 +100,6 @@ addTitle(filename, '# verbal bas -> visual bas + sup features' )
 names = addPrefix('verbal', verbalPatterns.names, 'bas');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, visualPatterns.sup_bas, 2)
 clear names;
+
+
+disp('Done!')

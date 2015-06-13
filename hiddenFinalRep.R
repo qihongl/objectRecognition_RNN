@@ -1,11 +1,11 @@
 rm(list = ls())
-library(ggplot2)
-library(ggdendro)
+library(ggplot2); library(ggdendro); library(ape)
+
 PROJECT_DIR = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization'
 
 # you need to enter the file name and folder name here!
-DATA_FOLDER = 'sim19_twoClasses'
-FILENAME = 'hiddenFinal_e01.txt'
+DATA_FOLDER = 'sim16_large'
+FILENAME = 'hiddenFinal_e3.txt'
 
 # load the data 
 datapath = paste(PROJECT_DIR, DATA_FOLDER, FILENAME, sep="/") 
@@ -47,8 +47,9 @@ plot(hclust(dist(hiddenData)),
      main = 'Hierarchical clustering: hidden layer \nneural representations for all instances',
      xlab = 'instances', ylab = 'distance')
 
-# hc <- hclust(dist(hiddenData), "ave")
-# ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
+hc <- hclust(dist(hiddenData), "ave")
+ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
+plot(as.phylo(hc), type = "fan", main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
 
 
 # 2D MDS
