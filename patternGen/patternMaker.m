@@ -61,7 +61,7 @@ names = addPrefix('verbal', verbalPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.sub, visualPatterns.full, 2)
 clear names;
 
-
+% testing file
 % write visual full -> verbal full (for tempDyn)
 addTitle(filename, '# visual full -> verbal full' )
 names = addPrefix('visual', visualPatterns.names, '');
