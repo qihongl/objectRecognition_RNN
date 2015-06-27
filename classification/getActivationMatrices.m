@@ -50,7 +50,7 @@ for t = 1: INTERVAL
         warning('number of total units mismatch');
     end
     
-    temp = nan(param.numInstances, numTotalUnits);  % preallocate
+%     temp = nan(param.numInstances, numTotalUnits);  % preallocate
     
     for i = 1 : param.numStimuli
         fprintf('Time: %d \t numInstace: %d\n',t,i)
