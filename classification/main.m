@@ -6,9 +6,9 @@ clear ; close all; clc
 
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim21_lessHidden';
+PATH.DATA_FOLDER = 'sim21.3_lessHidden';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e01.txt';
+FILENAME.DATA = 'hiddenAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
