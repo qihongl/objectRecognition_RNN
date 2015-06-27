@@ -10,10 +10,10 @@
 clear;clc;clf;
 PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim16.1_large';
-FILENAME.VERBAL = 'verbalAll_e7.txt';
+PATH.DATA= 'sim21.2_lessHidden';
+FILENAME.VERBAL = 'verbalAll_e04.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-EPOCH = 7000;
+EPOCH = 412;
 
 
 %% read data
