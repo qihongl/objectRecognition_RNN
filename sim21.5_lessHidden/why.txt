@@ -1,0 +1,13 @@
+The purpose of simulation 21 is to see if reducing the number of hidden units would give us the pattern of interest: inverted U shaped classification accuracy
+
+The results is a little surprising to me:
+I have tried 78 units, 39 units, 10 units, 1 units, whereas previous I kept the number of units bettwen all layers the same.
+
+Nevertheless, the classification accuracy is pretty good. I only see a smooth curve when plotting deviation, when I used 1 unit. Importantly, I still don't see the inverted U shape. 
+
+Since this network has 156 units for all other layers, I normally also use 156 units for the hidden semantic layer.
+
+Next: 
+
+I want to try more simulation with this 1 hidden unit network
+ 

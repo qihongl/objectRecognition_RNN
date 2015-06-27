@@ -6,7 +6,7 @@ clear ; close all; clc
 
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
-PATH.DATA_FOLDER = 'sim21.3_lessHidden';
+PATH.DATA_FOLDER = 'sim21.5_lessHidden';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'hiddenAll_e05.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -51,8 +51,8 @@ end
 
 
 %% Plot the CV accuracies against time
-plot(accuracy)
-% plot(-deviation)
+% plot(accuracy)
+plot(-deviation)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
