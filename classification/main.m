@@ -59,7 +59,7 @@ ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
 title('accuracy against time', 'FontSize', fontsize)
 % Plot the sum of absolute deviations (on the test set) against time
 subplot(1,2,2)
-plot(-deviation)
+plot(deviation)
 xlabel('time', 'FontSize', fontsize)
 ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
 title('absolute deviation against time', 'FontSize', fontsize)
