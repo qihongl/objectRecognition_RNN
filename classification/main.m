@@ -51,9 +51,10 @@ end
 
 
 %% Plot the CV accuracies against time
-% plot(accuracy)
-plot(-deviation)
+plot(accuracy)
+% plot(-deviation)
 fontsize = 18;
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
+% title('logistic regression: absolute deviation against time', 'FontSize', fontsize)
 title('logistic regression: accuracy against time', 'FontSize', fontsize)
