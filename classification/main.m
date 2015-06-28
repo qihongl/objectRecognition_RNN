@@ -49,12 +49,18 @@ for i = 1 : numTimePoints
     [accuracy(i), deviation(i)] = logisticReg(data{i}, CVB);
 end
 
-
-%% Plot the CV accuracies against time
-plot(accuracy)
-% plot(-deviation)
+%% Visualize the results
 fontsize = 18;
+% Plot the CV accuracies against time
+subplot(1,2,1)
+plot(accuracy)
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
-% title('logistic regression: absolute deviation against time', 'FontSize', fontsize)
-title('logistic regression: accuracy against time', 'FontSize', fontsize)
+title('accuracy against time', 'FontSize', fontsize)
+% Plot the sum of absolute deviations (on the test set) against time
+subplot(1,2,2)
+plot(-deviation)
+xlabel('time', 'FontSize', fontsize)
+ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
+title('absolute deviation against time', 'FontSize', fontsize)
+
