@@ -7,12 +7,12 @@ clear ; close all; clc
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
-PATH.DATA_FOLDER = 'sim21.2_lessHidden';
+PATH.DATA_FOLDER = 'sim16.1_large';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e04.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 % Normal blurring
-variance = 0;
+variance = 0.3;
 
 %% set some paramters
 % specificy the target class
