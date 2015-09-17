@@ -8,12 +8,12 @@
 
 %% CONSTANTS
 clear;clc;clf;
-PATH.ABS = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/';
+PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim21.4_lessHidden';
-FILENAME.VERBAL = 'verbalAll_e05.txt';
+PATH.DATA= 'sim16_large';
+FILENAME.VERBAL = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-EPOCH = 412;
+EPOCH = 2000;
 
 
 %% read data
