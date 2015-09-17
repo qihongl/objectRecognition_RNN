@@ -1,7 +1,8 @@
 rm(list = ls())
 library(ggplot2); library(ggdendro); library(ape)
 
-PROJECT_DIR = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization'
+PROJECT_DIR = '/Users/Qihong/Dropbox/github/categorization_PDP'
+
 
 # you need to enter the file name and folder name here!
 DATA_FOLDER = 'sim16_large'

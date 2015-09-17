@@ -11,15 +11,12 @@ PATH.DATA_FOLDER = 'sim16_large';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-% Normal blurring
-variance = 1.5;
-showresults = false;
+
 
 %% set some paramters
-% specificy the target class
-% this doesn't matter for binary classification
-% for multiclass-classification, you might want to loop over all target!
-TARGET = 1;
+showresults = false;
+% Normal blurring
+variance = 0;
 % specifiy the number of folds for CV
 K = 3;
 
@@ -27,28 +24,20 @@ K = 3;
 [output, param] = loadData(PATH, FILENAME);
 
 %% data preprocessing
-% get activattion matrices
+% get activation matrices
 activationMatrix = getActivationMatrices(output, param);
+numTimePoints = size(activationMatrix,1);
 % get labels
 [~, Y] = getLabels(param);
 
-% attach labels
-activationMatrix = attachLabels(activationMatrix, Y(:,TARGET));
-
-% change to a simpler name...
-data = activationMatrix; clear activationMatrix;
-
-%% Cross validation
-% set up the CV blocks
-CVB = logical(mod(1:param.numStimuli,K) == 0);
-numTimePoints = size(data,1);
-
-% specify how many simulations you want to do
-numSim = 10;
-gs.accuracy = cell(numSim,1);
-gs.deviation = cell(numSim,1);
-% run more simulations, since there is randomness in noise component
-for j = 1 : numSim
+% loop over all categories
+numCategories = size(Y,2);
+for j = 1 : numCategories
+    %% attach labels
+    data = attachLabels(activationMatrix, Y(:,j));
+    %% set up Cross validation blocks
+    CVB = logical(mod(1:param.numStimuli,K) == 0);
+    
     % preallocation
     accuracy = nan(numTimePoints, 1);
     deviation = nan(numTimePoints, 1);
@@ -63,8 +52,8 @@ for j = 1 : numSim
 end
 
 %% A function that visualizes the results
-[accuracy,deviation] = averagingResults(gs,numSim, numTimePoints);
-visualizeResults(accuracy, deviation)
+[overallScore] = averagingResults(gs,numCategories, numTimePoints);
+visualizeResults(overallScore)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,24 +61,25 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Visualize the results
-function visualizeResults(accuracy, deviation)
+function visualizeResults(score)
 fontsize = 18;
 % Plot the CV accuracies against time
 subplot(1,2,1)
-plot(accuracy)
+plot(score.accuracy)
+ylim([(min(score.accuracy)-5) 100])
 xlabel('time', 'FontSize', fontsize)
 ylabel('cross-validated accuracy (%)', 'FontSize', fontsize)
 title('accuracy against time', 'FontSize', fontsize)
 % Plot the sum of absolute deviations (on the test set) against time
 subplot(1,2,2)
-plot(deviation)
+plot(score.deviation)
 xlabel('time', 'FontSize', fontsize)
 ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
 title('absolute deviation against time', 'FontSize', fontsize)
 end
 
 %% averaging the results across simulations
-function [accuracy,deviation] = averagingResults(gs,numSim, numTimePoints)
+function [score] = averagingResults(gs,numSim, numTimePoints)
 % preallocate
 accuracy = zeros(numTimePoints, 1);
 deviation = zeros(numTimePoints, 1);
@@ -99,6 +89,14 @@ for i = 1 : numSim
     deviation = deviation + gs.deviation{i};
 end
 % take mean
-accuracy = accuracy / numSim;
-deviation = deviation / numSim;
+score.accuracy = accuracy / numSim;
+score.deviation = deviation / numSim;
 end
+
+
+
+% specify how many simulations you want to do
+% numSim = 10;
+% gs.accuracy = cell(numSim,1);
+% gs.deviation = cell(numSim,1);
+% run more simulations, since there is randomness in noise component
