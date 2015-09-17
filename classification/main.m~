@@ -12,7 +12,7 @@ PATH.DATA_FOLDER = 'sim16_large';
 FILENAME.DATA = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 % Normal blurring
-variance = 1.5;
+variance = 1;
 showresults = false;
 
 %% set some paramters
@@ -93,12 +93,10 @@ function [accuracy,deviation] = averagingResults(gs,numSim, numTimePoints)
 % preallocate
 accuracy = zeros(numTimePoints, 1);
 deviation = zeros(numTimePoints, 1);
-% accumulate
 for i = 1 : numSim
     accuracy = accuracy + gs.accuracy{i};
     deviation = deviation + gs.deviation{i};
 end
-% take mean
 accuracy = accuracy / numSim;
 deviation = deviation / numSim;
 end
