@@ -3,7 +3,6 @@
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
 function gs = main()
-
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
@@ -93,7 +92,6 @@ end
 score.accuracy = accuracy / numSim;
 score.deviation = deviation / numSim;
 end
-
 
 
 % specify how many simulations you want to do
