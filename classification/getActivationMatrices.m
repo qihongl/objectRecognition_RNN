@@ -28,7 +28,7 @@ end
 
 data = reshape(data, param.numCategory.sup, param.numInstances);
 
-%
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% From now on, the code assumes BINARY classification
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

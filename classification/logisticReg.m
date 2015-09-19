@@ -1,13 +1,16 @@
 %% Logistic regression classifier
 % it TAKES a data set and a cross-validation block
 % it RETURNS the cross-validated accuracy
-function [accuracy, deviation] = logisticReg(data, CVB, variance, showresults)
+function [accuracy, deviation] = logisticReg(data, CVB, variance, spaBlur, showresults)
 %% obtain the predictors and responses
 X = data(: , 1 : (size(data,2) - 1));
 y = data(:, size(data,2));
 
 %% injecting normal noise (this might be important!)
 X = X + normrnd(0,variance, size(X));
+if spaBlur
+    X = mean(X,2);
+end
 
 %% separate the training and testing sets
 Xtest = X(CVB,:);

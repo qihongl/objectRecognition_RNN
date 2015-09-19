@@ -9,13 +9,14 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
 PATH.DATA_FOLDER = 'sim16_large';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
-
 %% set some paramters
-showresults = false;
-% Normal blurring
+showresults = true;
+% Spatial bluring
+spaBlur = true;
+% Normal noise
 variance = 0;
 % specifiy the number of folds for CV
 K = 3;
@@ -45,7 +46,7 @@ for j = 1 : numCategories
     % loop over time
     for i = 1 : numTimePoints
         % compute the accuracy for every time points
-        [accuracy(i), deviation(i)] = logisticReg(data{i}, CVB, variance, showresults);
+        [accuracy(i), deviation(i)] = logisticReg(data{i}, CVB, variance, spaBlur, showresults);
     end
     gs.accuracy{j} = accuracy;
     gs.deviation{j} = deviation;
