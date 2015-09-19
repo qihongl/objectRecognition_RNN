@@ -9,14 +9,15 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
 PATH.DATA_FOLDER = 'sim16_large';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
-
 %% set some paramters
-% Normal blurring
+showresults = true;
+% Spatial bluring
+spaBlur = true;
+% Normal noise
 variance = 0;
-
 % specifiy the number of folds for CV
 K = 3;
 
@@ -26,19 +27,17 @@ K = 3;
 %% data preprocessing
 % get activation matrices
 activationMatrix = getActivationMatrices(output, param);
+numTimePoints = size(activationMatrix,1);
 % get labels
 [~, Y] = getLabels(param);
 
 % loop over all categories
 numCategories = size(Y,2);
 for j = 1 : numCategories
-    % attach labels
+    %% attach labels
     data = attachLabels(activationMatrix, Y(:,j));
-    
-    %% Cross validation
-    % set up the CV blocks
+    %% set up Cross validation blocks
     CVB = logical(mod(1:param.numStimuli,K) == 0);
-    numTimePoints = size(data,1);
     
     % preallocation
     accuracy = nan(numTimePoints, 1);
@@ -47,7 +46,7 @@ for j = 1 : numCategories
     % loop over time
     for i = 1 : numTimePoints
         % compute the accuracy for every time points
-        [accuracy(i), deviation(i)] = logisticReg(data{i}, CVB, variance, showresults);
+        [accuracy(i), deviation(i)] = logisticReg(data{i}, CVB, variance, spaBlur, showresults);
     end
     gs.accuracy{j} = accuracy;
     gs.deviation{j} = deviation;
