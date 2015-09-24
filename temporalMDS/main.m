@@ -32,8 +32,6 @@ for j = 1 : numCategories
     end
 end
 
-% plot mds over time
-
 %% set up selection matrix for distances
 select = getSelectionMatrices(param);
 %% compute mean distances for 3 levels over time
@@ -53,9 +51,10 @@ end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%% Helper functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% Some Helper functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% plot the results
 function plotAvgDistances(avgDist)
 figure
 % plot the mean distances over time 
@@ -68,13 +67,14 @@ hold off
 
 % add texts
 FS = 16;
-title('Average MDS distances over time','fontsize', FS);
+title('Average distances over time','fontsize', FS);
 legend({'superordinate', 'basic', 'subordinate'},'Fontsize', FS ...
     ,'Location','southeast');
 ylabel('mean distance','fontsize', FS);
 xlabel('stimuli onset time','fontsize', FS);
 end
 
+%% compute average MDS distance across all super classes trained 
 function dist = avgDistAcrossSuperClasses(avgDist)
 numCategories = size(avgDist,1);
 dist.sup = avgDist{1}.sup;
@@ -92,6 +92,8 @@ dist.bas = dist.bas / numCategories;
 dist.sub = dist.sub / numCategories;
 end
 
+
+%% compute average MDS distance over time 
 function avgDist = getAvgDistOverTime(distMatices, select)
 % get number of time points
 numTimePoints = length(distMatices);
