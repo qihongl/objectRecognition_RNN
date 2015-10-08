@@ -1,0 +1,10 @@
+Conduct simulation on RVSP, using trained weights from sim16
+
+
+results: 
+
+
+
+TODO LIST: 
+
+FUTHER DIRECTION: 
