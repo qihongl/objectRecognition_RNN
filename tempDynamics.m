@@ -10,10 +10,10 @@
 clear;clc;clf;
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim22.0_RVSP';
-FILENAME.VERBAL = 'verbalAll_e3.txt';
+PATH.DATA= 'sim16_large';
+FILENAME.VERBAL = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-EPOCH = 3000;
+EPOCH = 2000;
 
 
 %% read data
@@ -141,7 +141,7 @@ set(gca,'FontSize',11)
 legend('Superordinate', 'Basic', 'Subordinate', 'location', 'southeast')
 set(legend,'FontSize',18);
 TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
-title(TITLE, 'fontSize', 18);
+% title(TITLE, 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 

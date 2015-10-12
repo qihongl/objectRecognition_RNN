@@ -3,7 +3,7 @@ library(ggplot2); library(ggdendro); library(ape)
 
 PROJECT_DIR = '/Users/Qihong/Dropbox/github/categorization_PDP'
 
-
+setwd(PROJECT_DIR)
 # you need to enter the file name and folder name here!
 DATA_FOLDER = 'sim16_large'
 FILENAME = 'hiddenFinal_e3.txt'
@@ -49,8 +49,16 @@ plot(hclust(dist(hiddenData)),
      xlab = 'instances', ylab = 'distance')
 
 hc <- hclust(dist(hiddenData), "ave")
-ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
-plot(as.phylo(hc), type = "fan", main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
+# ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
+# plot(as.phylo(hc), type = "fan", main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
+
+
+# load code of A2R function
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+# colored dendrogram
+op = par(bg = "#EFEFEF")
+A2Rplot(hc, k = 3, boxes = FALSE, col.up = "gray50", col.down = c("#FF6B6B", "#4ECDC4", "#556270"), 
+        main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
 
 
 # 2D MDS
@@ -58,10 +66,12 @@ hiddenMDS = cmdscale(distanceMatrix)
 # check the range
 range = max(abs(hiddenMDS));
 plot(hiddenMDS, 
-     main = 'MDS: hidden layer neural\n representations for all instances',
-     xlab = 'distance', ylab = 'distance',type = 'n',
+#      main = 'MDS: hidden layer neural\n representations for all instances',
+#      xlab = 'distance', ylab = 'distance',
+    xlab = '', ylab = '',
+    type = 'n',
      xlim = c(-range,range), ylim = c(-range,range))
 text(hiddenMDS,labels = row.names(hiddenData))
-
+par(bg = "white")
 
 

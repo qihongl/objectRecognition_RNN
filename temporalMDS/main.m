@@ -63,13 +63,14 @@ LW = 2;
 plot(avgDist.sup,'linewidth',LW);
 plot(avgDist.bas,'linewidth',LW);
 plot(avgDist.sub,'linewidth',LW);
+plot(avgDist.sup / avgDist.bas, '.','linewidth',LW);
 hold off
 
 % add texts
 FS = 16;
 title('Average distances over time','fontsize', FS);
-legend({'superordinate', 'basic', 'subordinate'},'Fontsize', FS ...
-    ,'Location','southeast');
+legend({'superordinate', 'basic', 'subordinate', 'sup/bas'},'Fontsize', FS ...
+    ,'Location','northwest');
 ylabel('mean distance','fontsize', FS);
 xlabel('stimuli onset time','fontsize', FS);
 end
