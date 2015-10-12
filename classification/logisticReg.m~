@@ -1,7 +1,7 @@
 %% Logistic regression classifier
 % it TAKES a data set and a cross-validation block
 % it RETURNS the cross-validated accuracy
-function [meanAccuracy, meanResponse, meanDeviation] = logisticReg(data, CVB, variance, spaBlur, showresults)
+function [accuracy, meanResponse, meanDeviation] = logisticReg(data, CVB, variance, spaBlur, showresults)
 %% obtain the predictors and responses
 X = data(: , 1 : (size(data,2) - 1));
 y = data(:, size(data,2));
@@ -39,16 +39,14 @@ Xtest = [ones(size(Xtest,1), 1) Xtest]; % add the intercept term
 rawPrediction = sigmoid(Xtest * beta);
 predictedLabels  = rawPrediction >= 0.5;
 
-% deviation = L1 norm (difference between prediction values and truth), 
-% this is more sensitive than accuracy
+% deviation is the L1 norm of the difference between prediction values and 
+% truth, this is more sensitive than accuracy
 deviation = sum(abs(rawPrediction - ytest));
+accuracy = mean(double(predictedLabels == ytest)) * 100;
 
 %% compute the mean 
-% meanResponse = sum(rawPrediction) / length(rawPrediction);
-meanAccuracy = mean(double(predictedLabels == ytest)) * 100;
+meanResponse = sum(rawPrediction) / length(rawPrediction);
 meanDeviation = deviation / length(rawPrediction);
-meanResponse = mean([mean(rawPrediction(logical(ytest))), (1-mean(rawPrediction(~logical(ytest)))) ]);
-
 
 
 %% show the results
@@ -56,7 +54,7 @@ if showresults
     % print the comparison between model response and the truth
     [rawPrediction , ytest]
     % Compute accuracy on our training set    
-    fprintf('Cross-validated Accuracy: %.3f\n', meanAccuracy);
+    fprintf('Cross-validated Accuracy: %.3f\n', accuracy);
     disp('Done!')
 end
 

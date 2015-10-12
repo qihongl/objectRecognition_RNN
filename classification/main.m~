@@ -55,8 +55,7 @@ end
 
 %% A function that visualizes the results
 [overallScore] = averagingResults(gs,numCategories, numTimePoints);
-% visualizeResults(overallScore)
-visualizeDev(overallScore)
+visualizeResults(overallScore)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,31 +63,17 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Visualize the results
-function visualizeDev(score)
-fontsize = 18;
-LW = 2; 
-
-% Plot the CV accuracies against time
-plot(score.deviation,'linewidth',LW)
-
-% ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
-xlabel('time', 'FontSize', fontsize)
-ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
-title('absolute deviation against time', 'FontSize', fontsize)
-end
-
 function visualizeResults(score)
 fontsize = 18;
 LW = 2; 
 % Plot the CV accuracies against time
 % subplot(1,2,1)
-score.response = score.response * 100;
 hold on 
 plot(score.accuracy,'linewidth',LW)
-plot(score.response,'linewidth',LW)
+plot(score.response * 100,'linewidth',LW)
 hold off
-legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize, 'location', 'northwest')
-ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
+legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize)
+ylim([(min([score.accuracy ;score.response])-5) 100])
 xlabel('time', 'FontSize', fontsize)
 ylabel('performance (%)', 'FontSize', fontsize)
 title('accuracy against time', 'FontSize', fontsize)
