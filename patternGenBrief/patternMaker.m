@@ -1,8 +1,8 @@
 %% Generate the stimuli file for my PDP model for semantics
 clear; clc;
 % CONSTANTS
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/patternGen';
-cd PATH.PROJECT
+PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGenBrief';
+cd(PATH.PROJECT)
 
 %% Parameters
 % get full patterns 
@@ -31,7 +31,6 @@ parameters.actT = 1;
 parameters.min = 0.5;
 parameters.max = 3;
 parameters.grace = 0.5;
-
 
 
 %% get patterns

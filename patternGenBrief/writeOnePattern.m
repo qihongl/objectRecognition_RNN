@@ -29,16 +29,16 @@ function writeOnePattern(filename, name, length, input, target, visPos)
     % 2nd phase
     fprintf(filename, '\nI:\t');
     if visPos == 1
-        writeVisualVector(filename,input);
+        writeVisualVector(filename,zeros(1,size(input,2)));
     else
-        writeVerbalVector(filename,input);
+        writeVerbalVector(filename,zeros(1,size(input,2)));
     end
     
     fprintf(filename, '\nT:\t');
     if visPos == 2
-        writeVisualVector(filename,target);
+        writeVisualVector(filename,zeros(1,size(input,2)));
     else
-        writeVerbalVector(filename,target);
+        writeVerbalVector(filename,zeros(1,size(input,2)));
     end
     
     fprintf(filename, '\n;\n\n');

@@ -1,13 +1,12 @@
 # makeing the network
 addNet EM -t 5 -i 5 CONTINUOUS
 
-
 # specify all layers
-addGroup VerbalIn 156 INPUT
-addGroup VisualIn 156 INPUT
-addGroup VerbalRep 156 OUTPUT -BIASED
-addGroup VisualRep 156 OUTPUT -BIASED
-addGroup hidden 156
+addGroup VerbalIn 60  INPUT
+addGroup VisualIn 60 INPUT
+addGroup VerbalRep 60 OUTPUT -BIASED
+addGroup VisualRep 60 OUTPUT -BIASED
+addGroup hidden 60
 
 # establish the connectivity for verbal/ visual
 connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0
@@ -25,18 +24,18 @@ connectGroups bias VisualIn -m -2 -r 0
 freezeWeights -type bias
 
 # load example file
-loadExamples environment.txt -exmode PERMUTED
+loadExamples environment.txt
 loadExamples allStimuli.txt
 
 # set learning algorithm to steepest descent
 train -algorithm steepest -setOnly
 
 # set learning and display parameters
-setObj learningRate 0.001
+setObj learningRate 0.005
 setObj momentum     0.0
 setObj batchSize    0
 setObj numUpdates   1
-setObj reportInterval 1
+setObj reportInterval 10
 setObj trainGroupCrit 0.05
 setObj testGroupCrit 0.05
 
