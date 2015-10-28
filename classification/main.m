@@ -6,9 +6,9 @@ function gs = main()
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
-PATH.DATA_FOLDER = 'sim16_large';
+PATH.DATA_FOLDER = 'sim22.0_RSVP';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
@@ -55,8 +55,8 @@ end
 
 %% A function that visualizes the results
 [overallScore] = averagingResults(gs,numCategories, numTimePoints);
-% visualizeResults(overallScore)
-visualizeDev(overallScore)
+visualizeResults(overallScore)
+% visualizeDev(overallScore)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,25 +81,25 @@ function visualizeResults(score)
 fontsize = 18;
 LW = 2; 
 % Plot the CV accuracies against time
-% subplot(1,2,1)
+subplot(1,2,1)
 score.response = score.response * 100;
 hold on 
 plot(score.accuracy,'linewidth',LW)
-plot(score.response,'linewidth',LW)
+% plot(score.response,'linewidth',LW)
 hold off
-legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize, 'location', 'northwest')
-ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
+% legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize, 'location', 'northwest')
+% ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
 xlabel('time', 'FontSize', fontsize)
 ylabel('performance (%)', 'FontSize', fontsize)
 title('accuracy against time', 'FontSize', fontsize)
 
 % 
 % % Plot the sum of absolute deviations (on the test set) against time
-% subplot(1,2,2)
-% 
-% xlabel('time', 'FontSize', fontsize)
-% ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
-% title('absolute deviation against time', 'FontSize', fontsize)
+subplot(1,2,2)
+plot(score.deviation,'linewidth',LW)
+xlabel('time', 'FontSize', fontsize)
+ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
+title('absolute deviation against time', 'FontSize', fontsize)
 end
 
 %% averaging the results across simulations
