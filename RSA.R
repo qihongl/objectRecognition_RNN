@@ -21,6 +21,7 @@ temp = as.vector(temp[1:numPatterns,2])
 temp = sapply(strsplit(temp, split='l', fixed=TRUE), function(x) (x[2]))
 row.names(hiddenData) = temp
 
+# compute the RDM
 RDM = matrix(data=NA, nrow=numPatterns, ncol=numPatterns)
 for (i in 1 : numPatterns){
     for (j in 1 : numPatterns){

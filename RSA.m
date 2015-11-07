@@ -4,7 +4,10 @@ path.dir = 'sim16_large';
 path.file = 'hiddenFinal_e3.txt';
 filename = [path.root path.dir '/' path.file];
 
+X = dlmread(filename,' ', 0, 3);
 
+RDM = computeRDM(X);
 
-
-imagesc(X)
+colormap jet
+imagesc(RDM)
+colorbar
