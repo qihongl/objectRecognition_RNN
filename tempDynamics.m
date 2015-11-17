@@ -50,7 +50,7 @@ if param.numStimuli ~= size(output,1) / INTERVAL
     error ('number of stimuli are wrong')
 end
 
-% % plot the data
+%% plot the activation among all units over time 
 % for i = 1 : param.numStimuli
 %     subplot(param.numCategory.sup,param.numInstances,i)
 %     imagesc(data{i})
@@ -70,7 +70,7 @@ for i = 1 : param.numStimuli
     
     % check if current class is bigger than the number of super.category
     if(currClass > param.numCategory.sup)
-        error('wtf')
+        error('what!?')
     end
     
     % subset the data using the 'right' part of the units
@@ -82,7 +82,7 @@ for i = 1 : param.numStimuli
     filteredData{i} = filteredData{i}(:, prototype(index,:));
     
     % print the indices (for debugging purpose)
-    % fprintf('%d %d %d to %d\n', i, index, first, last)
+%     fprintf('%d %d %d to %d\n', i, index, first, last)
     
     % if I have went through all instances in a class...
     if(index == param.numInstances)
@@ -90,12 +90,11 @@ for i = 1 : param.numStimuli
     end
 end
 
-% plot the data
-
-% for i = 1 : param.numStimuli
-%     subplot(param.numCategory.sup,param.numInstances,i)
-%     imagesc(filteredData{i})
-% end
+%% plot the activation over time, for relevant units only 
+for i = 1 : param.numStimuli
+    subplot(param.numCategory.sup,param.numInstances,i)
+    imagesc(filteredData{i})
+end
 
 
 %%  divide the data according to super, basic, and sub level (across all stimuli)
