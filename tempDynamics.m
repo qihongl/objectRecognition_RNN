@@ -91,10 +91,10 @@ for i = 1 : param.numStimuli
 end
 
 %% plot the activation over time, for relevant units only 
-for i = 1 : param.numStimuli
-    subplot(param.numCategory.sup,param.numInstances,i)
-    imagesc(filteredData{i})
-end
+% for i = 1 : param.numStimuli
+%     subplot(param.numCategory.sup,param.numInstances, i)
+%     imagesc(filteredData{i})
+% end
 
 
 %%  divide the data according to super, basic, and sub level (across all stimuli)
