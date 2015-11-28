@@ -24,6 +24,12 @@ connectGroups bias VisualIn -m -2 -r 0
 # free the bias weights
 freezeWeights -type bias
 
+# add noise 
+noise hidden -flat -r 0.1
+noise VisualRep -flat -r 0.01
+noise VerbalRep -flat -r 0.01
+
+
 # load example file
 loadExamples environment.txt -exmode PERMUTED
 loadExamples allStimuli.txt
