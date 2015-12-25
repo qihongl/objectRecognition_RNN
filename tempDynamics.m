@@ -10,7 +10,7 @@
 clear;clc;clf;
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim23.1_noise';
+PATH.DATA= 'sim23.0_noise';
 FILENAME.VERBAL = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
