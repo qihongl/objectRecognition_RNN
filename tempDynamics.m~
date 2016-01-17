@@ -134,7 +134,6 @@ relativeProb = bsxfun(@times, tpmean, (1./sum(tpmean,2)));
 
 
 %% plot the data
-subplot(1,2,1)
 hold on
 % plot three temporal activation pattern
 plot(mSup,'g', 'linewidth', 2)
@@ -144,23 +143,22 @@ plot(mSub, 'linewidth', 2)
 % xlim([0 26]);
 % ylim([0 1]);
 set(gca,'FontSize',11)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
+legend('Superordinate', 'Basic', 'Subordinate', 'location', 'southeast')
+set(legend,'FontSize',18);
 TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
-title(TITLE, 'fontSize', 18);
+% title(TITLE, 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 
 hold off
 
-subplot(1,2,2)
+
 hold on
 % plot three temporal activation pattern
 plot(relativeProb(:,1),'g', 'linewidth', 2)
 plot(relativeProb(:,2),'r', 'linewidth', 2)
 plot(relativeProb(:,3), 'linewidth', 2)
 hold off
-title('Selection probability - luce choice', 'fontSize', 18)
+title('Selection probability - luce choice')
 set(gca,'FontSize',11)
 legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
-xlabel('Time Ticks', 'fontSize', 18)
-ylabel('Probability', 'fontSize', 18)

@@ -6,9 +6,9 @@ function gs = main()
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
-PATH.DATA_FOLDER = 'sim16_large';
+PATH.DATA_FOLDER = 'sim16.0_RSVP';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
@@ -88,7 +88,7 @@ plot(score.accuracy,'linewidth',LW)
 % plot(score.response,'linewidth',LW)
 hold off
 % legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize, 'location', 'northwest')
-ylim([(min([score.accuracy ;score.response])-5) 100])
+% ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
 xlabel('time', 'FontSize', fontsize)
 ylabel('performance (%)', 'FontSize', fontsize)
 title('accuracy against time', 'FontSize', fontsize)
