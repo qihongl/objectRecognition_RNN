@@ -1,0 +1,3 @@
+%% run a bunch of classifier
+% when simulating using random subset or normal noise, there is randomness
+% so we need a sample to establish average
