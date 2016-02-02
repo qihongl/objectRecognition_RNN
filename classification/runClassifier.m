@@ -2,7 +2,10 @@
 % the OVERALL GOAL of this program is to convert a 'neural response' from
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
-function gs = main()
+function [gs, param, logParams] = runClassifier(showPlot)
+if nargin == 0
+    showPlot = true;
+end
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim21.5_lessHidden';
@@ -12,14 +15,14 @@ FILENAME.DATA = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
-showresults = true;
+showresults = false;
 
 % classOpt = classification options
 % 0 -> normal classifcation
 % 1 -> classification with Spatial bluring
 % 2 -> classifcation with random subset of neurons.
-logParams.classOpt = 0;
-logParams.subsetProp = 0.05;
+logParams.classOpt = 2;
+logParams.subsetProp = 0.15;
 
 % variance of the normal noise
 logParams.variance = 0;
@@ -60,56 +63,19 @@ for j = 1 : numCategories
     gs.response{j} = response;
 end
 
+% averaging the neural activities
+[gs.averageScore] = averagingResults(gs,numCategories, numTimePoints);
+
 %% A function that visualizes the results
-[overallScore] = averagingResults(gs,numCategories, numTimePoints);
-gs.overallScore = overallScore;
-visualizeResults(gs.overallScore)
-% visualizeDev(overallScore)
+if showPlot
+    visualizeAccuracies(gs.averageScore)
+end
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Visualize the results
-function visualizeDev(score)
-fontsize = 18;
-LW = 2;
-
-% Plot the CV accuracies against time
-plot(score.deviation,'linewidth',LW)
-
-% ylim([(min([score.accuracy ;score.response])-5) (max([score.accuracy ;score.response])+5)])
-xlabel('time', 'FontSize', fontsize)
-ylabel('sum|deviation| from targets (0 or 1)', 'FontSize', fontsize)
-title('absolute deviation against time', 'FontSize', fontsize)
-end
-
-function visualizeResults(score)
-fontsize = 18;
-LW = 2;
-% Plot the CV accuracies against time
-subplot(1,2,1)
-score.response = score.response * 100;
-hold on
-plot(score.accuracy,'linewidth',LW)
-% plot(score.response,'linewidth',LW)
-hold off
-% legend({'accuracy', 'mean(P(correct))'},'FontSize', fontsize, 'location', 'northwest')
-ylim([(min(score.accuracy)-5) (max(score.accuracy)+5)])
-xlabel('time', 'FontSize', fontsize)
-ylabel('performance (%)', 'FontSize', fontsize)
-title('Logistic regression accuracy against time', 'FontSize', fontsize)
-
-
-% Plot the sum of absolute deviations (on the test set) against time
-subplot(1,2,2)
-plot(1 - score.deviation,'linewidth',LW)
-ylim([(min(1 - score.deviation)-.05) (max(1 - score.deviation)+.05)])
-xlabel('time', 'FontSize', fontsize)
-ylabel('$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}|  \hspace{.5cm} (target \in \{0,1\})$', 'FontSize', fontsize,'Interpreter','latex')
-title('Absolute deviation against time', 'FontSize', fontsize)
-end
 
 %% averaging the results across simulations
 function [score] = averagingResults(gs,numSim, numTimePoints)
@@ -128,10 +94,3 @@ score.accuracy = accuracy / numSim;
 score.deviation = deviation / numSim;
 score.response = response / numSim;
 end
-
-
-% specify how many simulations you want to do
-% numSim = 10;
-% gs.accuracy = cell(numSim,1);
-% gs.deviation = cell(numSim,1);
-% run more simulations, since there is randomness in noise component
