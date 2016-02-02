@@ -1,15 +1,24 @@
 %% Logistic regression classifier
 % it TAKES a data set and a cross-validation block
 % it RETURNS the cross-validated accuracy
-function [meanAccuracy, meanResponse, meanDeviation] = logisticReg(data, CVB, variance, spaBlur, showresults)
+function [meanAccuracy, meanResponse, meanDeviation] = logisticReg(data, CVB, param, showresults)
 %% obtain the predictors and responses
 X = data(: , 1 : (size(data,2) - 1));
 y = data(:, size(data,2));
 
-%% injecting normal noise (this might be important!)
-X = X + normrnd(0,variance, size(X));
-if spaBlur
+%% inject random normal noise (this might be important!)
+X = X + normrnd(0,param.variance, size(X));
+%% pre-process the data in accordance to the "classification option"
+if param.classOpt == 1
     X = mean(X,2);
+elseif param.classOpt == 2
+    if param.subsetProp > 1 
+        error('ERROR: subset Proportion should be less than 1!')
+    end
+    % select random subset of the data
+    subset.numUnits = round(size(X,2) * param.subsetProp);
+    subset.ind = randsample(size(X,2),subset.numUnits);
+    X = X(:,subset.ind);
 end
 
 %% separate the training and testing sets
