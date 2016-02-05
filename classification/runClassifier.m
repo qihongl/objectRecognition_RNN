@@ -21,8 +21,9 @@ showresults = false;
 % 0 -> normal classifcation
 % 1 -> classification with Spatial bluring
 % 2 -> classifcation with random subset of neurons.
-logParams.classOpt = 2;
-logParams.subsetProp = 0.15;
+logParams.classOpt = 1;
+logParams.numBlurrGroups = 3; 
+logParams.subsetProp = 0.1;
 
 % variance of the normal noise
 logParams.variance = 0;

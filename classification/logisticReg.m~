@@ -9,37 +9,33 @@ param.numUnits = size(X,2);
 
 %% inject random normal noise (this might be important!)
 X = X + normrnd(0, param.variance, size(X));
-
 %% pre-process the data in accordance to the "classification option"
 if param.classOpt == 1
-    % if no separation of groups is needed... 
-    if param.numBlurrGroups == 1
-        X = mean(X,2);
-        
-    elseif param.numBlurrGroups > 1
-        subset.gpSize = round(size(X,2) / param.numBlurrGroups);
-        for n = 1 : param.numBlurrGroups-1
-            % select a subset (columns) of X
-            subset.ind = randsample(size(X,2), subset.gpSize);
-            % compute logical indices for selected units
-            tempLogic = false(size(X,2),1); tempLogic(subset.ind) = true;
-            % select the units
-            subset.X{n} = X(:,tempLogic);
-            % delete selected units (columns) in X
-            X = X(:,~tempLogic);
-        end
-        % collect the remaining columns in X
-        subset.X{size(subset.X,2) + 1 } = X;
-        
-        % re-compute blurred X
-        clear X;
-        for n = 1 : param.numBlurrGroups
-            X(:,n) = mean(subset.X{n},2);
-        end
-        
-    else
-        error('ERROR: numBlurrGroups is at least 1!')
+    
+    if param.numBlurrGroups
+    X = mean(X,2);
+    
+    subset.gpSize = round(size(X,2) / param.numBlurrGroups);
+    for n = 1 : param.numBlurrGroups-1
+        % select a subset (columns) of X
+        subset.ind = randsample(size(X,2), subset.gpSize);
+        % compute logical indices for selected units
+        tempLogic = false(size(X,2),1); tempLogic(subset.ind) = true;
+        % select the units
+        subset.X{n} = X(:,tempLogic);
+        % delete selected units (columns) in X
+        X = X(:,~tempLogic);
     end
+    % collect the remaining columns in X 
+    subset.X{size(subset.X,2) + 1 } = X;
+    
+    % re-compute blurred X 
+    clear X;
+    for n = 1 : param.numBlurrGroups
+        X(:,n) = mean(subset.X{n},2);
+    end
+    
+        
 elseif param.classOpt == 2
     if param.subsetProp > 1
         error('ERROR: subset Proportion should be less than 1!')

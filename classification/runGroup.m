@@ -27,5 +27,5 @@ if exist(dataDirName,'dir') ~= 7
 else
     warning('Directory exists!')
 end
-dataFileName = sprintf('gs_subsetProp%.3d', logParams.subsetProp * 100);
+dataFileName = sprintf('gs_blur_subsetProp%.3d', logParams.subsetProp * 100);
 save([dataDirName '/' dataFileName],'group')
