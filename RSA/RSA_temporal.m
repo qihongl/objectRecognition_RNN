@@ -6,10 +6,15 @@
 clear all; clc; clf; close all;
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim23.1_noise';
+PATH.DATA= 'sim16_large';
 FILENAME.VERBAL = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
+
+% option = 'randomSubset';
+% option = 'spatBlurring';
+option = 'none';
+proportion = 0.05;
 
 %% read data
 % read the output data
@@ -45,17 +50,30 @@ end
 % then compute the RDM
 timeSliceData = cell(INTERVAL-1,1);
 temporalRDMs = cell(INTERVAL-1,1);
+processedData = cell(INTERVAL-1,1);
 for j = 1 : INTERVAL-1;
     temp = nan(size(data,1), param.numUnits.total * param.numCategory.sup);
     for i = 1:size(data,1)
         temp(i,:) = data{i}(j,:);
     end
     timeSliceData{j} = temp;
-    temporalRDMs{j} = computeRDM(timeSliceData{j});
+    
+    % blur or the data
+    if strcmp(option,'randomSubset')
+        processedData{j} = selectRandomSubset(timeSliceData{j}, proportion);
+    elseif strcmp(option,'spatBlurring')
+        processedData{j} = spatialBluring(timeSliceData{j}, proportion);
+    else
+        disp('no blurring or subset selection was performed')
+        processedData{j} = timeSliceData{j};
+    end
+    
+    % compute the RDM
+    temporalRDMs{j} = computeRDM(processedData{j});
 end
 
 % now you can compute RDM like so
-colormap jet
+% colormap jet
 % imagesc(temporalRDMs{25})
 
 %% compare to the theoritical basic level matrix
@@ -65,17 +83,22 @@ basicRDM = computeRDM(basicPatterns);
 superPatterns = dsum(ones(param.numInstances,param.numInstances),ones(param.numInstances,param.numInstances));
 superPatterns = dsum(superPatterns,ones(param.numInstances,param.numInstances));
 superRDM = computeRDM(superPatterns);
-%%
+
+%% compute RDM correlation for all time points
 for i = 1 : INTERVAL-1
     temporalCorr.basic(i) = corr(basicRDM(:), temporalRDMs{i}(:));
     temporalCorr.super(i) = corr(superRDM(:), temporalRDMs{i}(:));
 end
-temporalCorr.basic(isnan(temporalCorr.basic)) = 0; 
-temporalCorr.super(isnan(temporalCorr.super)) = 0; 
-hold on 
+% eliminate nan values
+temporalCorr.basic(isnan(temporalCorr.basic)) = 0;
+temporalCorr.super(isnan(temporalCorr.super)) = 0;
+
+
+%% visualization
+hold on
 plot(temporalCorr.basic, 'linewidth', 1.5)
 plot(temporalCorr.super, 'linewidth', 1.5)
-hold off 
+hold off
 
 legend({'basic theoretical matrix', 'super theoretical matrix'}, 'location', 'southeast', 'fontsize', 14)
 title('RDM correlation over time, x presentation', 'fontsize', 14)
