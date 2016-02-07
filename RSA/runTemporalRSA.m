@@ -1,9 +1,9 @@
 %% plot the temporal RSA
 % this program relies on the output file of 'testAllActs'
 % it is designed to process the output for the verbal representation layer
-
+function [temporalCorr, temporalRDMs] = runTemporalRSA(param)
 %% CONSTANTS
-clear all; clc; clf; close all;
+% clear; clc; clf; close all;
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.DATA= 'sim16_large';
@@ -11,10 +11,12 @@ FILENAME.VERBAL = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
+%% options
+showPlot = false;
 % option = 'randomSubset';
 % option = 'spatBlurring';
-option = 'none';
-proportion = 0.05;
+option = param.option; 
+proportion = param.porp;
 
 %% read data
 % read the output data
@@ -49,8 +51,9 @@ end
 % for each time point, get a stimuli by voxel matrix
 % then compute the RDM
 timeSliceData = cell(INTERVAL-1,1);
-temporalRDMs = cell(INTERVAL-1,1);
 processedData = cell(INTERVAL-1,1);
+temporalRDMs = cell(INTERVAL-1,1);
+
 for j = 1 : INTERVAL-1;
     temp = nan(size(data,1), param.numUnits.total * param.numCategory.sup);
     for i = 1:size(data,1)
@@ -95,12 +98,8 @@ temporalCorr.super(isnan(temporalCorr.super)) = 0;
 
 
 %% visualization
-hold on
-plot(temporalCorr.basic, 'linewidth', 1.5)
-plot(temporalCorr.super, 'linewidth', 1.5)
-hold off
+if showPlot
+    plotTemporalCorr_RDM()
+end
 
-legend({'basic theoretical matrix', 'super theoretical matrix'}, 'location', 'southeast', 'fontsize', 14)
-title('RDM correlation over time, x presentation', 'fontsize', 14)
-xlabel('Time', 'fontsize', 14)
-ylabel('Correlation', 'fontsize', 14)
+end
