@@ -144,9 +144,9 @@ plot(mSub, 'linewidth', 2)
 % xlim([0 26]);
 % ylim([0 1]);
 set(gca,'FontSize',11)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
+legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 18)
 TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
-title(TITLE, 'fontSize', 18);
+% title(TITLE, 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)
 ylabel('Activation Value', 'fontSize', 18)
 

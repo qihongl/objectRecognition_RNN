@@ -11,7 +11,6 @@ xlabel('time', 'FontSize', fontsize)
 ylabel('performance (%)', 'FontSize', fontsize)
 title('Logistic regression accuracy against time', 'FontSize', fontsize)
 
-
 % Plot the sum of absolute deviations (on the test set) against time
 subplot(1,2,2)
 plot(1 - score.deviation,'linewidth',LW)
