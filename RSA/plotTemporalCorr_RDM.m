@@ -1,5 +1,5 @@
 % plot RDM correlation over all time points
-function [] = plotTemporalCorr_RDM()
+function [] = plotTemporalCorr_RDM(temporalCorr)
 
 FONTSIZE = 14;
 LW = 1.5;

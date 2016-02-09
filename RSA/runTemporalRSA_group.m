@@ -2,7 +2,7 @@
 
 %% parameters
 param.option = 'spatBlurring';
-param.porp = 0.15; 
+param.porp = 1; 
 sampleSize = 10;
 
 %% Run group analysis
@@ -24,5 +24,5 @@ if exist(dataDirName,'dir') ~= 7
 else
     warning('Directory exists!')
 end
-dataFileName = sprintf('gRSA_blur_%s%.3d', param.option, param.porp * 100);
+dataFileName = sprintf('gRSA_%s%.3d', param.option, param.porp * 100);
 save([dataDirName '/' dataFileName],'corr')

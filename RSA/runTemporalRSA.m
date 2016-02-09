@@ -12,7 +12,7 @@ FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
 %% options
-showPlot = false;
+showPlot = 0;
 % option = 'randomSubset';
 % option = 'spatBlurring';
 option = param.option; 
@@ -99,7 +99,7 @@ temporalCorr.super(isnan(temporalCorr.super)) = 0;
 
 %% visualization
 if showPlot
-    plotTemporalCorr_RDM()
+    plotTemporalCorr_RDM(temporalCorr)
 end
 
 end
