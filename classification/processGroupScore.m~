@@ -5,7 +5,7 @@ clear; clc; clf
 
 %% load file and compute summarized data
 condition = 'spatBlurring';
-listing = dir(['groupScores/gsClass_' condition '*.mat']);
+listing = dir(['groupScores/gsClass'  '*.mat']);
 numFiles = size(listing,1);
 for i = 1:numFiles
     % load a data file 
@@ -35,11 +35,10 @@ plot(data.mean.acc,'linewidth',d.LW)
 %     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1%', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('performance (%)', 'FontSize', d.FONTSIZE)
-title_text = sprintf('Logistic reg accuracy - %s', condition);
-title(title_text, 'FontSize', d.FONTSIZE)
+title('Logistic regression accuracy against time', 'FontSize', d.FONTSIZE)
 
 % Plot the sum of absolute deviations (on the test set) against time
 subplot(1,2,2)
@@ -49,9 +48,8 @@ plot(1 - data.mean.dev,'linewidth',d.LW)
 %     errorbar(1 - data.mean.dev(:,i),data.sd.dev(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1%', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}|  \hspace{.5cm} (target \in \{0,1\})$', 'FontSize', d.FONTSIZE,'Interpreter','latex')
-title_text = sprintf(' ''Fit '' - %s ', condition);
-title(title_text, 'FontSize', d.FONTSIZE)
+title(' ''Fit ''against time', 'FontSize', d.FONTSIZE)
 

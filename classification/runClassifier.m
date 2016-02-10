@@ -2,7 +2,7 @@
 % the OVERALL GOAL of this program is to convert a 'neural response' from
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
-function [gs, param, logParams] = runClassifier(showPlot)
+function [gs, param] = runClassifier(logParam,showPlot)
 if nargin == 0
     showPlot = true;
 end
@@ -16,17 +16,6 @@ FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
 showresults = false;
-
-% classOpt = classification options
-% 0 -> normal classifcation
-% 1 -> classification with Spatial bluring
-% 2 -> classifcation with random subset of neurons.
-logParams.classOpt = 1;
-logParams.numBlurrGroups = 3; 
-logParams.subsetProp = 0.1;
-
-% variance of the normal noise
-logParams.variance = 0;
 
 % specifiy the number of folds for CV
 K = 3;
@@ -57,7 +46,7 @@ for j = 1 : numCategories
     % loop over time
     for i = 1 : numTimePoints
         % compute the accuracy for every time points
-        [accuracy(i), response(i), deviation(i)] = logisticReg(data{i}, CVB, logParams, showresults);
+        [accuracy(i), response(i), deviation(i)] = logisticReg(data{i}, CVB, logParam, showresults);
     end
     gs.accuracy{j} = accuracy;
     gs.deviation{j} = deviation;

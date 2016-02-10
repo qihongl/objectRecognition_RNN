@@ -2,6 +2,12 @@
 % it TAKES a data set and a cross-validation block
 % it RETURNS the cross-validated accuracy
 function [meanAccuracy, meanResponse, meanDeviation] = logisticReg(data, CVB, param, showresults)
+
+% input validation
+if param.subsetProp > 1
+    error('ERROR: subset Proportion should be less than 1!')
+end
+
 %% obtain the predictors and responses
 X = data(: , 1 : (size(data,2) - 1));
 y = data(:, size(data,2));
@@ -11,14 +17,13 @@ param.numUnits = size(X,2);
 X = X + normrnd(0, param.variance, size(X));
 
 %% pre-process the data in accordance to the "classification option"
-if param.classOpt == 1
-    % if no separation of groups is needed... 
-    if param.numBlurrGroups == 1
-        X = mean(X,2);
-        
-    elseif param.numBlurrGroups > 1
-        subset.gpSize = round(size(X,2) / param.numBlurrGroups);
-        for n = 1 : param.numBlurrGroups-1
+if strcmp(param.classOpt,'spatBlurring')
+    % determine how many gourps to separate
+    numBlurrGroups = round(size(X,2) * param.subsetProp);
+    
+    if numBlurrGroups > 1
+        subset.gpSize = round(size(X,2) / numBlurrGroups);
+        for n = 1 : numBlurrGroups-1
             % select a subset (columns) of X
             subset.ind = randsample(size(X,2), subset.gpSize);
             % compute logical indices for selected units
@@ -30,24 +35,22 @@ if param.classOpt == 1
         end
         % collect the remaining columns in X
         subset.X{size(subset.X,2) + 1 } = X;
-        
         % re-compute blurred X
         clear X;
-        for n = 1 : param.numBlurrGroups
+        for n = 1 : numBlurrGroups
             X(:,n) = mean(subset.X{n},2);
         end
-        
-    else
-        error('ERROR: numBlurrGroups is at least 1!')
+    else % if there is only one group 
+        X = mean(X,2);
     end
-elseif param.classOpt == 2
-    if param.subsetProp > 1
-        error('ERROR: subset Proportion should be less than 1!')
-    end
+    
+elseif strcmp(param.classOpt,'randomSubset')
     % select random subset of the data
     subset.numUnits = round(size(X,2) * param.subsetProp);
     subset.ind = randsample(size(X,2),subset.numUnits);
     X = X(:,subset.ind);
+else
+    warning('param.classOpt: unrecognized input!')
 end
 
 %% separate the training and testing sets
