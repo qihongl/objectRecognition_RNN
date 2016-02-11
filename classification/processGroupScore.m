@@ -35,7 +35,7 @@ plot(data.mean.acc,'linewidth',d.LW)
 %     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1%', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend({'1 unit', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('performance (%)', 'FontSize', d.FONTSIZE)
 title_text = sprintf('Logistic reg accuracy - %s', condition);
@@ -49,7 +49,7 @@ plot(1 - data.mean.dev,'linewidth',d.LW)
 %     errorbar(1 - data.mean.dev(:,i),data.sd.dev(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1%', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend({'1 unit', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}|  \hspace{.5cm} (target \in \{0,1\})$', 'FontSize', d.FONTSIZE,'Interpreter','latex')
 title_text = sprintf(' ''Fit '' - %s ', condition);
