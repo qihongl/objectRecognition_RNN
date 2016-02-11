@@ -16,7 +16,7 @@ d.LW = 1.5;
 
 % correlation with the basic matrix
 figure(1)
-subplot(1,2,1)
+subplot(1,3,1)
 plot(data.randSub.mean.basic,'linewidth',d.LW)
 ylim([0 1])
 % hold on 
@@ -30,7 +30,7 @@ ylabel('Correlation', 'FontSize', d.FONTSIZE)
 title('Correlation - basic matrix - random subset', 'FontSize', d.FONTSIZE)
 
 % correlation with the superordinate matrix
-subplot(1,2,2)
+subplot(1,3,2)
 plot(data.randSub.mean.super,'linewidth',d.LW)
 ylim([0 1])
 legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
@@ -38,10 +38,17 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('Correlation', 'FontSize', d.FONTSIZE)
 title('Correlation - super matrix - random subset', 'FontSize', d.FONTSIZE)
 
+subplot(1,3,3)
+plot(data.randSub.mean.basic - data.randSub.mean.super,'linewidth',d.LW)
+legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+xlabel('time', 'FontSize', d.FONTSIZE)
+ylabel('Difference', 'FontSize', d.FONTSIZE)
+title('Difference(basic - super) for random subsets', 'FontSize', d.FONTSIZE)
 
-% 2nd condition 
+
+%% 2nd condition 
 figure(2)
-subplot(1,2,1)
+subplot(1,3,1)
 plot(data.spatBlur.mean.basic,'linewidth',d.LW)
 ylim([0 1])
 legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
@@ -50,7 +57,7 @@ ylabel('Correlation', 'FontSize', d.FONTSIZE)
 title('Correlation - basic matrix - spatial blurring', 'FontSize', d.FONTSIZE)
 
 % correlation with the superordinate matrix
-subplot(1,2,2)
+subplot(1,3,2)
 plot(data.spatBlur.mean.super,'linewidth',d.LW)
 ylim([0 1])
 legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
@@ -58,3 +65,9 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('Correlation', 'FontSize', d.FONTSIZE)
 title('Correlation - super matrix - spatial blurring', 'FontSize', d.FONTSIZE)
 
+subplot(1,3,3)
+plot(data.spatBlur.mean.basic - data.spatBlur.mean.super,'linewidth',d.LW)
+legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+xlabel('time', 'FontSize', d.FONTSIZE)
+ylabel('Difference', 'FontSize', d.FONTSIZE)
+title('Difference(basic - super) for spatial blurring', 'FontSize', d.FONTSIZE)
