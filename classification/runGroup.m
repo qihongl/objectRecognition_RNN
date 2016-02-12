@@ -4,13 +4,19 @@
 
 sampleSize = 20;
 timePoints = 25;
+
+%% Specify the Path information (user needs to do this!)
+PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
+PATH.DATA_FOLDER = 'sim16_large';
+% PATH.DATA_FOLDER = 'sim16_large';
+% provide the NAMEs of the data files (user need to set them mannually)
+FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.PROTOTYPE = 'PROTO.xlsx';
+
 %% parameter for logistic regresison classifier
 % classOpt = classification options
-% 0 -> normal classifcation
-% 1 -> classification with Spatial bluring
-% 2 -> classifcation with random subset of neurons.
 % propChoice = [.01 .05 .15 .3 1];
-propChoice = .005;
+propChoice = 1;
 logParam.classOpt = 'spatBlurring';
 % variance of the normal noise
 logParam.variance = 0;
@@ -25,7 +31,7 @@ for p = 1: length(propChoice);
     group.response = nan(timePoints,sampleSize);
     for i = 1 : sampleSize
         % run classifier and compute average
-        [gs, param] = runClassifier(logParam,false);
+        [gs, param] = runClassifier(logParam,PATH,FILENAME,1);
         
         % record the average scores in 3 matrices
         group.accuracy(:,i) = gs.averageScore.accuracy;

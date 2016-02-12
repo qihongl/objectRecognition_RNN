@@ -2,17 +2,10 @@
 % the OVERALL GOAL of this program is to convert a 'neural response' from
 % ANN (in the form of a time series) and outputs a 'class' that represents
 % a superordinate level category
-function [gs, param] = runClassifier(logParam,showPlot)
+function [gs, param] = runClassifier(logParam,PATH,FILENAME,showPlot)
 if nargin == 0
     showPlot = true;
 end
-%% Specify the Path information (user needs to do this!)
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-% PATH.DATA_FOLDER = 'sim21.5_lessHidden';
-PATH.DATA_FOLDER = 'sim16_large';
-% provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
-FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% set some paramters
 showresults = false;

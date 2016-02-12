@@ -1,18 +1,13 @@
 %% plot the temporal RSA
 % this program relies on the output file of 'testAllActs'
 % it is designed to process the output for the verbal representation layer
-function [temporalCorr, temporalRDMs] = runTemporalRSA(param)
+function [temporalCorr, temporalRDMs] = runTemporalRSA(param, PATH, FILENAME)
 %% CONSTANTS
 % clear; clc; clf; close all;
-PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-% provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim16_large';
-FILENAME.VERBAL = 'hiddenAll_e2.txt';
-FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
 %% options
-showPlot = 0;
+showPlot = 1;
 % option = 'randomSubset';
 % option = 'spatBlurring';
 option = param.option; 
