@@ -7,16 +7,15 @@ timePoints = 25;
 
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-PATH.DATA_FOLDER = 'sim16_large';
 % PATH.DATA_FOLDER = 'sim16_large';
+PATH.DATA_FOLDER = 'sim23.2_noise';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% parameter for logistic regresison classifier
 % classOpt = classification options
-% propChoice = [.01 .05 .15 .3 1];
-propChoice = 1;
+propChoice = [.005 .01 .05 .15 .3 1];
 logParam.classOpt = 'spatBlurring';
 % variance of the normal noise
 logParam.variance = 0;
@@ -31,7 +30,7 @@ for p = 1: length(propChoice);
     group.response = nan(timePoints,sampleSize);
     for i = 1 : sampleSize
         % run classifier and compute average
-        [gs, param] = runClassifier(logParam,PATH,FILENAME,1);
+        [gs, param] = runClassifier(logParam,PATH,FILENAME,0);
         
         % record the average scores in 3 matrices
         group.accuracy(:,i) = gs.averageScore.accuracy;
@@ -41,7 +40,7 @@ for p = 1: length(propChoice);
     end
     
     %% save the results
-    dataDirName = sprintf('groupScores/');
+    dataDirName = sprintf('groupScores_class/');
     if exist(dataDirName,'dir') ~= 7
         mkdir(dataDirName)
     else
