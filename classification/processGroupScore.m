@@ -5,22 +5,31 @@ clear; clc; clf
 
 %% load file and compute summarized data
 condition = 'spatBlurring';
-listing = dir(['groupScores/gsClass_' condition '*.mat']);
+% 
+dirName = 'groupScores_class';
+listing = dir([dirName '/gsClass_' condition '*.mat']);
 numFiles = size(listing,1);
+propUsed = cell(numFiles,1);
 for i = 1:numFiles
     % load a data file 
     fileName = listing(i).name;
-    load(['groupScores/' fileName])
+    load([dirName '/' fileName])
+    % build legend
+    propUsed{i} = strcat(num2str(extractPropUsed(fileName, condition)), '%');
     
     % compute mean 
     data.mean.acc(:,i) = mean(group.accuracy,2);
     data.mean.dev(:,i) = mean(group.deviation,2);
     data.mean.rep(:,i) = mean(group.response,2);
     % compute std (to build CI)
-    data.sd.acc(:,i) = std(group.accuracy');
-    data.sd.dev(:,i) = std(group.deviation');
-    data.sd.rep(:,i) = std(group.response');
+    data.sd.acc(:,i) = std(group.accuracy,0,2);
+    data.sd.dev(:,i) = std(group.deviation,0,2);
+    data.sd.rep(:,i) = std(group.response,0,2);
 end
+
+
+%% 
+
 
 
 %% Visualize the classification accuracy over time
@@ -35,7 +44,7 @@ plot(data.mean.acc,'linewidth',d.LW)
 %     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1 unit', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend(propUsed, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('performance (%)', 'FontSize', d.FONTSIZE)
 title_text = sprintf('Logistic reg accuracy - %s', condition);
@@ -49,7 +58,7 @@ plot(1 - data.mean.dev,'linewidth',d.LW)
 %     errorbar(1 - data.mean.dev(:,i),data.sd.dev(:,i),'linewidth',d.LW)
 % end
 % hold off
-legend({'1 unit', '5%', '15%', '30%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+legend(propUsed, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}|  \hspace{.5cm} (target \in \{0,1\})$', 'FontSize', d.FONTSIZE,'Interpreter','latex')
 title_text = sprintf(' ''Fit '' - %s ', condition);
