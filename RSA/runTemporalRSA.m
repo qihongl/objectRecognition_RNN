@@ -7,7 +7,7 @@ function [temporalCorr, temporalRDMs] = runTemporalRSA(param, PATH, FILENAME)
 EPOCH = 2000;
 
 %% options
-showPlot = 1;
+showPlot = 0;
 % option = 'randomSubset';
 % option = 'spatBlurring';
 option = param.option; 
@@ -15,12 +15,12 @@ proportion = param.porp;
 
 %% read data
 % read the output data
-PATH.FULL = [PATH.ABS PATH.DATA];
+PATH.FULL = [PATH.PROJECT PATH.DATA_FOLDER];
 % check if the data file exists
-if exist([PATH.FULL '/' FILENAME.VERBAL], 'file') == 0
-    error([ 'File ' FILENAME.VERBAL ' not found.'])
+if exist([PATH.FULL '/' FILENAME.DATA], 'file') == 0
+    error([ 'File ' FILENAME.DATA ' not found.'])
 end
-outputFile = tdfread([PATH.FULL '/' FILENAME.VERBAL]);
+outputFile = tdfread([PATH.FULL '/' FILENAME.DATA]);
 name = char(fieldnames(outputFile));
 output = getfield(outputFile, name);
 
