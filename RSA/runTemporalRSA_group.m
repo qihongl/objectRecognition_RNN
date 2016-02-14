@@ -17,7 +17,7 @@ param.propChoices = [.01, .05, .15, .3, 1];
 %% start data recording
 % loop over all choices of conditions
 for opt = 1 : length(param.optionChoices)
-    param.option = 'randomSubset'
+    param.option = param.optionChoices{opt};
     
     % loop over all choices of proportion parameter
     for p = 1 : length(param.propChoices)

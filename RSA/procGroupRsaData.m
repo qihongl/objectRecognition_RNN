@@ -4,10 +4,14 @@
 clear; clc; clf
 
 %% load file and compute summarized data
+subDataDir = 'sim23.2_noise_e2';
+dataDir = 'groupScores_RSA/';
+dataPath = strcat(dataDir,subDataDir);
+
 condition1 = 'randomSubset';
-[data.randSub] = summarizeTempRsaData(condition1);
+[data.randSub] = summarizeTempRsaData(condition1,dataPath);
 condition2 = 'spatBlurring';
-[data.spatBlur] = summarizeTempRsaData(condition2);
+[data.spatBlur] = summarizeTempRsaData(condition2,dataPath);
 
 %% % Plot the correlation against time
 % constant

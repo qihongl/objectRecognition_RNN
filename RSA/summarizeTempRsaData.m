@@ -1,13 +1,11 @@
-function [data] = summarizeTempRsaData(condition)
+function [data] = summarizeTempRsaData(condition,dataPath)
 %% load file and compute summarized data
-dataDirName = 'groupScores_RSA';
-listing = dir([dataDirName '/gRSA_' condition '*.mat']);
-% listing = dir([dataDirName '/*.mat']);
+listing = dir([dataPath '/gRSA_' condition '*.mat']);
 numFiles = size(listing,1);
 for i = 1:numFiles
     % load a data file
     fileName = listing(i).name;
-    load([dataDirName '/' fileName])
+    load([dataPath '/' fileName])
     % compute mean
     data.mean.basic(:,i) = mean(corr.basic,2);
     data.mean.super(:,i) = mean(corr.super,2);
