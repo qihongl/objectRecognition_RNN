@@ -10,9 +10,10 @@
 % clear variables; clf; close all; clc; 
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.DATA= 'sim16_large';
+% PATH.DATA= 'sim16_large';
 % PATH.DATA= 'sim22.0_RSVP';
-FILENAME.VERBAL = 'verbalAll_e3.txt';
+PATH.DATA= 'sim23.2_noise';
+FILENAME.VERBAL = 'verbalAll_e7.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
@@ -143,9 +144,9 @@ plot(mBas,'r', 'linewidth', 2)
 plot(mSub, 'linewidth', 2)
 
 % xlim([0 26]);
-ylim([0 .7]);
+% ylim([0 .7]);
 set(gca,'FontSize',11)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 18)
+legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
 TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
 % title(TITLE, 'fontSize', 18);
 xlabel('Time Ticks', 'fontSize', 18)

@@ -8,14 +8,16 @@ timePoints = 25;
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim16_large';
-PATH.DATA_FOLDER = 'sim23.2_noise';
+PATH.DATA_FOLDER = 'sim22.0_RSVP';
+% PATH.DATA_FOLDER = 'sim23.2_noise';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% parameter for logistic regresison classifier
 % classOpt = classification options
 propChoice = [.005 .01 .05 .15 .3 1];
+% propChoice = [.01 .05 .15 .3 1];
 optionChoice = {'randomSubset', 'spatBlurring'};
 
 % variance of the normal noise

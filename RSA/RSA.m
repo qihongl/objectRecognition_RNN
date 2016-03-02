@@ -1,7 +1,7 @@
 % initialize 
 clear all;close all;clc
 path.root = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-path.dir = 'sim22.0_RSVP';
+path.dir = 'sim23.0_noise';
 path.file = 'hiddenFinal_e3.txt';
 filename = [path.root path.dir '/' path.file];
 
