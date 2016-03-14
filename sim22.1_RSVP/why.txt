@@ -1,0 +1,2 @@
+previous RSVP simulation uses weights trained without noise (sim16)
+this version of simulation uses weights trained with normal noise, from sim23.2_noise
