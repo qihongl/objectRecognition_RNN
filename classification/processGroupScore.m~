@@ -4,8 +4,8 @@
 clear; clc; clf; close
 
 %% load file and compute summarized data
-condition = 'randomSubset';
-% condition = 'spatBlurring';
+% condition = 'randomSubset';
+condition = 'spatBlurring';
 subDirName = 'sim23.2_noise_e2_13-Mar-2016';
 
 % combine path name
@@ -59,8 +59,6 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('performance (%)', 'FontSize', d.FONTSIZE)
 title_text = sprintf('Logistic reg accuracy - %s', condition);
 title(title_text, 'FontSize', d.FONTSIZE)
-set(gca,'FontSize',d.FONTSIZE)
-
 
 % Plot the sum of absolute deviations (on the test set) against time
 subplot(2,2,2)
@@ -75,7 +73,7 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}|  \hspace{.5cm} (target \in \{0,1\})$', 'FontSize', d.FONTSIZE,'Interpreter','latex')
 title_text = sprintf(' ''Fit '' - %s ', condition);
 title(title_text, 'FontSize', d.FONTSIZE)
-set(gca,'FontSize',d.FONTSIZE)
+
 
 
 subplot(2,2,3)
@@ -89,4 +87,4 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('%', 'FontSize', d.FONTSIZE)
 title_text = sprintf('(hit - false)rate  - %s', condition);
 title(title_text, 'FontSize', d.FONTSIZE)
-set(gca,'FontSize',d.FONTSIZE)
+set(gca,'FontSize',3)
