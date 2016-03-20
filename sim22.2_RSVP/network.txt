@@ -3,11 +3,11 @@ addNet EM -t 5 -i 5 CONTINUOUS
 
 
 # specify all layers
-addGroup VerbalIn 156 INPUT
-addGroup VisualIn 156 INPUT
+addGroup VerbalIn 156 INPUT 
+addGroup VisualIn 156 INPUT 
 addGroup VerbalRep 156 OUTPUT -BIASED
 addGroup VisualRep 156 OUTPUT -BIASED
-addGroup hidden 156
+addGroup hidden 156 IN_NOISE OUT_NOISE
 
 # establish the connectivity for verbal/ visual
 connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0
@@ -23,6 +23,13 @@ connectGroups bias VerbalIn -m -2 -r 0
 connectGroups bias VisualIn -m -2 -r 0
 # free the bias weights
 freezeWeights -type bias
+
+# add noise 
+noise hidden -r 0.3
+# noise VisualRep -r 0.1
+# noise VerbalRep -r 0.1
+# lesionLinks * -r 0.1 -m
+
 
 # load example file
 loadExamples environment.txt -exmode PERMUTED

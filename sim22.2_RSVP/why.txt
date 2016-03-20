@@ -1,3 +1,1 @@
-this version of simulation uses weights trained with normal noise, from sim23.2_noise
-
-try shorted presentation time
+adapt weights and network files from 23.3_nosie
