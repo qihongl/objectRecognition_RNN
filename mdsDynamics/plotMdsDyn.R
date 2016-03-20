@@ -21,22 +21,11 @@ for (i in 1:length(patnames)) {
 patnames # print pattern name
 # -----------------------------------------------------------------------------
 timeActData <- as.matrix(fullData[, firstUnitIdx:dim(fullData)[2] ] )
-m = dim(timeActData)[1]     # num rows 
-n = dim(timeActData)[2]     # num columns = num hidden units
-
-
 all_scales <- cmdscale(dist(timeActData))
 
 # create a panel with appropriate size
-plot(0, 0, type = "n", ylim = range(all_scales), xlim = range(all_scales))
-lines(all_scales[0:29 * nQs + 1, ]) # first item at each of the snapshots in time
-
-
-index = 0:29 *nQs+2
-index
-
-seq(1,29,2)*nQs+1
-
+# plot(0, 0, type = "n", ylim = range(all_scales), xlim = range(all_scales))
+# lines(all_scales[0:29 * nQs + 1, ]) # first item at each of the snapshots in time
 
 # for (item_num in 1:8) 
 #     lines(all_scales[0:29 * nQs + item_num, ])
