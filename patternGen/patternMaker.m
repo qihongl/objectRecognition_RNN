@@ -1,12 +1,11 @@
 %% Generate the stimuli file for my PDP model for semantics
 clear; clc;
 % CONSTANTS
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/PDPmodel_Categorization/patternGen';
-cd PATH.PROJECT
+PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
 %% Parameters
 % get full patterns 
-protoName = 'PROTO3.xlsx';
+protoName = 'PROTO1.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
