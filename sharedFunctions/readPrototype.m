@@ -39,5 +39,7 @@ function [param, prototype] = readPrototype (filename)
         param.numStimuli = param.numInstances * param.numCategory.sup;
 
     end
+    
+    prototype = logical(prototype);
 
 end
