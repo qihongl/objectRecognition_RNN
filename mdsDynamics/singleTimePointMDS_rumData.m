@@ -16,7 +16,7 @@ nQs = 32;
 
 %% compute 2 dimensional MDS
 % get unique numbers in the distance matrix
-tempIdx = getTimePtsRows(timePt, nObjs, nQs);
+tempIdx = (1:nObjs) + timePt * nQs;
 dist.num = pdist(data(tempIdx,:));
 % compute the multidimensional scaling
 [Y,evals] = cmdscale(dist.num);
@@ -32,7 +32,7 @@ plot(Y(:,1),Y(:,2),'bx', 'linewidth', LW);
 % rescale the size of the panel
 axis(max(max(abs(Y))) * [-1,1,-1,1] * SCALE); axis('square');
 
-title_text = sprintf('Classic metric MDS at time point %d', timePt);
+title_text = sprintf('Classical metric MDS at time point %d', timePt);
 title(title_text, 'fontsize', FS)
 
 %% other elements in the plots
