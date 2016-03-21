@@ -11,7 +11,7 @@ FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
-timePt = 5;         % select from int[1,25]
+timePt = 25;         % select from int[1,25]
 turnOnAxis = false;
 attachLabels = true;
 

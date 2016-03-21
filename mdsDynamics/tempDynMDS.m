@@ -4,15 +4,15 @@ clear variables; clf; close all; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim16_large';
-% PATH.SIMID = 'sim22.1_RSVP';
+% PATH.SIMID = 'sim22.2_RSVP';
 PATH.SIMID = 'sim23.2_noise';
-FILENAME.ACT = 'hiddenAll_e2.txt';
+FILENAME.ACT = 'hiddenAll_e4.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
 timePt = 1;         % select from int[1,25]
-turnOnAxis = false;
-attachLabels = true;
+graph.turnOnAxis = false;
+graph.attachLabels = false;
 
 %% read data
 % fixed parameters
@@ -37,43 +37,45 @@ Y = Y(:,1:2);
 
 %% plot it!
 % set plotting constants
-SCALE = 1.2;
-FS = 16;
-LW = 3;
+graph.SCALE = 1.2;
+graph.FS = 16;
+graph.LW = 3;
 
+%% static plot
+subplot(1,2,1)
 hold on
 for itemNum = 1 : nObjs
     tempIdx = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
-    plot(Y(tempIdx,1),Y(tempIdx,2), 'b')
-    plot(Y(tempIdx,1),Y(tempIdx,2), 'b.')
+    plot(Y(tempIdx,1),Y(tempIdx,2), 'g',  'linewidth', graph.LW/2)
+    plot(Y(tempIdx,1),Y(tempIdx,2), 'b.', 'linewidth', graph.LW)
 end
-
-initIdx = 1 + (0:nObjs-1) * nTimePts;
-plot(Y(initIdx,1),Y(initIdx,2), 'rx', 'linewidth',3)
+% mark the initial and final locations
+idx.init = 1 + (0:nObjs-1) * nTimePts;
+idx.final = nTimePts + (0:nObjs-1) * nTimePts;
+plot(Y(idx.init,1),Y(idx.init,2), 'rx', 'linewidth',graph.LW)
+plot(Y(idx.final,1),Y(idx.final,2), 'rx', 'linewidth',graph.LW)
 hold off
 
-% square form plot 
-axis(max(max(abs(Y))) * [-1,1,-1,1] * SCALE); axis('square');
-
-% add title
-title_text = 'Classical Metric Multidimensional Scaling over time';
-title(title_text, 'fontsize', FS)
-set(gca,'FontSize',FS-1)
+mdsPlotModifier(Y, param, graph, idx);
 
 
-if attachLabels
-    labels = nameGen(param.numCategory);
-    for i = 1 : length(labels)
-        tempSlices = strsplit(labels{i},'_');
-        labels{i} = tempSlices(1);
-    end
-    
-    finalIdx = nTimePts + (0:nObjs-1) * nTimePts;
-    text(Y(finalIdx,1),Y(finalIdx,2)+0.05* max(max(abs(Y))),labels, ...
-        'HorizontalAlignment','left', 'fontsize', FS);
+%% dynamics plot
+subplot(1,2,2)
+
+
+for n = 1 : nObjs
+    h{n} = animatedline;
 end
+% setup plotting panel
+axis(max(max(abs(Y))) * [-1,1,-1,1] * graph.SCALE); axis('square');
 
-if turnOnAxis
-    line([-1,1],[0 0],'XLimInclude','off','Color',[.7 .7 .7])
-    line([0 0],[-1,1],'YLimInclude','off','Color',[.7 .7 .7])
+% y values at time t
+for t = 1:nTimePts
+    for n = 1 : nObjs
+        % create index the t-th location for n-th object
+        th.idx = t + nTimePts * (n-1);
+        % add the point
+        addpoints(h{n},Y(th.idx,1),Y(th.idx,2)); drawnow;
+    end    
 end
+mdsPlotModifier(Y, param, graph, idx);
