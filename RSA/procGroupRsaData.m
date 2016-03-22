@@ -4,7 +4,7 @@
 clear; clc; clf
 
 %% where to read the data 
-subDataDir = 'sim23.2_noise_e2';
+subDataDir = 'sim23.3_noise_e2';
 dataDir = 'groupScores_RSA/';
 
 %% load file and compute summarized data

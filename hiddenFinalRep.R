@@ -5,8 +5,8 @@ PROJECT_DIR = '/Users/Qihong/Dropbox/github/categorization_PDP'
 
 setwd(PROJECT_DIR)
 # you need to enter the file name and folder name here!
-DATA_FOLDER = 'sim16_large'
-FILENAME = 'hiddenFinal_e3.txt'
+DATA_FOLDER = 'sim23.3_noise'
+FILENAME = 'hiddenFinal_e4.txt'
 
 # load the data 
 datapath = paste(PROJECT_DIR, DATA_FOLDER, FILENAME, sep="/") 
@@ -49,8 +49,8 @@ plot(hclust(dist(hiddenData)),
      xlab = 'instances', ylab = 'distance')
 
 hc <- hclust(dist(hiddenData), "ave")
-# ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
-# plot(as.phylo(hc), type = "fan", main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
+ggdendrogram(hc, rotate = FALSE, size = 2) + ggtitle("Hierarchical clustering: hidden layer \nneural representations for all instances")
+plot(as.phylo(hc), type = "fan", main = 'Hierarchical clustering: hidden layer \nneural representations for all instances')
 
 
 # load code of A2R function

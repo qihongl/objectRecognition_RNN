@@ -4,9 +4,10 @@
 clear; clc; clf; close
 
 %% load file and compute summarized data
-condition = 'randomSubset';
-% condition = 'spatBlurring';
-subDirName = 'sim23.2_noise_e2_13-Mar-2016';
+% condition = 'randomSubset';
+condition = 'spatBlurring';
+% subDirName = 'sim23.2_noise_e2_13-Mar-2016';
+subDirName = 'sim23.3_noise_e2_21-Mar-2016';
 
 % combine path name
 mainDirName = 'groupScores_class';

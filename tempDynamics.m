@@ -11,9 +11,9 @@
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.DATA= 'sim16_large';
-% PATH.DATA= 'sim22.0_RSVP';
-PATH.DATA= 'sim23.2_noise';
-FILENAME.VERBAL = 'verbalAll_e7.txt';
+PATH.DATA= 'sim23.4_noise';
+% PATH.DATA= 'sim23.3_noise';
+FILENAME.VERBAL = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
@@ -34,7 +34,6 @@ output = getfield(outputFile, name);
 % read the prototype pattern, to get some parameters of the simulation
 [param, prototype] = readPrototype ([PATH.FULL '/' FILENAME.PROTOTYPE]);
 % param.numStimuli = param.numInstances * param.numCategory.sup;
-prototype = logical(prototype);
 
 %% preprocessing
 % add a zero row at the beginning so that every pattern has equal numRows

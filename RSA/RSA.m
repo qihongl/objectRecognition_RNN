@@ -1,8 +1,8 @@
 % initialize 
 clear all;close all;clc
 path.root = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-path.dir = 'sim23.0_noise';
-path.file = 'hiddenFinal_e3.txt';
+path.dir = 'sim22.2_RSVP';
+path.file = 'hiddenFinal_e4.txt';
 filename = [path.root path.dir '/' path.file];
 
 %% start
@@ -14,9 +14,10 @@ RDM = computeRDM(X);
 colormap jet
 img = imagesc(RDM);
 colorbar
+title_text = sprintf('%s-%s',path.dir, path.file);
+title(title_text)
 
 %%
-imname = sprintf('RDM%.3d', 1);
-mkdir([path.dir '_RDM'])
-
-print(imname,'-dpng');
+% imname = sprintf('RDM%.3d', 1);
+% mkdir([path.dir '_RDM'])
+% print(imname,'-dpng');

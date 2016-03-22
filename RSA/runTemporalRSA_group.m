@@ -4,15 +4,15 @@ clear all; clc; clf;
 %% path info
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim16_large';
-PATH.DATA_FOLDER = 'sim23.2_noise';
+PATH.DATA_FOLDER = 'sim23.3_noise';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.DATA = 'hiddenAll_e7.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %% parameters
 sampleSize = 20;
 param.optionChoices = {'randomSubset','spatBlurring'};
-param.propChoices = [.01, .05, .15, .3, 1];
+param.propChoices = [.01, .05, .15, .3 1];
 
 %% start data recording
 % loop over all choices of conditions
