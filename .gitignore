@@ -2,3 +2,5 @@
 /*.mat
 /*.wt
 /*.Rhistory
+*.RData
+*.Rhistory
