@@ -5,14 +5,15 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim16_large';
 % PATH.SIMID = 'sim22.2_RSVP';
-PATH.SIMID = 'sim23.2_noise';
-FILENAME.ACT = 'hiddenAll_e4.txt';
+PATH.SIMID = 'sim23.4_noise';
+FILENAME.ACT = 'hiddenAll_e3.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
 timePt = 1;         % select from int[1,25]
 graph.turnOnAxis = false;
 graph.attachLabels = false;
+doDynamicPlot = false;
 
 %% read data
 % fixed parameters
@@ -42,40 +43,42 @@ graph.FS = 16;
 graph.LW = 3;
 
 %% static plot
-subplot(1,2,1)
+if doDynamicPlot
+    subplot(1,2,1)
+end
 hold on
 for itemNum = 1 : nObjs
     tempIdx = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
-    plot(Y(tempIdx,1),Y(tempIdx,2), 'g',  'linewidth', graph.LW/2)
+    plot(Y(tempIdx,1),Y(tempIdx,2), 'b',  'linewidth', graph.LW/2)
     plot(Y(tempIdx,1),Y(tempIdx,2), 'b.', 'linewidth', graph.LW)
 end
 % mark the initial and final locations
 idx.init = 1 + (0:nObjs-1) * nTimePts;
 idx.final = nTimePts + (0:nObjs-1) * nTimePts;
-plot(Y(idx.init,1),Y(idx.init,2), 'rx', 'linewidth',graph.LW)
+plot(Y(idx.init,1),Y(idx.init,2), 'gx', 'linewidth',graph.LW)
 plot(Y(idx.final,1),Y(idx.final,2), 'rx', 'linewidth',graph.LW)
 hold off
 
-mdsPlotModifier(Y, param, graph, idx);
+mdsPlotModifier(Y, param, graph, idx);3
 
 
-%% dynamics plot
-subplot(1,2,2)
-
-
-for n = 1 : nObjs
-    h{n} = animatedline;
-end
-% setup plotting panel
-axis(max(max(abs(Y))) * [-1,1,-1,1] * graph.SCALE); axis('square');
-
-% y values at time t
-for t = 1:nTimePts
+%% dynamicaly create MDS solutions
+if doDynamicPlot
+    subplot(1,2,2)
     for n = 1 : nObjs
-        % create index the t-th location for n-th object
-        th.idx = t + nTimePts * (n-1);
-        % add the point
-        addpoints(h{n},Y(th.idx,1),Y(th.idx,2)); drawnow;
-    end    
+        h{n} = animatedline;
+    end
+    % setup plotting panel
+    axis(max(max(abs(Y))) * [-1,1,-1,1] * graph.SCALE); axis('square');
+    
+    % y values at time t
+    for t = 1:nTimePts
+        for n = 1 : nObjs
+            % create index the t-th location for n-th object
+            th.idx = t + nTimePts * (n-1);
+            % add the point
+            addpoints(h{n},Y(th.idx,1),Y(th.idx,2)); drawnow;
+        end
+    end
+    mdsPlotModifier(Y, param, graph, idx);
 end
-mdsPlotModifier(Y, param, graph, idx);
