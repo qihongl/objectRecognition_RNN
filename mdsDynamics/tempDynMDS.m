@@ -4,16 +4,18 @@ clear variables; clf; close all; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim16_large';
-% PATH.SIMID = 'sim22.2_RSVP';
-PATH.SIMID = 'sim23.4_noise';
-FILENAME.ACT = 'hiddenAll_e3.txt';
+
+PATH.SIMID = 'sim23.2_noise';
+% PATH.SIMID = 'sim22.1_RSVP';
+FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
-timePt = 1;         % select from int[1,25]
+% timePt = 1;         % select from int[1,25]
 graph.turnOnAxis = false;
 graph.attachLabels = false;
 doDynamicPlot = false;
+dimension = 2;
 
 %% read data
 % fixed parameters
@@ -34,32 +36,56 @@ data(1 + (0:nObjs-1)*(nTimePts+1),:) = []; % remove zero rows
 dist.num = pdist(data);
 % compute the multidimensional scaling
 [Y,evals] = cmdscale(dist.num);
-Y = Y(:,1:2);
+% Y = Y(:,1:2);
 
 %% plot it!
 % set plotting constants
 graph.SCALE = 1.2;
-graph.FS = 16;
-graph.LW = 3;
+graph.FS = 17;
+graph.LW = 5;
 
-%% static plot
+
 if doDynamicPlot
     subplot(1,2,1)
 end
-hold on
-for itemNum = 1 : nObjs
-    tempIdx = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
-    plot(Y(tempIdx,1),Y(tempIdx,2), 'b',  'linewidth', graph.LW/2)
-    plot(Y(tempIdx,1),Y(tempIdx,2), 'b.', 'linewidth', graph.LW)
+%% static plot - 2d
+if dimension == 2
+    hold on
+    for itemNum = 1 : nObjs
+        tempIdx = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
+        plot(Y(tempIdx,1),Y(tempIdx,2), 'g',  'linewidth', graph.LW/2)
+        plot(Y(tempIdx,1),Y(tempIdx,2), 'b.', 'linewidth', graph.LW)
+    end
+    
+    % mark the initial and final locations
+    idx.init = 1 + (0:nObjs-1) * nTimePts;
+    idx.final = nTimePts + (0:nObjs-1) * nTimePts;
+    plot(Y(idx.init,1),Y(idx.init,2), 'rx', 'linewidth',graph.LW)
+    plot(Y(idx.final,1),Y(idx.final,2), 'rx', 'linewidth',graph.LW)
+    hold off
+    
+    mdsPlotModifier(Y, param, graph, idx);
+    
+elseif dimension == 3
+    %% static plot - 3d
+    hold on
+    for itemNum = 1 : nObjs
+        tempIdx = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
+        % path 
+        plot3(Y(tempIdx,1),Y(tempIdx,2), Y(tempIdx,3), 'g',  'linewidth', graph.LW/2)
+        % point 
+        plot3(Y(tempIdx,1),Y(tempIdx,2), Y(tempIdx,3), 'b.', 'linewidth', graph.LW)
+    end
+    
+    % mark the initial and final locations
+    idx.init = 1 + (0:nObjs-1) * nTimePts;
+    idx.final = nTimePts + (0:nObjs-1) * nTimePts;
+    plot3(Y(idx.init,1),Y(idx.init,2), Y(idx.init,3), 'rx', 'linewidth',graph.LW)
+    plot3(Y(idx.final,1),Y(idx.final,2), Y(idx.final,3),'rx', 'linewidth',graph.LW)
+    hold off
+else
+    error('Dimension must be 2 OR 3.')
 end
-% mark the initial and final locations
-idx.init = 1 + (0:nObjs-1) * nTimePts;
-idx.final = nTimePts + (0:nObjs-1) * nTimePts;
-plot(Y(idx.init,1),Y(idx.init,2), 'gx', 'linewidth',graph.LW)
-plot(Y(idx.final,1),Y(idx.final,2), 'rx', 'linewidth',graph.LW)
-hold off
-
-mdsPlotModifier(Y, param, graph, idx);3
 
 
 %% dynamicaly create MDS solutions

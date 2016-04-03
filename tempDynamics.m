@@ -1,7 +1,7 @@
 %% plot the temporal dynamics of the model behavior
 % this program relies on the output file of 'testAllActs'
 % it is designed to process the output for the verbal representation layer
-
+clear variables; close all; clc 
 % MORE ABOUT THE EXPERIEMENT:
 % the model sees the visual representation for all objects, and its verbal
 % patterns were recorded.
@@ -11,8 +11,8 @@
 PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.DATA= 'sim16_large';
-PATH.DATA= 'sim23.4_noise';
-% PATH.DATA= 'sim23.3_noise';
+PATH.DATA= 'sim22.2_RSVP';
+% PATH.DATA= 'sim22.1_RSVP';
 FILENAME.VERBAL = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
@@ -135,33 +135,41 @@ relativeProb = bsxfun(@times, tpmean, (1./sum(tpmean,2)));
 
 
 %% plot the data
-subplot(1,2,1)
+p.LW = 4; 
+p.FS = 18; 
+
+% subplot(1,2,1)
 hold on
 % plot three temporal activation pattern
-plot(mSup,'g', 'linewidth', 2)
-plot(mBas,'r', 'linewidth', 2)
-plot(mSub, 'linewidth', 2)
-
+plot(mSup,'g', 'linewidth', p.LW)
+plot(mBas,'r', 'linewidth', p.LW)
+plot(mSub, 'linewidth', p.LW)
 % xlim([0 26]);
-% ylim([0 .7]);
-set(gca,'FontSize',11)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
-TITLE = sprintf('Temporal dynamics of different level of concepts, %d epoch', EPOCH);
+ylim([0 .7]);
+set(gca,'FontSize',p.FS)
+
+
+
+legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', p.FS)
+% TITLE = sprintf('Temporal dynamics of verbal responses');
 % title(TITLE, 'fontSize', 18);
-xlabel('Time Ticks', 'fontSize', 18)
-ylabel('Activation Value', 'fontSize', 18)
+xlabel('Time Ticks', 'fontSize', p.FS)
+ylabel('Activation Value', 'fontSize', p.FS)
 
 hold off
 
-subplot(1,2,2)
-hold on
-% plot three temporal activation pattern
-plot(relativeProb(:,1),'g', 'linewidth', 2)
-plot(relativeProb(:,2),'r', 'linewidth', 2)
-plot(relativeProb(:,3), 'linewidth', 2)
-hold off
-title('Selection probability - luce choice', 'fontSize', 18)
-set(gca,'FontSize',11)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', 14)
-xlabel('Time Ticks', 'fontSize', 18)
-ylabel('Probability', 'fontSize', 18)
+
+
+% subplot(1,2,2)
+% hold on
+% % plot three temporal activation pattern
+% plot(relativeProb(:,1),'g', 'linewidth', p.LW)
+% plot(relativeProb(:,2),'r', 'linewidth', p.LW)
+% plot(relativeProb(:,3), 'linewidth', p.LW)
+% hold off
+% 
+% title('Selection probability - luce choice', 'fontSize', p.FS)
+% legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', p.FS)
+% xlabel('Time Ticks', 'fontSize', p.FS)
+% ylabel('Probability', 'fontSize', p.FS)
+% set(gca,'FontSize',p.FS)

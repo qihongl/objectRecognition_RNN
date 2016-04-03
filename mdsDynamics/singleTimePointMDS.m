@@ -1,7 +1,7 @@
 %% plot MDS solution over time
 % [D,Z] = procrustes(X,Y(:,1:2)); % TODO: can be used to fit raw visual embedding
 %% CONSTANTS
-clear variables; clf; close all; clc; 
+% clear variables; clf; close all; clc; 
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim16_large';
@@ -42,7 +42,7 @@ imagesc(dist.matrix); colormap(jet);
 %% plot it! 
 % set plotting constants
 SCALE = 1.2;
-FS = 16;
+FS = 20;
 LW = 3;
 
 % plot 
@@ -52,10 +52,12 @@ axis(max(max(abs(Y))) * [-1,1,-1,1] * SCALE); axis('square');
 
 title_text = sprintf('Classical Metric Multidimensional Scaling [time point == %d]', timePt);
 title(title_text, 'fontsize', FS)
+xlabel('Distance', 'fontsize', FS)
+ylabel('Distance', 'fontsize', FS)
 
-set(gca,'FontSize',FS-1)
+set(gca,'FontSize',FS)
 
-%% other elements in the plots
+% attach text labels
 if attachLabels
     labels = nameGen(param.numCategory);
     for i = 1 : length(labels)
@@ -66,6 +68,8 @@ end
 text(Y(:,1),Y(:,2)+0.05* max(max(abs(Y))),labels, ...
     'HorizontalAlignment','left', 'fontsize', FS);
 
+
+%% other elements in the plots
 if turnOnAxis
     line([-1,1],[0 0],'XLimInclude','off','Color',[.7 .7 .7])
     line([0 0],[-1,1],'YLimInclude','off','Color',[.7 .7 .7])

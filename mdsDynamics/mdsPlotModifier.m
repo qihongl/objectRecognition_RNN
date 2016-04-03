@@ -2,6 +2,8 @@ function mdsPlotModifier(Y, param, graphParam, idx)
 % add title
 title_text = 'Classical Metric Multidimensional Scaling over time';
 title(title_text, 'fontsize', graphParam.FS)
+xlabel('Distance', 'fontsize', graphParam.FS)
+ylabel('Distance', 'fontsize', graphParam.FS)
 set(gca,'FontSize',graphParam.FS)
 % squareform plot
 axis(max(max(abs(Y))) * [-1,1,-1,1] * graphParam.SCALE); axis('square');
