@@ -13,6 +13,9 @@ X = data(: , 1 : (size(data,2) - 1));
 y = data(:, size(data,2));
 param.numUnits = size(X,2);
 
+%% impose normal noise, which simulates "measurement noise"
+X = X + param.var * randn(size(X));
+
 %% pre-process the data in accordance to the "classification option"
 if strcmp(param.classOpt,'spatBlurring')
     % determine how many gourps to separate
