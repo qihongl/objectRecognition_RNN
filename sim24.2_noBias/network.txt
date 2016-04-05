@@ -1,0 +1,61 @@
+# makeing the network
+addNet EM -t 5 -i 5 CONTINUOUS
+
+
+# specify all layers
+addGroup VerbalIn 156 INPUT 
+addGroup VisualIn 156 INPUT 
+addGroup VerbalRep 156 OUTPUT -BIASED
+addGroup VisualRep 156 OUTPUT -BIASED
+addGroup hidden 156 IN_NOISE OUT_NOISE
+
+# establish the connectivity for verbal/ visual
+connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0
+connectGroups VisualIn VisualRep -projection ONE_TO_ONE -m 5 -r 0
+
+# establish the connectivity for the hidden layer with verbal/visual
+connectGroups VerbalRep hidden -bidirectional
+connectGroups VisualRep hidden -bidirectional
+connectGroups hidden hidden
+
+# bias unit
+# connectGroups bias VerbalIn -m -2 -r 0
+# connectGroups bias VisualIn -m -2 -r 0
+# free the bias weights
+# freezeWeights -type bias
+
+# add noise 
+noise hidden -r 0.1
+# noise VisualRep -r 0.1
+# noise VerbalRep -r 0.1
+# lesionLinks * -r 0.1 -m
+
+
+# load example file
+loadExamples environment.txt -exmode PERMUTED
+loadExamples allStimuli.txt
+
+# set learning algorithm to steepest descent
+train -algorithm steepest -setOnly
+
+# set learning and display parameters
+setObj learningRate 0.001
+setObj momentum     0.0
+setObj batchSize    0
+setObj numUpdates   1
+setObj reportInterval 1
+setObj trainGroupCrit 0.05
+setObj testGroupCrit 0.05
+
+# set the init output values to be 0
+setObj VerbalRep.initOutput 0.05
+setObj VisualRep.initOutput 0.05
+setObj VerbalIn.initOutput 0.05
+setObj VisualIn.initOutput 0.05
+setObj hidden.initOutput 0.05
+
+# define unit display (20 units wide) and create error graph
+autoPlot 20
+# viewUnits
+# graphObj
+# setObj graph(0).cols 300

@@ -1,0 +1,5 @@
+check what if we don’t have bias to the input layers 
+	- in particular, want to check MDS temporal pattern
+
+- adapted from 23.2_noise 
+	- so it is a normal presentation condition 
