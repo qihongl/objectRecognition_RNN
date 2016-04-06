@@ -18,7 +18,7 @@ if graphParam.attachLabels
         labels{i} = tempSlices(1);
     end
     % attach labels at the right coordinates
-    text(Y(idx.final,1),Y(idx.final,2),labels, ...
+    text(Y(idx(:,end),1),Y(idx(:,end),2),labels, ...
         'HorizontalAlignment','left', 'fontsize', graphParam.FS);
 end
 
