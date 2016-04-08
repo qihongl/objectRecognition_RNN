@@ -12,8 +12,8 @@ PATH.ABS = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.DATA= 'sim16_large';
 PATH.DATA= 'sim22.2_RSVP';
-% PATH.DATA= 'sim22.1_RSVP';
-FILENAME.VERBAL = 'verbalAll_e2.txt';
+% PATH.DATA= 'sim24.2_noBias';
+FILENAME.VERBAL = 'verbalAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 EPOCH = 2000;
 
