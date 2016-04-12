@@ -25,9 +25,7 @@ end
 %     imagesc(data{i})
 % end
 
-
 data = reshape(data, param.numCategory.sup, param.numInstances);
-
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% From now on, the code assumes BINARY classification
@@ -53,7 +51,7 @@ for t = 1: INTERVAL
 %     temp = nan(param.numInstances, numTotalUnits);  % preallocate
     
     for i = 1 : param.numStimuli
-        fprintf('Time: %d \t numInstace: %d\n',t,i)
+%         fprintf('Time: %d \t numInstace: %d\n',t,i)
         % constructing activation matrices
         temp(i,:) = data{i}(t,:);
     end
@@ -64,5 +62,5 @@ end
 activationMatrix = acts;
 % save the activation matrices
 % save('activationMatrix', 'activationMatrix')
-disp('done!')
+% disp('done!')
 end

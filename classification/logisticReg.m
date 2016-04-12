@@ -67,11 +67,8 @@ Xtrain = [ones(m, 1) Xtrain];
 
 % Initialize fitting parameters and options
 initial_beta = zeros(n + 1, 1);
-options = optimset('GradObj', 'on', 'MaxIter', 400);
+options = optimset('GradObj', 'on', 'MaxIter', 400, 'Display', 'off');
 %  Run fminunc to obtain the optimal beta
-if showresults
-    disp('Weights estimation in progress...')
-end
 beta = fminunc(@(t)(costFunction(t, Xtrain, ytrain)), initial_beta, options);
 
 %% Predict and Accuracies
@@ -92,13 +89,13 @@ result.hitRate = sum(predictedLabels & ytest) / sum(ytest);
 result.falseRate = sum(predictedLabels & ~ytest) / sum(~ytest);
 
 % %% show the results
-if showresults
+% if showresults
 %     % print the comparison between model response and the truth
 %     [rawPrediction , ytest]
 %     % Compute accuracy on our training set
 %     fprintf('Cross-validated Accuracy: %.3f\n', result.accuracy);
 %     disp('Done!')
-end
+% end
 
 end
 
