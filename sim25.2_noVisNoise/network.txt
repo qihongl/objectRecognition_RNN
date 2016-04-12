@@ -3,11 +3,11 @@ addNet EM -t 5 -i 5 CONTINUOUS
 
 
 # specify all layers
-addGroup VerbalIn 60 INPUT 
-addGroup VisualIn 60 INPUT 
-addGroup VerbalRep 60 OUTPUT -BIASED
-addGroup VisualRep 60 OUTPUT -BIASED
-addGroup hidden 60 IN_NOISE OUT_NOISE
+addGroup VerbalIn 156 INPUT 
+addGroup VisualIn 156 INPUT 
+addGroup VerbalRep 156 OUTPUT -BIASED
+addGroup VisualRep 156 OUTPUT -BIASED
+addGroup hidden 156 IN_NOISE OUT_NOISE
 
 # establish the connectivity for verbal/ visual
 connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0
