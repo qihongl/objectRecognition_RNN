@@ -10,6 +10,7 @@ axis(max(max(abs(Y))) * [-1,1,-1,1] * graphParam.SCALE); axis('square');
 
 
 %% additional graphic elemetns...
+
 if graphParam.attachLabels
     % generate labels
     labels = nameGen(param.numCategory);
@@ -18,8 +19,15 @@ if graphParam.attachLabels
         labels{i} = tempSlices(1);
     end
     % attach labels at the right coordinates
+    if graphParam.dimension == 2 
     text(Y(idx(:,end),1),Y(idx(:,end),2),labels, ...
         'HorizontalAlignment','left', 'fontsize', graphParam.FS);
+    elseif graphParam.dimension == 3 
+        text(Y(idx(:,end),1),Y(idx(:,end),2),Y(idx(:,end),3),labels, ...
+        'HorizontalAlignment','left', 'fontsize', graphParam.FS);
+    else
+        error('Graph dimension has to be 2 or 3! ')
+    end
 end
 
 if graphParam.turnOnAxis
