@@ -70,7 +70,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% averaging the results across simulations
-function [score] = averagingResults(gs,numSim, numTimePoints)
+function [score] = averagingResults(gs,numCategories, numTimePoints)
 % preallocate
 accuracy = zeros(numTimePoints, 1);
 deviation = zeros(numTimePoints, 1);
@@ -79,7 +79,7 @@ hitRate =  zeros(numTimePoints, 1);
 falseRate =  zeros(numTimePoints, 1);
 
 % accumulate
-for i = 1 : numSim
+for i = 1 : numCategories
     accuracy = accuracy + gs.accuracy{i};
     deviation = deviation + gs.deviation{i};
     response = response + gs.response{i};
@@ -88,9 +88,9 @@ for i = 1 : numSim
 end
 
 % take mean
-score.accuracy = accuracy / numSim;
-score.deviation = deviation / numSim;
-score.response = response / numSim;
-score.hitRate = hitRate / numSim;
-score.falseRate = falseRate / numSim; 
+score.accuracy = accuracy / numCategories;
+score.deviation = deviation / numCategories;
+score.response = response / numCategories;
+score.hitRate = hitRate / numCategories;
+score.falseRate = falseRate / numCategories; 
 end
