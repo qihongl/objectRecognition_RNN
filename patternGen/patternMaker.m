@@ -5,7 +5,7 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
 %% Parameters
 % get full patterns 
-protoName = 'PROTO1.xlsx';
+protoName = 'PROTO3.xlsx';
 % write to a file
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
@@ -16,13 +16,13 @@ rng(parameters.seed);% TODO consider move it to patternGen
 
 % the threshold is "P(being ON)" for all unit that "suppose" to be on
 % (defined by the prototype)
-parameters.visualThres = 0.7;   
+parameters.visualThres = 1;   
 % verbal threshold is always on. For basic and superordiante category, name
 % should be the same for all members of the category
 parameters.verbalThres = 1; 
 
 % modeling parameters
-stimulusLength = 15;
+stimulusLength = 15;     
 parameters.defI = 0;
 parameters.defT = NaN;
 parameters.actI = 1;

@@ -17,7 +17,7 @@ rng(parameters.seed);% TODO consider move it to patternGen
 
 % the threshold is "P(being ON)" for all unit that "suppose" to be on
 % (defined by the prototype)
-parameters.visualThres = 0.7;   
+parameters.visualThres = 1;   
 % verbal threshold is always on. For basic and superordiante category, name
 % should be the same for all members of the category
 parameters.verbalThres = 1; 
