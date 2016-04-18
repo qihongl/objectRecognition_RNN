@@ -5,7 +5,7 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.SIMID = 'sim25.2_noVisNoise';
 % PATH.SIMID = 'sim25.2_RSVP';
-FILENAME.ACT = 'hiddenAll_e6.txt';
+FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
@@ -13,12 +13,13 @@ targetTimePt = 25;       % select from int[1,25]
 graph.turnOnAxis = false;
 graph.attachLabels = 1;
 doDynamicPlot = 0;
-graph.dimension = 3;
+graph.dimension = 2;
 % stimulate properties of EEG
-% method = 'spatialBlurring';
+subsetSize = 10; 
+method = 'spatialBlurring';
 % method = 'randomSubset';
-method = 'normal';
-subsetSize = 3; 
+% method = 'normal';
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,42 +36,7 @@ for itemNum = 1 : nObjs
     idx(itemNum,:) = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
 end
 
-%% select random subset or blurring 
-randPermOrder = randperm(param.numUnits.total * param.numCategory.sup);
-if strcmp(method, 'randomSubset')
-    sprintf('Method: randomSubset.\n')
-    subsetIdx = randPermOrder(1:subsetSize);
-    data = data(:,subsetIdx);
-elseif strcmp(method, 'spatialBlurring')
-    sprintf('Method: spatialBlurring.\n')
-    % split the data into N subgroup
-    if subsetSize > 1
-        subset.gpSize = round(size(data,2) / subsetSize);
-        for n = 1 : subsetSize-1
-            % select a subset (columns) of data
-            subset.ind = randsample(size(data,2), subset.gpSize);
-            % compute logical indices for selected units
-            tempLogic = false(size(data,2),1); tempLogic(subset.ind) = true;
-            % select the units
-            subset.data{n} = data(:,tempLogic);
-            % delete selected units (columns) in data
-            data = data(:,~tempLogic);
-        end
-        % collect the remaining columns in data
-        subset.data{size(subset.data,2) + 1 } = data;
-        % re-compute blurred data
-        clear data;
-        for n = 1 : subsetSize
-            data(:,n) = mean(subset.data{n},2);
-        end
-    else % if there is only one group 
-        data = mean(data,2);
-    end
-
-else
-    sprintf('Method: NA.\n')
-end
-
+data = eegSimulation( data, method, subsetSize, param);
 
 %% compute 2 dimensional MDS
 % get unique numbers in the distance matrix
