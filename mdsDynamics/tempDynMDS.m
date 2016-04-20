@@ -18,8 +18,7 @@ graph.dimension = 2;
 subsetSize = 10; 
 method = 'spatialBlurring';
 % method = 'randomSubset';
-% method = 'normal';
-
+method = 'normal';
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,8 +34,18 @@ idx = nan(nObjs, nTimePts);
 for itemNum = 1 : nObjs
     idx(itemNum,:) = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
 end
+if all(all(idx == reshape(1:size(data,1), [nTimePts,nObjs])'))
+    idx = reshape(1:size(data,1), [nTimePts,nObjs])';
+else
+    warning('reshape formula is not working, check why');
+end
 
-data = eegSimulation( data, method, subsetSize, param);
+% simulate eeg-like senario: adding spatial noise or select random subset
+data = eegSimulation(data, method, subsetSize, param);
+
+%% plot sup, bas, sub cluster distances
+
+
 
 %% compute 2 dimensional MDS
 % get unique numbers in the distance matrix
@@ -71,6 +80,7 @@ if graph.dimension == 2
     hold off
     mdsPlotModifier(Y, param, graph, idx);
     
+    %% hierach. clustering
 %     figure(3);
 %     tree = linkage(pdist(data(idx(:,end),:)));
 %     hc = dendrogram(tree, 'Labels', nameGen(param.numCategory),...
