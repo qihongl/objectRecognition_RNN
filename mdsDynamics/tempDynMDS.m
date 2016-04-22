@@ -3,7 +3,7 @@
 clear variables; clf; close all; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.SIMID = 'sim25.2_noVisNoise';
+PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
 FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -15,10 +15,10 @@ graph.attachLabels = 1;
 doDynamicPlot = 0;
 graph.dimension = 2;
 % stimulate properties of EEG
-subsetSize = 10;
+subsetSize = 3;
 method = 'spatialBlurring';
-method = 'randomSubset';
-% method = 'normal';
+% method = 'randomSubset';
+method = 'normal';
 
 % set plotting constants
 graph.SCALE = 1.2;
@@ -40,70 +40,6 @@ idx = reshape(1:size(data,1), [nTimePts,nObjs])';
 % for itemNum = 1 : nObjs
 %     idx(itemNum,:) = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
 % end
-
-
-%% plot cluster spreads with in sup vs. bas categories
-simSize = 100;
-meanSpread = cell(simSize,1);
-dataSp = cell(simSize,1);
-supMeanSpread.within = zeros(nTimePts,param.numUnits.total*param.numCategory.sup);
-basMeanSpread.within = zeros(size(supMeanSpread.within));
-% do the simulation n times
-for i = 1 : simSize
-    dataSp{i} = eegSimulation(data, method, subsetSize, param);
-    [meanSpread{i}] = getSpread(dataSp{i}, param, idx, nTimePts);
-    supMeanSpread.within = meanSpread{i}.sup.within;
-    basMeanSpread.within = meanSpread{i}.bas.within;
-    supMeanSpread.bet = meanSpread{i}.sup.bet;
-    basMeanSpread.bet = meanSpread{i}.bas.bet;
-end
-% get average spread
-supMeanSpread.within = supMeanSpread.within/simSize;
-basMeanSpread.within = basMeanSpread.within/simSize;
-supMeanSpread.bet = supMeanSpread.bet/simSize;
-basMeanSpread.bet = basMeanSpread.bet/simSize;
-
-% plot the spread
-figure(1)
-subplot(2,2,1)
-hold on
-plot(sum(supMeanSpread.within,2), 'linewidth',graph.LW)
-plot(sum(basMeanSpread.within,2), 'linewidth',graph.LW)
-hold off
-legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
-if strcmp(method,'normal')
-    title_spread = sprintf('The within spread: sup vs. basic (method: %s, size: NA)', method);
-else
-    title_spread = sprintf('The within spread: sup vs. basic (method: %s, size: %d)', method, subsetSize);
-end
-title(title_spread, 'fontsize', graph.FS)
-xlabel('Time', 'fontsize', graph.FS)
-ylabel('Sum of the spread', 'fontsize', graph.FS)
-set(gca,'FontSize',graph.FS)
-
-% plot the spread
-subplot(2,2,2)
-hold on
-plot(sum(supMeanSpread.bet,2), 'linewidth',graph.LW)
-plot(sum(basMeanSpread.bet,2), 'linewidth',graph.LW)
-hold off
-legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
-if strcmp(method,'normal')
-    title_spread = sprintf('The between spread: sup vs. basic (method: %s, size: NA)', method);
-else
-    title_spread = sprintf('The between spread: sup vs. basic (method: %s, size: %d)', method, subsetSize);
-end
-title(title_spread, 'fontsize', graph.FS)
-xlabel('Time', 'fontsize', graph.FS)
-ylabel('Sum of the spread', 'fontsize', graph.FS)
-set(gca,'FontSize',graph.FS)
-
-subplot(2,2,3)
-betweenWithinRatio = mean(supMeanSpread.bet .\ supMeanSpread.within,2);
-plot(betweenWithinRatio, 'linewidth', graph.LW)
-title('Ratio of spread: Between / Within ', 'fontsize', graph.FS)
-xlabel('time', 'fontsize', graph.FS)
-set(gca,'FontSize',graph.FS)
 
 
 %% compute 2 dimensional MDS
