@@ -83,8 +83,6 @@ end
 meanSpread.bas.within = meanSpread.bas.within / (param.numCategory.sup*param.numCategory.bas);
 meanSpread.bas.bet = meanSpread.bas.bet/ (param.numCategory.sup*param.numCategory.bas);
 
-
-
 % averaging the spread across dimension
 meanSpread.sup.bet = mean(meanSpread.sup.bet,2);
 meanSpread.sup.within = mean(meanSpread.sup.within,2);

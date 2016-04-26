@@ -3,7 +3,7 @@
 clear variables; clf; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.SIMID = 'sim23.2_noise';
+PATH.SIMID = 'sim22.2_RSVP';
 % PATH.SIMID = 'sim25.2_RSVP';
 FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -13,7 +13,7 @@ subsetSize = 8;
 method = 'spatialBlurring';
 % method = 'randomSubset';
 % method = 'normal';
-simSize = 1000;
+simSize = 100;
 
 % set plotting constants
 graph.SCALE = 1.2;
