@@ -9,11 +9,11 @@ FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % stimulate properties of EEG
-subsetSize = 8;
+subsetSize = 2;
 method = 'spatialBlurring';
-% method = 'randomSubset';
+method = 'randomSubset';
 % method = 'normal';
-simSize = 1000;
+simSize = 50;
 
 % set plotting constants
 graph.SCALE = 1.2;
@@ -38,6 +38,9 @@ meanSpread_byPath = cell(simSize,1);
 meanSpread_byPDist = cell(simSize,1);
 dataSp = cell(simSize,1);
 
+% supMeanSpread.within = zeros(nTimePts,1);
+% basMeanSpread.within = zeros(size(supMeanSpread.within));
+
 supMeanSpread.within.sample = nan(nTimePts,simSize);
 supMeanSpread.bet.sample = nan(size(supMeanSpread.within.sample));
 basMeanSpread.within.sample = zeros(size(supMeanSpread.within.sample));
@@ -54,6 +57,10 @@ for i = 1 : simSize
     supMeanSpread.bet.sample(:,i) = meanSpread_byPath{i}.sup.bet;
     basMeanSpread.bet.sample(:,i) = meanSpread_byPath{i}.bas.bet;
 
+%     supMeanSpread.within = meanSpread_byPath{i}.sup.within;
+%     basMeanSpread.within = meanSpread_byPath{i}.bas.within;
+%     supMeanSpread.bet = meanSpread_byPath{i}.sup.bet;
+%     basMeanSpread.bet = meanSpread_byPath{i}.bas.bet;
     % evaluate the spread by the average of all pair-wise distances
     meanSpread_byPDist = getSpread_byPDist(dataSp{i}, param, idx, nTimePts);
     spRatio_byPDist.sample(:,i) = meanSpread_byPDist.between  ./ meanSpread_byPDist.within;
@@ -68,49 +75,41 @@ basMeanSpread.within.mean = mean(basMeanSpread.within.sample,2);
 basMeanSpread.within.std = std(basMeanSpread.within.sample,1,2); 
 basMeanSpread.bet.mean = mean(basMeanSpread.bet.sample,2);
 basMeanSpread.bet.std = std(basMeanSpread.bet.sample,1,2);
-
-% spreading ratio using std measure 
-spRatio_byPath.mean = supMeanSpread.bet.mean ./ supMeanSpread.within.mean; 
-spRatio_byPath.std = std(supMeanSpread.bet.sample ./ supMeanSpread.within.sample,1,2);
-
 % spreading ratio using pair-wise distances measure
 spRatio_byPDist.mean = mean(spRatio_byPDist.sample,2);
 spRatio_byPDist.std = std(spRatio_byPDist.sample,1,2);
 
 %% plot the spread: sup category
 
-% subplot(1,2,1)
-% hold on
-% plot(supMeanSpread.within.mean, 'linewidth',graph.LW)
-% plot(basMeanSpread.within.mean, 'linewidth',graph.LW)
-% hold off
-% 
-% legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
-% title('The spread within', 'fontsize', graph.FS)
-% xlabel('Time', 'fontsize', graph.FS)
-% ylabel('Sum of the spread', 'fontsize', graph.FS)
-% set(gca,'FontSize',graph.FS)
-% 
-% % plot the spread: basic category 
-% subplot(1,2,2)
-% hold on
-% plot(supMeanSpread.bet.mean, 'linewidth',graph.LW)
-% plot(basMeanSpread.bet.mean, 'linewidth',graph.LW)
-% hold off
-% legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
-% title('The spread between', 'fontsize', graph.FS)
-% xlabel('Time', 'fontsize', graph.FS)
-% ylabel('Sum of the spread', 'fontsize', graph.FS)
-% set(gca,'FontSize',graph.FS)
+subplot(2,2,1)
+hold on
+plot(supMeanSpread.within, 'linewidth',graph.LW)
+plot(basMeanSpread.within, 'linewidth',graph.LW)
+hold off
+
+legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
+title('The spread within', 'fontsize', graph.FS)
+xlabel('Time', 'fontsize', graph.FS)
+ylabel('Sum of the spread', 'fontsize', graph.FS)
+set(gca,'FontSize',graph.FS)
+
+% plot the spread: basic category 
+subplot(2,2,2)
+hold on
+plot(supMeanSpread.bet, 'linewidth',graph.LW)
+plot(basMeanSpread.bet, 'linewidth',graph.LW)
+hold off
+legend({'superordinate','basic'}, 'fontsize', graph.FS, 'location', 'southeast')
+title('The spread between', 'fontsize', graph.FS)
+xlabel('Time', 'fontsize', graph.FS)
+ylabel('Sum of the spread', 'fontsize', graph.FS)
+set(gca,'FontSize',graph.FS)
 
 
 % plot the between - within spread ratio ~= decodibility 
-subplot(1,2,1)
-hold on 
-plot(spRatio_byPath.mean, 'linewidth', graph.LW)
-errorbar(1:nTimePts, spRatio_byPath.mean, spRatio_byPath.std, 'b','linewidth', graph.LW/2);
-hold off
-xlim([1,nTimePts+1])
+subplot(2,2,3)
+betweenWithinRatio = mean(supMeanSpread.bet ./ supMeanSpread.within,2);
+plot(betweenWithinRatio, 'linewidth', graph.LW)
 
 title('Spread ratio by path: Bet/Within ', 'fontsize', graph.FS)
 xlabel('Time', 'fontsize', graph.FS)
@@ -118,17 +117,16 @@ ylabel('Decodibility', 'fontsize', graph.FS)
 set(gca,'FontSize',graph.FS)
 
 % plot the between - within spread ratio | with pair-wise dist measure
-subplot(1,2,2)
+subplot(2,2,4)
 hold on 
 plot(spRatio_byPDist.mean, 'linewidth', graph.LW);
 errorbar(1:nTimePts, spRatio_byPDist.mean, spRatio_byPDist.std, 'b','linewidth', graph.LW/2);
 hold off
 xlim([1,nTimePts+1])
-title('Spread ratio by p-dist: Bet/Within', 'fontsize', graph.FS)
+title('Spread ratio by dist: Bet/Within', 'fontsize', graph.FS)
 xlabel('Time', 'fontsize', graph.FS)
 ylabel('Decodibility', 'fontsize', graph.FS)
 set(gca,'FontSize',graph.FS)
 
 %% over all title
 makeSupTitle(method,subsetSize, simSize)
-sprintf('Done')

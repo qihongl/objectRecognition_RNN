@@ -86,10 +86,8 @@ meanSpread.bas.bet = meanSpread.bas.bet/ (param.numCategory.sup*param.numCategor
 
 
 % averaging the spread across dimension
-meanSpread.sup.bet = mean(meanSpread.sup.bet,2);
-meanSpread.sup.within = mean(meanSpread.sup.within,2);
-meanSpread.bas.bet = mean(meanSpread.bas.bet,2);
-meanSpread.bas.within = mean(meanSpread.bas.within,2);
+meanSpread_byPath
+
 
 end
 
