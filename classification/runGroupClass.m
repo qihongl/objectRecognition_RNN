@@ -31,7 +31,7 @@ for opt = 1 : length(optionChoice)
     % loop over all proportion parameters
     
     for p = 1: length(propChoice);
-        logParam.subsetProp = propChoice(p)
+        logParam.subsetProp = propChoice(p);
         
         %% run the analysis
         % preallocate
@@ -62,7 +62,9 @@ for opt = 1 : length(optionChoice)
             checkAndMkdir(dataDirName);
             checkAndMkdir(finalSavePath);
             % 
-            dataFileName = sprintf('gsClass_%s%.3d.mat', logParam.classOpt, logParam.subsetProp * 100);
+            dataFileName = sprintf('gsClass_%s%.3d.mat', ...
+                logParam.classOpt, logParam.subsetProp * 1000);
+            
             save([finalSavePath '/' dataFileName],'group')
         end
     end

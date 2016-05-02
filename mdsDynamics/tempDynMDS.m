@@ -11,11 +11,11 @@ FILENAME.PROTOTYPE = 'PROTO.xlsx';
 % set parameters
 targetTimePt = 25;       % select from int[1,25]
 graph.turnOnAxis = false;
-graph.attachLabels = false;
+graph.attachLabels = 1;
 doDynamicPlot = 0;
-graph.dimension = 3;
+graph.dimension = 2;
 % stimulate properties of EEG
-subsetSize = 3;
+subsetSize = 2;
 method = 'spatialBlurring';
 % method = 'randomSubset';
 % method = 'normal';
@@ -36,10 +36,6 @@ PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 nObjs = param.numStimuli;
 % generate index matrix (itermNumber x time)
 idx = reshape(1:size(data,1), [nTimePts,nObjs])';
-% idx = nan(nObjs, nTimePts);
-% for itemNum = 1 : nObjs
-%     idx(itemNum,:) = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
-% end
 
 
 %% compute 2 dimensional MDS
@@ -56,8 +52,9 @@ col_supCat_idx = reshape(repmat(1:param.numCategory.sup, [nObjs_sup,1]), [nObjs,
 col_supCat = ['g', 'm', 'c'];
 %% static MDS - 2d
 if graph.dimension == 2
-    figure(3);
+    
     % final time point MDS
+    figure(3);
     hold on 
     for itemNum = 1 : nObjs
         plot(Y(idx(itemNum,targetTimePt),1),Y(idx(itemNum,targetTimePt),2), ...
@@ -93,7 +90,6 @@ elseif graph.dimension == 3
     %% static plot - 3d
     figure(4)
     hold on
-    
     for itemNum = 1 : nObjs
         % tarjectory
         plot3(Y(idx(itemNum,:),1),Y(idx(itemNum,:),2), Y(idx(itemNum,:),3), ...
@@ -134,4 +130,3 @@ if doDynamicPlot
     end
     mdsPlotModifier(Y, param, graph, idx);
 end
-

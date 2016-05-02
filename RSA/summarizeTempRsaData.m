@@ -1,6 +1,7 @@
 function [data] = summarizeTempRsaData(condition,dataPath)
 %% load file and compute summarized data
-listing = dir([dataPath '/gRSA_' condition '*.mat']);
+listing = dir( strcat(dataPath, '/gRSA_' ,condition, '*.mat'));
+
 numFiles = size(listing,1);
 for i = 1:numFiles
     % load a data file

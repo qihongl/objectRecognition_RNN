@@ -1,18 +1,19 @@
 %% compute a sample of RDM correlation scores (for statistics)
-clear all; clc; clf;
-
-%% path info
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
-% PATH.DATA_FOLDER = 'sim16_large';
-PATH.DATA_FOLDER = 'sim23.3_noise';
-% provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e7.txt';
-FILENAME.PROTOTYPE = 'PROTO.xlsx';
+clear all; clc; 
 
 %% parameters
 sampleSize = 20;
 param.optionChoices = {'randomSubset','spatBlurring'};
-param.propChoices = [.01, .05, .15, .3 1];
+param.propChoices = [.01, .05, .15, .3];
+
+%% path info
+PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
+% PATH.DATA_FOLDER = 'sim16_large';
+PATH.DATA_FOLDER = 'sim23.2_noise';
+% provide the NAMEs of the data files (user need to set them mannually)
+FILENAME.DATA = 'hiddenAll_e2.txt';
+FILENAME.PROTOTYPE = 'PROTO.xlsx';
+todayDate = date;
 
 %% start data recording
 % loop over all choices of conditions
@@ -32,7 +33,7 @@ for opt = 1 : length(param.optionChoices)
         RDMs = cell(sampleSize,1);
         for i = 1 : sampleSize
             % RDMs: each cell has a time series for a diff. "subject"
-            [corrData RDMs{i}] = runTemporalRSA(param, PATH, FILENAME);
+            [corrData, RDMs{i}] = runTemporalRSA(param, PATH, FILENAME);
             
             % corr: time by subject correlation matrix
             corr.basic(:,i) = corrData.basic';
@@ -42,7 +43,7 @@ for opt = 1 : length(param.optionChoices)
         %% get save dir names
         dataDirName = sprintf('groupScores_RSA/');
         subDataDirName = getSubDataDirName(PATH,FILENAME);
-        finalSavePath = strcat(dataDirName,subDataDirName);
+        finalSavePath = strcat(dataDirName,subDataDirName,'_',todayDate);
         % create data dir
         checkAndMkdir(dataDirName);
         checkAndMkdir(finalSavePath);
