@@ -9,7 +9,7 @@ if strcmp(condition,'randomSubset')
         legendNames{i} = sprintf('%.2d %%', propUsed{i});
     end
     
-    legendNames{1} = '1%'; %% To be fixed
+    legendNames{1} = '.5%'; %% To be fixed
     
 elseif strcmp(condition,'spatBlurring')
     legendNames = cell(size(propUsed));
@@ -17,7 +17,11 @@ elseif strcmp(condition,'spatBlurring')
         legendNames{i} = sprintf('%d', ceil(numHiddenUnits * propUsed{i} * .01));
     end
     
-    legendNames{1} = '1'; %% To be fixed
+    for i = 1 : length(legendNames)
+        legendNames{i} = strcat(legendNames{i}, ' groups');
+    end
+    legendNames{1} = '1 group'; %% To be fixed
+    
 else 
     sprintf('Unrecognizable condition for generating legends')
 end
