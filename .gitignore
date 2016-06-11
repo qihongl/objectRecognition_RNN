@@ -5,5 +5,5 @@
 *.RData
 *.Rhistory
 patternGen/*.txt
-
+[oldFiles]/
 classification/testing.m
