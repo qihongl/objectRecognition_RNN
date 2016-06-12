@@ -1,0 +1,5 @@
+simulation with different initial unit activation value 
+
+0.5 
+
+adapt from 23.2
