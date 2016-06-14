@@ -4,6 +4,7 @@ clear variables; clf; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.SIMID = 'sim22.2_RSVP';
+PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
 FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -79,6 +80,9 @@ spRatio_byPDist.std = std(spRatio_byPDist.sample,1,2);
 
 %% plot the spread: sup category
 
+alpha = .975; 
+tval = tinv(alpha, simSize - 1);
+
 % subplot(1,2,1)
 % hold on
 % plot(supMeanSpread.within.mean, 'linewidth',graph.LW)
@@ -108,7 +112,8 @@ spRatio_byPDist.std = std(spRatio_byPDist.sample,1,2);
 subplot(1,2,1)
 hold on 
 plot(spRatio_byPath.mean, 'linewidth', graph.LW)
-errorbar(1:nTimePts, spRatio_byPath.mean, spRatio_byPath.std, 'b','linewidth', graph.LW/2);
+errorbar(1:nTimePts, spRatio_byPath.mean, tval * spRatio_byPath.std / sqrt(simSize), ...
+    'b','linewidth', graph.LW/2);
 hold off
 xlim([1,nTimePts+1])
 
@@ -121,7 +126,8 @@ set(gca,'FontSize',graph.FS)
 subplot(1,2,2)
 hold on 
 plot(spRatio_byPDist.mean, 'linewidth', graph.LW);
-errorbar(1:nTimePts, spRatio_byPDist.mean, spRatio_byPDist.std, 'b','linewidth', graph.LW/2);
+errorbar(1:nTimePts, spRatio_byPDist.mean, tval * spRatio_byPDist.std / sqrt(simSize),...
+    'b','linewidth', graph.LW/2);
 hold off
 xlim([1,nTimePts+1])
 title('Spread ratio by p-dist: Bet/Within', 'fontsize', graph.FS)
