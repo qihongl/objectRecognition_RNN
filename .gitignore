@@ -7,3 +7,5 @@
 patternGen/*.txt
 [oldFiles]/
 classification/testing.m
+
+mdsDynamics/mnist_train.mat
