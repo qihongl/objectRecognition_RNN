@@ -12,7 +12,7 @@ train_labels = labels(ind(1:nPts));
 no_dims = 2;
 initial_dims = 50;
 perplexity = 30;
-% Run t?SNE
+% Run t-SNE
 mappedX = tsne(train_X, [], no_dims, initial_dims, perplexity);
 % Plot results
 gscatter(mappedX(:,1), mappedX(:,2), train_labels);

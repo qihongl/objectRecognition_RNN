@@ -1,4 +1,5 @@
 %% plot MDS solution over time
+clear variables; clf
 % [D,Z] = procrustes(X,Y(:,1:2)); % TODO: can be used to fit raw visual embedding
 %% CONSTANTS
 % clear variables; clf; close all; clc; 
@@ -79,8 +80,10 @@ end
 
 
 
-%% 
+
 figure(2)
+%% 
+clf
 % Set parameters
 no_dims = 2;
 initial_dims = 12;

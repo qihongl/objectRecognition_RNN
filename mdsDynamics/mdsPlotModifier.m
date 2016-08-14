@@ -1,6 +1,6 @@
 function mdsPlotModifier(Y, param, graphParam, idx)
 % add title
-title_text = 'Classical Metric Multidimensional Scaling over time';
+title_text = 'Classical MDS over time';
 title(title_text, 'fontsize', graphParam.FS)
 xlabel('Distance', 'fontsize', graphParam.FS)
 ylabel('Distance', 'fontsize', graphParam.FS)

@@ -2,7 +2,7 @@
 % when simulating using random subset or normal noise, there is randomness
 % so we need a sample to establish average
 clear variables; clc;
-sampleSize = 10;
+sampleSize = 20;
 timePoints = 25;
 saveData = 1;
 showPlot = 0; 
@@ -10,8 +10,8 @@ showPlot = 0;
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim22.1_RSVP';
-PATH.DATA_FOLDER = 'sim25.2_RSVP';
-% PATH.DATA_FOLDER = 'sim25.2_noVisNoise';
+PATH.DATA_FOLDER = 'sim23.2_noise';
+% PATH.DATA_FOLDER = 'sim26.3_initCond';
 % provide the NAMEs of the data files (user need to set them mannually)
 FILENAME.DATA = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
