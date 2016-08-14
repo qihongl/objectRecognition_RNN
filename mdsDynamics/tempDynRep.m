@@ -1,12 +1,12 @@
 %% Plot MDS solution over time
 % initialization
-clear variables; clf; close all; clc;
+clear variables; clf;  clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim24.2_noBias';
-PATH.SIMID = 'sim25.2_noVisNoise';
-FILENAME.ACT = 'hiddenAll_e6.txt';
-FILENAME.ACT = 'verbalAll_e6.txt';
+PATH.SIMID = 'sim23.2_noise';
+PATH.SIMID = 'sim22.2_RSVP';
+FILENAME.ACT = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,7 +60,7 @@ average.bas = average.bas / nTimePts;
 
 % plot the data
 p.LW = 4; 
-p.FS = 18; 
+p.FS = 20; 
 
 % subplot(1,2,1)
 hold on
@@ -71,10 +71,11 @@ plot(average.bas,'r', 'linewidth', p.LW)
 hold off 
 
 % xlim([0 26]);
-% ylim([0 .7]);
+ylim([0 .5]);
 set(gca,'FontSize',p.FS)
-legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', p.FS)
+legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
 % TITLE = sprintf('Temporal dynamics of verbal responses');
 % title(TITLE, 'fontSize', 18);
-xlabel('Time Ticks', 'fontSize', p.FS)
-ylabel('Activation Value', 'fontSize', p.FS)
+xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
+ylabel('Activation Value of Verbal Rep.', 'fontSize', p.FS, 'FontWeight','bold')
+set(gca,'FontSize',p.FS)

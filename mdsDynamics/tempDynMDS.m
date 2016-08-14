@@ -5,20 +5,21 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
+% PATH.SIMID = 'sim26.2_initCond';
 FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
 targetTimePt = 25;       % select from int[1,25]
 graph.turnOnAxis = false;
-graph.attachLabels = 1;
+graph.attachLabels = 0;
 doDynamicPlot = 0;
-graph.dimension = 2;
+graph.dimension = 3;
 % stimulate properties of EEG
-subsetSize = 2;
-method = 'spatialBlurring';
-% method = 'randomSubset';
-% method = 'normal';
+subsetSize = 156;
+% method = 'spatialBlurring';
+method = 'randomSubset';
+method = 'normal';
 
 % set plotting constants
 graph.SCALE = 1.2;
@@ -130,3 +131,5 @@ if doDynamicPlot
     end
     mdsPlotModifier(Y, param, graph, idx);
 end
+set(gca,'position',[0 0 1 1],'units','normalized')
+axis off

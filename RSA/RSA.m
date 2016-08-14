@@ -1,7 +1,8 @@
 % initialize
-clear all;close all;clc
+clear all;clf;clc
 path.root = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 path.dir = 'sim23.2_noise';
+% path.dir = 'sim22.2_RSVP';
 path.file = 'hiddenFinal_e2.txt';
 filename = [path.root path.dir '/' path.file];
 
@@ -21,10 +22,7 @@ set(gca, 'XTick', [], 'YTick', [],'dataAspectRatio',[1 1 1])
 
 title_text = sprintf('%s-%s',path.dir, path.file);
 % title(title_text)
-
-%%
-% remove the tick labels:
-
+% set(gca,'position',[0 0 1 1],'units','normalized')
 
 
 

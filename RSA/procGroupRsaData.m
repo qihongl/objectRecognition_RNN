@@ -5,7 +5,7 @@ clear; clc;
 
 %% where to read the data 
 dataDir = strcat(pwd, '/groupScores_RSA/');
-subDataDir = 'sim23.3_noise_e7_27-Apr-2016';
+subDataDir = 'sim23.2_noise_e2';
 
 %% load file and compute summarized data
 dataPath = strcat(dataDir,subDataDir);
@@ -17,7 +17,7 @@ condition2 = 'spatBlurring';
 
 %% Plot the correlation against time
 % constant
-d.FONTSIZE = 18;
+d.FONTSIZE = 20;
 d.LW = 3;
 
 % correlation with the basic matrix
@@ -52,33 +52,53 @@ ylabel('Difference', 'FontSize', d.FONTSIZE)
 title('Difference(basic - super)', 'FontSize', d.FONTSIZE)
 
 
-makeSupTitle_RSA(condition1, d, 0)
+% makeSupTitle_RSA(condition1, d, 0)
 
 
-%% 2nd condition 
-figure(2)
-subplot(1,3,1)
-plot(data.spatBlur.mean.basic,'linewidth',d.LW)
+% %% 2nd condition 
+% figure(2)
+% subplot(1,3,1)
+% plot(data.spatBlur.mean.basic,'linewidth',d.LW)
+% ylim([0 1])
+% legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+% xlabel('time', 'FontSize', d.FONTSIZE)
+% ylabel('Correlation', 'FontSize', d.FONTSIZE)
+% title('Correlation - basic matrix', 'FontSize', d.FONTSIZE)
+% 
+% % correlation with the superordinate matrix
+% subplot(1,3,2)
+% plot(data.spatBlur.mean.super,'linewidth',d.LW)
+% ylim([0 1])
+% legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+% xlabel('time', 'FontSize', d.FONTSIZE)
+% ylabel('Correlation', 'FontSize', d.FONTSIZE)
+% title('Correlation - super matrix', 'FontSize', d.FONTSIZE)
+% 
+% subplot(1,3,3)
+% plot(data.spatBlur.mean.basic - data.spatBlur.mean.super,'linewidth',d.LW)
+% legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+% xlabel('time', 'FontSize', d.FONTSIZE)
+% ylabel('Difference', 'FontSize', d.FONTSIZE)
+% title('Difference(basic - super)', 'FontSize', d.FONTSIZE)
+% 
+% makeSupTitle_RSA(condition2, d, 0)
+
+%% 
+figure(3)
+subplot(1,2,1)
+plot(data.randSub.mean.basic(:,1:3),'linewidth',d.LW)
 ylim([0 1])
-legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
-xlabel('time', 'FontSize', d.FONTSIZE)
-ylabel('Correlation', 'FontSize', d.FONTSIZE)
-title('Correlation - basic matrix', 'FontSize', d.FONTSIZE)
-
+% legend({'2 units', '8 units', '23 units'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+xlabel('time', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+ylabel('Correlation', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+title('Basic level matrix ', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+set(gca,'FontSize',d.FONTSIZE-5)
 % correlation with the superordinate matrix
-subplot(1,3,2)
-plot(data.spatBlur.mean.super,'linewidth',d.LW)
+subplot(1,2,2)
+plot(data.randSub.mean.super(:,1:3),'linewidth',d.LW)
 ylim([0 1])
-legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
-xlabel('time', 'FontSize', d.FONTSIZE)
-ylabel('Correlation', 'FontSize', d.FONTSIZE)
-title('Correlation - super matrix', 'FontSize', d.FONTSIZE)
-
-subplot(1,3,3)
-plot(data.spatBlur.mean.basic - data.spatBlur.mean.super,'linewidth',d.LW)
-legend({'1%', '5%', '15%', '30%', '100%'}, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
-xlabel('time', 'FontSize', d.FONTSIZE)
-ylabel('Difference', 'FontSize', d.FONTSIZE)
-title('Difference(basic - super)', 'FontSize', d.FONTSIZE)
-
-makeSupTitle_RSA(condition2, d, 0)
+legend({'2 units', '8 units', '23 units'}, 'location', 'southeast', 'fontsize', d.FONTSIZE, 'FontWeight','bold')
+xlabel('time', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+% ylabel('Correlation', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+title('Superordinate level matrix', 'FontSize', d.FONTSIZE, 'FontWeight','bold')
+set(gca,'FontSize',d.FONTSIZE-5)
