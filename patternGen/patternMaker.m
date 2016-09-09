@@ -40,6 +40,8 @@ parameters.grace = 0.5;
 visualPatterns.names = nameGen(visualPatterns.numCategory);
 verbalPatterns.names = nameGen(verbalPatterns.numCategory);
 
+%% save the actual pattern used 
+saveActualPatterns(parameters, visualPatterns, verbalPatterns, protoName)
 
 %% write all patterns to a file
 writeParameters(filename, parameters, visualPatterns);
