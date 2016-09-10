@@ -9,10 +9,7 @@
 %   It assumes every superordinate categories uses the SAME prototype,
 %   which is an oversimplification
 
-function [pattern] = patternGen(filename, thres1)
-
-% read the prototype file
-[param, prototype] = readPrototype (filename); 
+function [pattern] = patternGen(param, prototype, thres1)
 numUnits = param.numUnits;
 numCategory = param.numCategory;
 numInstances = param.numInstances;
@@ -52,10 +49,10 @@ for i = 1: numCategory.sup - 1
     pattern.full = dsum(pattern.full, distortedProto);
     
     % compute subset patterns
-    pattern.sup = dsum( pattern.sup, [distortedProto(:,1: numUnits.sup) , zeros(numInstances, numUnits.bas + numUnits.sub)] );
-    pattern.bas = dsum( pattern.bas, [zeros(numInstances, numUnits.sup), distortedProto(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
-    pattern.sub = dsum( pattern.sub, [zeros(numInstances, numUnits.sup + numUnits.bas), distortedProto(:, numUnits.sup + numUnits.bas + 1: end)]);
-    pattern.sup_bas = dsum( pattern.sup_bas, [distortedProto(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)] );
+    pattern.sup = dsum(pattern.sup, [distortedProto(:,1: numUnits.sup), zeros(numInstances, numUnits.bas + numUnits.sub)]);
+    pattern.bas = dsum(pattern.bas, [zeros(numInstances, numUnits.sup), distortedProto(:, numUnits.sup + 1 : numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)]);
+    pattern.sub = dsum(pattern.sub, [zeros(numInstances, numUnits.sup + numUnits.bas), distortedProto(:, numUnits.sup + numUnits.bas + 1: end)]);
+    pattern.sup_bas = dsum(pattern.sup_bas, [distortedProto(:, 1:numUnits.sup + numUnits.bas), zeros(numInstances, numUnits.sub)]);
 end
 
 % comptue other parameters
