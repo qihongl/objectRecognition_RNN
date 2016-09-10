@@ -138,7 +138,7 @@ relativeProb = bsxfun(@times, tpmean, (1./sum(tpmean,2)));
 p.LW = 4; 
 p.FS = 18; 
 
-% subplot(1,2,1)
+subplot(1,2,1)
 hold on
 % plot three temporal activation pattern
 plot(mSup,'g', 'linewidth', p.LW)
@@ -160,16 +160,16 @@ hold off
 
 
 
-% subplot(1,2,2)
-% hold on
-% % plot three temporal activation pattern
-% plot(relativeProb(:,1),'g', 'linewidth', p.LW)
-% plot(relativeProb(:,2),'r', 'linewidth', p.LW)
-% plot(relativeProb(:,3), 'linewidth', p.LW)
-% hold off
-% 
-% title('Selection probability - luce choice', 'fontSize', p.FS)
-% legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', p.FS)
-% xlabel('Time Ticks', 'fontSize', p.FS)
-% ylabel('Probability', 'fontSize', p.FS)
-% set(gca,'FontSize',p.FS)
+subplot(1,2,2)
+hold on
+% plot three temporal activation pattern
+plot(relativeProb(:,1),'g', 'linewidth', p.LW)
+plot(relativeProb(:,2),'r', 'linewidth', p.LW)
+plot(relativeProb(:,3), 'linewidth', p.LW)
+hold off
+
+title('Selection probability - luce choice', 'fontSize', p.FS)
+legend({'Superordinate', 'Basic', 'Subordinate'}, 'location', 'southeast', 'fontsize', p.FS)
+xlabel('Time Ticks', 'fontSize', p.FS)
+ylabel('Probability', 'fontSize', p.FS)
+set(gca,'FontSize',p.FS)
