@@ -7,23 +7,29 @@
 % @parameter vector: the vector you want to write
 function writeVerbalVector(filename, vector)
     
-    separator = ' ';
-    zero = '0';
-
+    SEPARATOR = ' ';
+    ZERO = '0';
+    BLANK = '-';
+    
+    % verbal section 
     for i = 1: size(vector,2)
-        if vector(i)~= 1 && vector(i)~= 0   % make sure the input is 1 or 0
+        if vector(i)~= 1 && vector(i)~= 0  && ~isnan(vector(i))
             error('Input pattern is neither 0 or 1.')
         elseif vector(i) == 1               % print '1' iff input is 1
             fprintf(filename, '%d', vector(i));
-        elseif vector(i) == 0               % print '-' iff input is 0
-            fprintf(filename, '%s', zero);
+        elseif vector(i) == 0               
+            fprintf(filename, '%s', ZERO);
+        elseif isnan(vector(i))
+            fprintf(filename, '%s', BLANK);
         end
-        fprintf(filename, separator); % sep by space
+        fprintf(filename, SEPARATOR); % sep by space
     end
     
     fprintf(filename, '\n\t');
+    
+    % visual section 
     for i = 1: size(vector,2)
-        fprintf(filename, '-');
-        fprintf(filename, separator);
+        fprintf(filename, BLANK);
+        fprintf(filename, SEPARATOR);
     end
 end

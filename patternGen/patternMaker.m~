@@ -1,5 +1,5 @@
 %% Generate the stimuli file for my PDP model for semantics
-clear; clc; close all; 
+clear; clc;
 % CONSTANTS
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
@@ -31,8 +31,6 @@ parameters.min = 0.5;
 parameters.max = 3;
 parameters.grace = 0.5;
 
-allTargetTypes = {'visual_sup', 'visual_bas_sup', 'visual_all', ...
-    'verbal_none', 'verbal_sup',  'verbal_bas', 'verbal_sub'};
 
 %% get patterns
 [protoParam, prototype] = readPrototype (protoName); 
@@ -51,76 +49,63 @@ writeParameters(filenameTest, parameters, visualPatterns);
 
 % verbal -> visual
 addTitle(filename, '# verbal sup -> visual sup features' )
-targetType = 'visual_sup';
 names = addPrefix('verbal', verbalPatterns.names, 'sup');
 writeAllPatterns(filename, names, stimulusLength, ...
-    verbalPatterns.sup, visualPatterns.sup, protoParam, targetType, 2)
+    verbalPatterns.sup, visualPatterns.sup, protoParam, 2)
 clear names;
 
 addTitle(filename, '# verbal bas -> visual bas + sup features' )
-targetType = 'visual_bas+sup';
 names = addPrefix('verbal', verbalPatterns.names, 'bas');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
-        visualPatterns.sup_bas, protoParam, targetType, 2)
+        visualPatterns.sup_bas, protoParam, 2)
 clear names;
 
 addTitle(filename, '# verbal sub -> visual full features' )
-targetType = 'visual_all';
 names = addPrefix('verbal', verbalPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.sub, ...
-    visualPatterns.full, protoParam, targetType, 2)
+    visualPatterns.full, protoParam, 2)
 clear names;
 
-
+% testing file
 % write visual full -> verbal full (for tempDyn)
 addTitle(filename, '# visual full -> verbal full' )
 names = addPrefix('visual', visualPatterns.names, '');
-targetType = 'verbal_none';
-writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.full, protoParam, targetType, 1)
-% testing file
+writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, verbalPatterns.full, 1)
 writeAllPatterns(filenameTest, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.full, protoParam, targetType, 1)
+    verbalPatterns.full, protoParam, 1)
 clear names;
 
 
 % write visual full to 3 levels of names
 addTitle(filename, '# visual full -> verbal sup' )
-targetType = 'verbal_sup';
 names = addPrefix('visual', visualPatterns.names, 'sup');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.sup, protoParam, targetType, 1)
+    verbalPatterns.sup, protoParam, 1)
 clear names;
 
 addTitle(filename, '# visual full -> verbal bas' )
-targetType = 'verbal_bas';
 names = addPrefix('visual', visualPatterns.names, 'bas');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.bas, protoParam, targetType, 1)
+    verbalPatterns.bas, protoParam, 1)
 clear names;
 
 addTitle(filename, '# visual full -> verbal sub' )
-targetType = 'verbal_sub';
 names = addPrefix('visual', visualPatterns.names, 'sub');
-writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.sub, protoParam, targetType, 1)
+writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, verbalPatterns.sub, protoParam, 1)
 clear names;
 
 
 
 %% manipulate frequency (add more basic training patterns)
-targetType = 'verbal_bas';
 
 addTitle(filename, '# visual full -> verbal bas' )
 names = addPrefix('visual', visualPatterns.names, 'bas');
-writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ... 
-    verbalPatterns.bas, protoParam, targetType, 1)
+writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, verbalPatterns.bas, 1)
 clear names;
 
 addTitle(filename, '# verbal bas -> visual bas + sup features' )
 names = addPrefix('verbal', verbalPatterns.names, 'bas');
-writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
-    visualPatterns.sup_bas, protoParam, targetType, 2)
+writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, visualPatterns.sup_bas, 2)
 clear names;
 
 
