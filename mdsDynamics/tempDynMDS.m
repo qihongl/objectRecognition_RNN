@@ -3,10 +3,11 @@
 clear variables; clf; close all; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.SIMID = 'sim23.2_noise';
+% PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
 % PATH.SIMID = 'sim26.2_initCond';
-FILENAME.ACT = 'hiddenAll_e2.txt';
+PATH.SIMID = 'sim27.1_maskTarget';
+FILENAME.ACT = 'hidden_e01.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
