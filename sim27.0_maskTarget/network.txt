@@ -43,16 +43,16 @@ setObj learningRate 0.001
 setObj momentum     0.0
 setObj batchSize    0
 setObj numUpdates   1
-setObj reportInterval 1
-setObj trainGroupCrit 0.05
-setObj testGroupCrit 0.05
+setObj reportInterval 10
+setObj trainGroupCrit 0.00
+setObj testGroupCrit 0.00
 
 # set the init output values to be 0
-setObj VerbalRep.initOutput 0.05
-setObj VisualRep.initOutput 0.05
-setObj VerbalIn.initOutput 0.05
-setObj VisualIn.initOutput 0.05
-setObj hidden.initOutput 0.05
+setObj VerbalRep.initOutput 0.00
+setObj VisualRep.initOutput 0.00
+setObj VerbalIn.initOutput 0.00
+setObj VisualIn.initOutput 0.00
+setObj hidden.initOutput 0.00
 
 # define unit display (20 units wide) and create error graph
 autoPlot 20

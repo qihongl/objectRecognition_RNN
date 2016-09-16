@@ -28,7 +28,7 @@ parameters.defT = NaN;
 parameters.actI = 1;
 parameters.actT = 1;
 parameters.min = 0.5;
-parameters.max = 3;
+parameters.max = 5;
 parameters.grace = 0.5;
 
 allTargetTypes = {'visual_sup', 'visual_bas_sup', 'visual_all', ...
@@ -109,7 +109,7 @@ clear names;
 
 
 %% manipulate frequency (add more basic training patterns)
-freq = 10; 
+freq = 9; 
 for f = 1 : freq
     targetType = 'verbal_bas';
     addTitle(filename, '# visual full -> verbal bas' )

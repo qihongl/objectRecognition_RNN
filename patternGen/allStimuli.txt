@@ -19,7 +19,7 @@ defT: -
 actI: 1 
 actT: 1 
 min: 0.5 
-max: 3.0 
+max: 5.0 
 grace: 0.5 
 ;
 name: visualA11 	 15
