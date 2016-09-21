@@ -10,7 +10,6 @@
 % @parameter tartget: the teaching pattern
 function writeOnePattern(filename, name, length, input, target, visPos, ...
     supCat, param, targetType)
-
 modifiedTarget = modifyTargetPattern(target, targetType, param, supCat);
 
 % write the title of the mapping
@@ -82,7 +81,7 @@ else
                 case 'sup'
                     mask(1:param.numUnits.sup) = true; 
                 case 'bas'
-                    mask((param.numUnits.sup+1):param.numUnits.bas) = true; 
+                    mask((param.numUnits.sup+1):(param.numUnits.sup+param.numUnits.bas)) = true; 
                 case 'sub'
                     mask((param.numUnits.sup+param.numUnits.bas+1) : param.numUnits.total) = true; 
                 otherwise
