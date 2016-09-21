@@ -6,10 +6,10 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.SIMID= 'sim24.2_noBias';
 % PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_noVisNoise';
-PATH.SIMID = 'sim27.1_maskTarget';
+PATH.SIMID = 'sim27.0_maskTarget';
 
 % PATH.SIMID = 'sim22.2_RSVP';
-FILENAME.ACT = 'verbalAll_e01.txt';
+FILENAME.ACT = 'verbalAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 PLOTALL = false;
@@ -41,22 +41,30 @@ end
 % subplot(121);imagesc(dataByCat{1}(7:25:400,:));subplot(122);imagesc(proto)
 
 %% compute the average
+% preallocate
+average.sup = zeros(nTimePts,param.numCategory.sup);
+average.bas = zeros(nTimePts,param.numCategory.sup);
 for c = 1:param.numCategory.sup;
-    % preallocate
-    average.sup = zeros(nTimePts,1);
-    average.bas = zeros(nTimePts,1);
     % get activation values at corresponding units: superordinate
     supUnitsRange = 1:param.numUnits.sup;
-    for instance = 1 : param.numStimuli/param.numCategory.sup;
-        average.sup = average.sup + mean(dataByCat{c}(idx(instance,:),supUnitsRange),2);
+    for instance = 1 : param.numInstances;
+        average.sup(:,c) = average.sup(:,c) + mean(dataByCat{c}(idx(instance,:),supUnitsRange),2);
     end
+    
     % get activation values at corresponding units: basic
     basUnitRange = (param.numUnits.sup+1):(param.numUnits.sup+param.numUnits.bas);
     basicIdxVec = reshape(repmat(1:param.numCategory.bas,[param.numCategory.bas,1]),[1,param.numCategory.bas^2]);
-    for instance = 1 : param.numStimuli/param.numCategory.sup;
+    
+    count = 0; 
+    for instance = 1 : param.numInstances;
         basUnitsIdx = (1+param.numUnits.sup*basicIdxVec(instance)) : (param.numCategory.bas * (basicIdxVec(instance)+1));
-        average.bas = average.bas + mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
+        temp = mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
+        if temp(end) > .8 
+            count = count + 1;
+            average.bas(:,c) = average.bas(:,c) + mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
+        end
     end
+    average.bas(:,c) = average.bas(:,c) / count; 
     %     % get activation values at corresponding units: sub
     %     subIdx = (param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total;
     %     act.sub = nan(nTimePts,length(subIdx));
@@ -71,8 +79,10 @@ for c = 1:param.numCategory.sup;
     
 end
 
-average.sup = average.sup / nTimePts;
-average.bas = average.bas / nTimePts;
+% average across instance and super-category 
+average.sup = mean(average.sup / param.numInstances,2);
+% average.bas = mean(average.bas / param.numInstances,2);
+average.bas = mean(average.bas,2);
 
 % subplot(121);imagesc(proto(:,(param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total))
 % subplot(122);imagesc(dataByCat{c}(7:nTimePts:size(dataByCat{1},1),(param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total))
@@ -160,7 +170,7 @@ if PLOTALL
     
     
 else
-subplot(1,2,1)
+    subplot(1,2,1)
     hold on
     % plot three temporal activation pattern
     plot(average.sup,'g', 'linewidth', p.LW)
