@@ -10,6 +10,10 @@ protoName = 'PROTO3.xlsx';
 filename = fopen('environment.txt','w');
 filenameTest = fopen('allStimuli.txt','w');
 
+
+allThings = {'otherSupCategories', 'otherLevels'};
+parameters.thingsToBeMasked = allThings{2};
+
 % set a seed (for replicability )
 parameters.seed = 2;
 rng(parameters.seed);% TODO consider move it to patternGen
@@ -36,6 +40,7 @@ allTargetTypes = {'visual_sup', 'visual_bas_sup', 'visual_all', ...
 
 %% get patterns
 [protoParam, prototype] = readPrototype (protoName);
+protoParam.thingsToBeMasked = parameters.thingsToBeMasked;
 [visualPatterns] = patternGen(protoParam, prototype, parameters.visualThres);
 [verbalPatterns] = patternGen(protoParam, prototype, parameters.verbalThres);
 % generate names for all patterns

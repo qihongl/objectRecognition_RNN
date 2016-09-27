@@ -8,6 +8,8 @@
 *.txt
 *.mat
 *.xlsx
+*.m~
+
 patternGen/*.txt
 [oldFiles]/
 classification/testing.m

@@ -10,7 +10,10 @@
 % @parameter tartget: the teaching pattern
 function writeOnePattern(filename, name, length, input, target, visPos, ...
     supCat, param, targetType)
-modifiedTarget = modifyTargetPattern(target, targetType, param, supCat);
+
+% modify the target patterns by masking out the corresponding "non-targets" 
+thingsToBeMasked = param.thingsToBeMasked;
+modifiedTarget = modifyTargetPattern(target, targetType, param, supCat, thingsToBeMasked);
 
 % write the title of the mapping
 fprintf(filename, 'name: %s \t %d\n', name, length);
@@ -24,7 +27,6 @@ if visPos == 1
 else
     writeVerbalVector(filename,input);
 end
-
 
 fprintf(filename, '\nT: ');
 fprintf(filename, '');      % the 1st phase has no target
@@ -48,8 +50,12 @@ fprintf(filename, '\n;\n\n');
 
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Helper functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function modifiedTarget = modifyTargetPattern(target, targetType, param, ...
+    supCat, thingsToBeMasked)
 
-function modifiedTarget = modifyTargetPattern(target, targetType, param, supCat)
 allTargetTypes = {'visual_sup', 'visual_bas+sup', 'visual_all', ...
     'verbal_none', 'verbal_sup',  'verbal_bas', 'verbal_sub'};
 
@@ -94,19 +100,32 @@ else
         
 end
 
-%% construct the final target pattern 
-% the index for the current superordinate category 
-idx_curCat = ((supCat-1) * param.numUnits.total) + (1:param.numUnits.total);
-% preallocate the whole pattern to zeros 
-modifiedTarget = zeros(1,param.numCategory.sup * param.numUnits.total);
-% preallocate the current superordinate category section to NAN
-target_curCat_masked = nan(1,param.numUnits.total);
+%% construct the final target pattern
+if strcmp(thingsToBeMasked, 'otherLevels')
+    mask = vertcat(mask,mask,mask);
+    modifiedTarget = nan(1, length(mask));
+    modifiedTarget(mask) = target(mask);
+    
+elseif strcmp(thingsToBeMasked, 'otherSupCategories')
+    %% masking out alternative superordinate categories
+    % the index for the current superordinate category 
+    idx_curCat = ((supCat-1) * param.numUnits.total) + (1:param.numUnits.total);
+    % preallocate the whole pattern to zeros 
+    modifiedTarget = zeros(1,param.numCategory.sup * param.numUnits.total);
+    % preallocate the current superordinate category section to NAN
+    target_curCat_masked = nan(1,param.numUnits.total);
 
-% get the current superordinate category section 
-target_curCat = target(idx_curCat);
-% mask out irrelevant target (for other level of concepts )
-target_curCat_masked(mask) = target_curCat(mask);
+    % get the current superordinate category section 
+    target_curCat = target(idx_curCat);
+    % mask out irrelevant target (for other level of concepts )
+    target_curCat_masked(mask) = target_curCat(mask);
 
-% get the final target 
-modifiedTarget(idx_curCat) = target_curCat_masked;
+    % get the final target 
+    modifiedTarget(idx_curCat) = target_curCat_masked;
+    
+else 
+    error('ERROR: unrecognized mask.')
+end
+
+
 end
