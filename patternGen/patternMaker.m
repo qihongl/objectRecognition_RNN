@@ -118,12 +118,12 @@ for f = 1 : freq
         verbalPatterns.bas, protoParam, targetType, 1)
     clear names;
     
-%     targetType = 'visual_bas+sup';
-%     addTitle(filename, '# verbal bas -> visual bas + sup features' )
-%     names = addPrefix('verbal', verbalPatterns.names, 'bas');
-%     writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
-%         visualPatterns.sup_bas, protoParam, targetType, 2)
-%     clear names;
+    targetType = 'visual_bas+sup';
+    addTitle(filename, '# verbal bas -> visual bas + sup features' )
+    names = addPrefix('verbal', verbalPatterns.names, 'bas');
+    writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
+        visualPatterns.sup_bas, protoParam, targetType, 2)
+    clear names;
 end
 
 

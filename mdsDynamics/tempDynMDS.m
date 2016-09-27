@@ -6,8 +6,8 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
 % PATH.SIMID = 'sim26.2_initCond';
-PATH.SIMID = 'sim27.1_maskTarget';
-FILENAME.ACT = 'hidden_e01.txt';
+PATH.SIMID = 'sim27.0_maskTarget';
+FILENAME.ACT = 'hiddenAll_e01.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters

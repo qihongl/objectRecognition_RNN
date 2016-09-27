@@ -9,10 +9,17 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 PATH.SIMID = 'sim27.0_maskTarget';
 
 % PATH.SIMID = 'sim22.2_RSVP';
-FILENAME.ACT = 'verbalAll_e2.txt';
+FILENAME.ACT = 'verbalAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-
 PLOTALL = false;
+
+% read input file name to epoch num  (DOESN WORK FOR "01", for e.g.)
+temp = strsplit(FILENAME.ACT, '_'); temp = temp(2); temp = temp{:};
+temp = strsplit(temp, '.'); temp = temp(1); temp = temp{:}; 
+temp(1) = []; 
+temp = str2num(temp);
+epochNum = temp * 1000; 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% start
@@ -181,7 +188,7 @@ else
     xlim([0 25]);
     % ylim([0 .5]);
     legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
-    title_text = sprintf('EPOCH = 300');
+    title_text = sprintf('EPOCH = %d', epochNum);
     title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
     xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
     ylabel('Activation Value of Verbal Rep.', 'fontSize', p.FS, 'FontWeight','bold')
