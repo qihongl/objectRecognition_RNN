@@ -4,6 +4,9 @@
 /*.Rhistory
 *.RData
 *.Rhistory
+*.wt
+*.txt
+*.mat
 patternGen/*.txt
 [oldFiles]/
 classification/testing.m
