@@ -1,4 +1,4 @@
-# makeing the network
+# make the network
 addNet EM -t 5 -i 5 CONTINUOUS
 
 
@@ -48,14 +48,15 @@ setObj trainGroupCrit 0.00
 setObj testGroupCrit 0.00
 
 # set the init output values to be 0
-setObj VerbalRep.initOutput 0.05
-setObj VisualRep.initOutput 0.05
-setObj VerbalIn.initOutput 0.05
-setObj VisualIn.initOutput 0.05
-setObj hidden.initOutput 0.05
+setObj VerbalRep.initOutput 0.00
+setObj VisualRep.initOutput 0.00
+setObj VerbalIn.initOutput 0.00
+setObj VisualIn.initOutput 0.00
+setObj hidden.initOutput 0.00
+
 
 # define unit display (20 units wide) and create error graph
-autoPlot 20
+autoPlot 52
 # viewUnits
 # graphObj
 # setObj graph(0).cols 300
