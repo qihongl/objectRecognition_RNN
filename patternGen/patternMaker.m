@@ -32,6 +32,7 @@ parameters.defT = NaN;
 parameters.actI = 1;
 parameters.actT = 1;
 parameters.min = 0.5;
+parameters_test.min = 2.5;
 parameters.max = 5;
 parameters.grace = 0.5;
 
@@ -52,8 +53,21 @@ saveParams(parameters, visualPatterns, verbalPatterns, protoParam, prototype)
 
 %% write all patterns to a file
 writeParameters(filename, parameters, visualPatterns);
+temp = parameters.min;
+parameters.min = parameters_test.min;
 writeParameters(filenameTest, parameters, visualPatterns);
+parameters.min = temp; 
 
+%% test set
+% write visual full -> verbal full (for tempDyn)
+addTitle(filename, '# visual full -> verbal full' )
+targetType = 'verbal_none';
+names = addPrefix('visual', visualPatterns.names, '');
+writeAllPatterns(filenameTest, names, stimulusLength, visualPatterns.full, ...
+    verbalPatterns.full, protoParam, targetType, 1)
+clear names;
+
+%% training set 
 % verbal -> visual
 addTitle(filename, '# verbal sup -> visual sup features' )
 targetType = 'visual_sup';
@@ -74,18 +88,6 @@ targetType = 'visual_all';
 names = addPrefix('verbal', verbalPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.sub, ...
     visualPatterns.full, protoParam, targetType, 2)
-clear names;
-
-
-% write visual full -> verbal full (for tempDyn)
-addTitle(filename, '# visual full -> verbal full' )
-names = addPrefix('visual', visualPatterns.names, '');
-targetType = 'verbal_none';
-% writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-%     verbalPatterns.full, protoParam, targetType, 1)
-% testing file
-writeAllPatterns(filenameTest, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.full, protoParam, targetType, 1)
 clear names;
 
 
