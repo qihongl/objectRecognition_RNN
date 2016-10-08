@@ -6,11 +6,14 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.SIMID= 'sim24.2_noBias';
 % PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_noVisNoise';
-PATH.SIMID = 'sim27.0_maskTarget';
+PATH.SIMID = 'sim27.0_maskAltLvs';
+% PATH.SIMID = 'sim27.0_maskAltLvs_rsvp';
 
 % PATH.SIMID = 'sim22.2_RSVP';
 FILENAME.ACT = 'verbalAll_e1.txt';
+% FILENAME.ACT = 'visualAll_e1.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
+nTimePts = 25; 
 PLOTALL = false;
 
 % read input file name to epoch num  (DOESN WORK FOR "01", for e.g.)
@@ -27,7 +30,7 @@ epochNum = temp * 1000;
 %% read data
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [param, proto] = readPrototype(PATH.PROTOTYPE);
-[data, nTimePts] = importData( PATH, FILENAME, param);
+[data, nTimePts] = importData( PATH, FILENAME, param, nTimePts);
 nObjs = param.numStimuli;
 % generate index matrix (itermNumber x time)
 idx = nan(nObjs, nTimePts);
@@ -66,10 +69,10 @@ for c = 1:param.numCategory.sup;
     for instance = 1 : param.numInstances;
         basUnitsIdx = (1+param.numUnits.sup*basicIdxVec(instance)) : (param.numCategory.bas * (basicIdxVec(instance)+1));
         temp = mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
-        if temp(end) > .8 
+%         if temp(end) > .8 
             count = count + 1;
             average.bas(:,c) = average.bas(:,c) + mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
-        end
+%         end
     end
     average.bas(:,c) = average.bas(:,c) / count; 
     %     % get activation values at corresponding units: sub
