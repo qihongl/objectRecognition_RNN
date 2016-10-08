@@ -5,11 +5,10 @@ clear; clc; clf;
 
 %% load file and compute summarized data
 condition = 'randomSubset';
-% condition = 'spatBlurring';
+condition = 'spatBlurring';
 % subDirName = 'sim22.2_RSVP_e2_30-Mar-2016_03';
-% subDirName = 'sim23.2_noise_e2_13-Mar-2016';
-% subDirName = 'sim26.3_initCond_e2_21-Jun-2016';
 subDirName = 'sim23.2_noise_e2_22-Jun-2016';
+subDirName = 'sim27.0_maskAltLvs_rsvp_e1_01-Oct-2016';
 
 % combine path name
 mainDirName = 'groupScores_class';
@@ -27,7 +26,7 @@ for i = 1:numFiles
     fileName = listing(i).name;
     load([pathName '/' fileName])
     % build legend
-    propUsed{i} = extractPropUsed(fileName, condition);
+    propUsed{i} = extractPropUsed(fileName, condition)/10;
     
     % compute means
     data.mean.acc(:,i) = mean(group.accuracy,2);
@@ -51,61 +50,61 @@ end
 % constant
 d.FONTSIZE = 20;
 d.LW = 3;
-% % % Plot the CV accuracies against time
-% % % subplot(2,2,1)
-% fig1 = figure(1);
-% set(fig1, 'Position', [1000 1000 600 500])
-% 
-% plot(data.mean.acc,'linewidth',d.LW)
-% % hold on
-% % for i = 1 : numFiles
-% %     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
-% % end
-% % hold off
-% 
-% legend(legendNames, 'location', 'SE', 'fontsize', d.FONTSIZE-2);
-% 
-% 
-% xlabel('time', 'FontSize', d.FONTSIZE)
-% ylabel('Classification accuracy (%)', 'FontSize', d.FONTSIZE)
-% title_text = sprintf('Logistic regression, Semantic units, %s', condition);
-% title(title_text, 'FontSize', d.FONTSIZE)
-% set(gca,'FontSize',d.FONTSIZE)
-% 
-% 
-% % Plot the sum of absolute deviations (on the test set) against time
-% % subplot(2,2,2)
-% figure(2)
-% plot(1 - data.mean.dev,'linewidth',d.LW)
-% % hold on
-% % for i = 1 : numFiles
-% %     errorbar(1 - data.mean.dev(:,i),data.sd.dev(:,i),'linewidth',d.LW)
-% % end
-% % hold off
-% legend(legendNames, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
-% xlabel('time', 'FontSize', d.FONTSIZE)
-% % ylabel(strcat( '$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}| ',...
-% %     ' \hspace{.5cm} (target \in \{0,1\})$'), 'FontSize', d.FONTSIZE,'Interpreter','latex')
-% ylabel('Absolute sum of deviation from the class label','FontSize', d.FONTSIZE);
-% % title_text = sprintf(' ''Fit '' - %s ', condition);
-% title_text = sprintf('Logistic regression, Fit | Semantic units | %s', condition);
-% title(title_text, 'FontSize', d.FONTSIZE)
-% set(gca,'FontSize',d.FONTSIZE)
-% 
-% 
-% % subplot(2,2,3)
-% figure(3)
-% hold on 
-% % plot(data.mean.hr,'linewidth',d.LW/2)
-% % plot(data.mean.fr,'linewidth',d.LW/2)
-% plot(data.mean.hr-data.mean.fr,'linewidth',d.LW)
+% % Plot the CV accuracies against time
+% % subplot(2,2,1)
+fig1 = figure(1);
+set(fig1, 'Position', [1000 1000 600 500])
+
+plot(data.mean.acc,'linewidth',d.LW)
+% hold on
+% for i = 1 : numFiles
+%     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
+% end
 % hold off
-% legend(legendNames, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
-% xlabel('time', 'FontSize', d.FONTSIZE)
-% ylabel('%', 'FontSize', d.FONTSIZE)
-% title_text = sprintf('(hit - false)rate  - %s', condition);
-% title(title_text, 'FontSize', d.FONTSIZE)
-% set(gca,'FontSize',d.FONTSIZE)
+
+legend(legendNames, 'location', 'SE', 'fontsize', d.FONTSIZE-2);
+
+
+xlabel('time', 'FontSize', d.FONTSIZE)
+ylabel('Classification accuracy (%)', 'FontSize', d.FONTSIZE)
+title_text = sprintf('Logistic regression, Semantic units, %s', condition);
+title(title_text, 'FontSize', d.FONTSIZE)
+set(gca,'FontSize',d.FONTSIZE)
+
+
+% Plot the sum of absolute deviations (on the test set) against time
+% subplot(2,2,2)
+figure(2)
+plot(1 - data.mean.dev,'linewidth',d.LW)
+% hold on
+% for i = 1 : numFiles
+%     errorbar(1 - data.mean.dev(:,i),data.sd.dev(:,i),'linewidth',d.LW)
+% end
+% hold off
+legend(legendNames, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+xlabel('time', 'FontSize', d.FONTSIZE)
+% ylabel(strcat( '$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}| ',...
+%     ' \hspace{.5cm} (target \in \{0,1\})$'), 'FontSize', d.FONTSIZE,'Interpreter','latex')
+ylabel('Absolute sum of deviation from the class label','FontSize', d.FONTSIZE);
+% title_text = sprintf(' ''Fit '' - %s ', condition);
+title_text = sprintf('Logistic regression, Fit | Semantic units | %s', condition);
+title(title_text, 'FontSize', d.FONTSIZE)
+set(gca,'FontSize',d.FONTSIZE)
+
+
+% subplot(2,2,3)
+figure(3)
+hold on 
+% plot(data.mean.hr,'linewidth',d.LW/2)
+% plot(data.mean.fr,'linewidth',d.LW/2)
+plot(data.mean.hr-data.mean.fr,'linewidth',d.LW)
+hold off
+legend(legendNames, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
+xlabel('time', 'FontSize', d.FONTSIZE)
+ylabel('%', 'FontSize', d.FONTSIZE)
+title_text = sprintf('(hit - false)rate  - %s', condition);
+title(title_text, 'FontSize', d.FONTSIZE)
+set(gca,'FontSize',d.FONTSIZE)
 %% 
 figure(4)
 verySmallNum = 1e-9;

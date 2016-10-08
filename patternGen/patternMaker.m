@@ -1,5 +1,5 @@
 %% Generate the stimuli file for my PDP model for semantics
-clear; clc; close all;
+clear variables; clc; close all;
 % CONSTANTS
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
@@ -7,9 +7,10 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 % get full patterns
 protoName = 'PROTO3.xlsx';
 % write to a file
-filename = fopen('environment.txt','w');
-filenameTest = fopen('allStimuli.txt','w');
-
+trainFileName = 'train.txt';
+filename = fopen(trainFileName,'w');
+testFileName = 'test.txt';
+filenameTest = fopen(testFileName,'w');
 
 allThings = {'otherSupCategories', 'otherLevels'};
 parameters.thingsToBeMasked = allThings{2};
@@ -32,7 +33,7 @@ parameters.defT = NaN;
 parameters.actI = 1;
 parameters.actT = 1;
 parameters.min = 0.5;
-parameters_test.min = 2.5;
+parameters_test.min = 0.5;
 parameters.max = 5;
 parameters.grace = 0.5;
 
@@ -51,44 +52,26 @@ verbalPatterns.names = nameGen(verbalPatterns.numCategory);
 %% save the actual pattern used
 saveParams(parameters, visualPatterns, verbalPatterns, protoParam, prototype)
 
-%% write all patterns to a file
-writeParameters(filename, parameters, visualPatterns);
-temp = parameters.min;
-parameters.min = parameters_test.min;
-writeParameters(filenameTest, parameters, visualPatterns);
-parameters.min = temp; 
-
-%% test set
-% write visual full -> verbal full (for tempDyn)
-addTitle(filename, '# visual full -> verbal full' )
-targetType = 'verbal_none';
-names = addPrefix('visual', visualPatterns.names, '');
-writeAllPatterns(filenameTest, names, stimulusLength, visualPatterns.full, ...
-    verbalPatterns.full, protoParam, targetType, 1)
-clear names;
-
 %% training set 
+writeParameters(filename, parameters, visualPatterns);
 % verbal -> visual
 addTitle(filename, '# verbal sup -> visual sup features' )
 targetType = 'visual_sup';
 names = addPrefix('verbal', verbalPatterns.names, 'sup');
 writeAllPatterns(filename, names, stimulusLength, ...
     verbalPatterns.sup, visualPatterns.sup, protoParam, targetType, 2)
-clear names;
 
 addTitle(filename, '# verbal bas -> visual bas + sup features' )
 targetType = 'visual_bas+sup';
 names = addPrefix('verbal', verbalPatterns.names, 'bas');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
     visualPatterns.sup_bas, protoParam, targetType, 2)
-clear names;
 
 addTitle(filename, '# verbal sub -> visual full features' )
 targetType = 'visual_all';
 names = addPrefix('verbal', verbalPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, verbalPatterns.sub, ...
     visualPatterns.full, protoParam, targetType, 2)
-clear names;
 
 
 % write visual full to 3 levels of names
@@ -97,22 +80,18 @@ targetType = 'verbal_sup';
 names = addPrefix('visual', visualPatterns.names, 'sup');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
     verbalPatterns.sup, protoParam, targetType, 1)
-clear names;
 
 addTitle(filename, '# visual full -> verbal bas' )
 targetType = 'verbal_bas';
 names = addPrefix('visual', visualPatterns.names, 'bas');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
     verbalPatterns.bas, protoParam, targetType, 1)
-clear names;
 
 addTitle(filename, '# visual full -> verbal sub' )
 targetType = 'verbal_sub';
 names = addPrefix('visual', visualPatterns.names, 'sub');
 writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
     verbalPatterns.sub, protoParam, targetType, 1)
-clear names;
-
 
 
 %% manipulate frequency (add more basic training patterns)
@@ -122,16 +101,27 @@ for f = 1 : freq
     addTitle(filename, '# visual full -> verbal bas' )
     names = addPrefix('visual', visualPatterns.names, 'bas');
     writeAllPatterns(filename, names, stimulusLength, visualPatterns.full, ...
-        verbalPatterns.bas, protoParam, targetType, 1)
-    clear names;
+        verbalPatterns.bas, protoParam, targetType, 1) 
     
     targetType = 'visual_bas+sup';
     addTitle(filename, '# verbal bas -> visual bas + sup features' )
     names = addPrefix('verbal', verbalPatterns.names, 'bas');
     writeAllPatterns(filename, names, stimulusLength, verbalPatterns.bas, ...
         visualPatterns.sup_bas, protoParam, targetType, 2)
-    clear names;
 end
+
+
+
+
+%% test set
+parameters.min = parameters_test.min;
+writeParameters(filenameTest, parameters, visualPatterns);
+% write visual full -> verbal full (for tempDyn)
+addTitle(filename, '# visual full -> verbal full' )
+targetType = 'verbal_none';
+names = addPrefix('visual', visualPatterns.names, '');
+writeAllPatterns(filenameTest, names, stimulusLength, visualPatterns.full, ...
+    verbalPatterns.full, protoParam, targetType, 1)
 
 
 disp('Done!')
