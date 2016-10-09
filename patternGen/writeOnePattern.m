@@ -33,10 +33,12 @@ fprintf(filename, '');      % the 1st phase has no target
 
 %% 2nd phase - stimuli & target presentation
 fprintf(filename, '\nI:\t');
-if visPos == 1
-    writeVisualVector(filename,input);
-else
-    writeVerbalVector(filename,input);
+if param.rapidPresentation == false
+    if visPos == 1
+        writeVisualVector(filename,input);
+    else
+        writeVerbalVector(filename,input);
+    end
 end
 
 fprintf(filename, '\nT:\t');
@@ -83,7 +85,7 @@ else
         case 'verbal'
             switch targetTypes{2}
                 case 'none'
-                    % do nothing, all false is good 
+                    mask = true(param.numUnits.total,1);
                 case 'sup'
                     mask(1:param.numUnits.sup) = true; 
                 case 'bas'
