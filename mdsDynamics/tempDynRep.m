@@ -4,77 +4,80 @@ clear variables; clf;  clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim24.2_noBias';
-% PATH.SIMID = 'sim23.2_noise';
+PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_noVisNoise';
-PATH.SIMID = 'sim27.0_maskAltLvs';
-% PATH.SIMID = 'sim27.0_maskAltLvs_rsvp';
+% PATH.SIMID = 'sim28.2_sym';
+PATH.SIMID = 'sim27.0_base';
 
-% PATH.SIMID = 'sim22.2_RSVP';
-FILENAME.ACT = 'verbalAll_e1.txt';
-% FILENAME.ACT = 'visualAll_e1.txt';
+FILENAME.ACT = 'verbal_normal_e20.txt';
+% FILENAME.ACT = 'verbal_rapid_e20.txt';
+% FILENAME.ACT = 'verbalAll_e3.txt';
+
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-nTimePts = 25; 
+nTimePts = 25;
 PLOTALL = false;
 
 % read input file name to epoch num  (DOESN WORK FOR "01", for e.g.)
-temp = strsplit(FILENAME.ACT, '_'); temp = temp(2); temp = temp{:};
-temp = strsplit(temp, '.'); temp = temp(1); temp = temp{:}; 
-temp(1) = []; 
-temp = str2num(temp);
-epochNum = temp * 1000; 
+% temp = strsplit(FILENAME.ACT, '_'); temp = temp(3); temp = temp{:};
+% temp = strsplit(temp, '.'); temp = temp(1); temp = temp{:};
+% temp(1) = [];
+% temp = str2num(temp);
+% epochNum = temp * 100;
+epochNum = 0;
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% start
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% read data
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [param, proto] = readPrototype(PATH.PROTOTYPE);
-[data, nTimePts] = importData( PATH, FILENAME, param, nTimePts);
-nObjs = param.numStimuli;
+[data, nTimePts] = importData(PATH, FILENAME, param, nTimePts);
 % generate index matrix (itermNumber x time)
-idx = nan(nObjs, nTimePts);
-for itemNum = 1 : nObjs
-    idx(itemNum,:) = (1 + (itemNum-1) * nTimePts) : (itemNum*nTimePts);
-end
+idx = reshape(1 : nTimePts * param.numStimuli, [nTimePts,param.numStimuli])';
 
-%%
+%% 
 dataByCat = cell(param.numCategory.sup,1);
+dataRest = cell(param.numCategory.sup,1);
 chunk = nTimePts * param.numStimuli / param.numCategory.sup;
 for c = 1: param.numCategory.sup
     colIdx = 1+ chunk * (c-1): chunk * c;
     rowIdx = 1 + param.numUnits.total * (c - 1) : param.numUnits.total * c;
     dataByCat{c} = data(colIdx ,rowIdx);
+    dataRest{c} = data(colIdx ,rowIdx);
 end
-
 
 % subplot(121);imagesc(dataByCat{1}(7:25:400,:));subplot(122);imagesc(proto)
 
 %% compute the average
 % preallocate
-average.sup = zeros(nTimePts,param.numCategory.sup);
-average.bas = zeros(nTimePts,param.numCategory.sup);
+average.sup = zeros(nTimePts, param.numCategory.sup);
+average.bas = zeros(nTimePts, param.numCategory.sup);
+baseline.bas = zeros(nTimePts, param.numCategory.sup);
+baseline.sup = zeros(nTimePts, param.numCategory.sup);
+
+
 for c = 1:param.numCategory.sup;
     % get activation values at corresponding units: superordinate
     supUnitsRange = 1:param.numUnits.sup;
-    for instance = 1 : param.numInstances;
-        average.sup(:,c) = average.sup(:,c) + mean(dataByCat{c}(idx(instance,:),supUnitsRange),2);
+    for instance = 1 : param.numInstances
+        average.sup(:,c) = average.sup(:,c) + ...
+            mean(dataByCat{c}(idx(instance,:),supUnitsRange),2)/ param.numInstances;
     end
+    
+    
     
     % get activation values at corresponding units: basic
     basUnitRange = (param.numUnits.sup+1):(param.numUnits.sup+param.numUnits.bas);
     basicIdxVec = reshape(repmat(1:param.numCategory.bas,[param.numCategory.bas,1]),[1,param.numCategory.bas^2]);
     
-    count = 0; 
     for instance = 1 : param.numInstances;
-        basUnitsIdx = (1+param.numUnits.sup*basicIdxVec(instance)) : (param.numCategory.bas * (basicIdxVec(instance)+1));
-        temp = mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
-%         if temp(end) > .8 
-            count = count + 1;
-            average.bas(:,c) = average.bas(:,c) + mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
-%         end
+        basUnitsIdx = (1 + param.numUnits.sup*basicIdxVec(instance)) : (param.numCategory.bas * (basicIdxVec(instance)+1));
+        average.bas(:,c) = average.bas(:,c) + mean(dataByCat{c}(idx(instance,:),basUnitsIdx), 2);
+        baseline.bas(:,c) = baseline.bas(:,c) + mean(dataByCat{c}(idx(instance,:), setdiff(basUnitRange,basUnitsIdx)), 2);
     end
-    average.bas(:,c) = average.bas(:,c) / count; 
+    average.bas(:,c) = average.bas(:,c) / param.numInstances;
+    baseline.bas(:,c) = baseline.bas(:,c) / param.numInstances;
+    
+    
+
     %     % get activation values at corresponding units: sub
     %     subIdx = (param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total;
     %     act.sub = nan(nTimePts,length(subIdx));
@@ -89,10 +92,11 @@ for c = 1:param.numCategory.sup;
     
 end
 
-% average across instance and super-category 
-average.sup = mean(average.sup / param.numInstances,2);
+% average across instance and super-category
+average.sup = mean(average.sup,2);
 % average.bas = mean(average.bas / param.numInstances,2);
 average.bas = mean(average.bas,2);
+average.baseline.bas = mean(baseline.bas,2);
 
 % subplot(121);imagesc(proto(:,(param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total))
 % subplot(122);imagesc(dataByCat{c}(7:nTimePts:size(dataByCat{1},1),(param.numUnits.sup + param.numUnits.bas+1) : param.numUnits.total))
@@ -104,113 +108,6 @@ average.bas = mean(average.bas,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% plot the data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-p.LW = 4;
-p.FS = 20;
-%%
-if PLOTALL
-    subplot(2,2,1)
-    hold on
-    % plot three temporal activation pattern
-    plot(average.sup,'g', 'linewidth', p.LW)
-    plot(average.bas,'r', 'linewidth', p.LW)
-    % plot(mSub, 'linewidth', p.LW)
-    hold off
-    
-    xlim([0 25]);
-    % ylim([0 .5]);
-    legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
-    title_text = sprintf('Verbal response');
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('Activation Value of Verbal Rep.', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-    
-    %%
-    subplot(2,2,2)
-    
-    prob.bas = average.bas ./ (average.sup + average.bas);
-    prob.sup = average.sup ./ (average.sup + average.bas);
-    hold on
-    plot(prob.sup,'g', 'linewidth', p.LW)
-    plot(prob.bas,'r', 'linewidth', p.LW)
-    hold off
-    
-    % legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
-    title_text = sprintf('Luce Choice Probability');
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('Relative Probability', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-    
-    %%
-    subplot(2,2,3)
-    
-    % crossOverPt = find(min(abs(prob.bas - prob.sup)) == abs(prob.bas - prob.sup));
-    
-    % arbitarily chosen time points
-    timeSections = [5 7 25];
-    timeSecData = horzcat(prob.sup(timeSections),prob.bas(timeSections));
-    
-    mybar = bar(timeSecData);
-    set(gca,'xticklabel',{'5','7','25'})
-    
-    mybar(1).FaceColor = 'g';
-    mybar(2).FaceColor = 'r';
-    
-    title_text = sprintf('Time sections');
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('Relative Probability', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-    
-    %%
-    subplot(2,2,4)
-    % mybar = bar(timeSecData);
-    
-    % set(gca,'xticklabel',{'t1','t2','t3'})
-    % mybar(1).FaceColor = 'g';
-    % mybar(2).FaceColor = 'r';
-    
-    title_text = sprintf('Empirical data');
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('--', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-    
-    
-    
-else
-    subplot(1,2,1)
-    hold on
-    % plot three temporal activation pattern
-    plot(average.sup,'g', 'linewidth', p.LW)
-    plot(average.bas,'r', 'linewidth', p.LW)
-    % plot(mSub, 'linewidth', p.LW)
-    hold off
-    
-    xlim([0 25]);
-    % ylim([0 .5]);
-    legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
-    title_text = sprintf('EPOCH = %d', epochNum);
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('Activation Value of Verbal Rep.', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-    
-    %%
-    subplot(1,2,2)
-    
-    prob.bas = average.bas ./ (average.sup + average.bas);
-    prob.sup = average.sup ./ (average.sup + average.bas);
-    hold on
-    plot(prob.sup,'g', 'linewidth', p.LW)
-    plot(prob.bas,'r', 'linewidth', p.LW)
-    hold off
-    
-    % legend({'Superordinate', 'Basic'}, 'location', 'southeast', 'fontsize', p.FS, 'FontWeight','bold')
-    title_text = sprintf('Luce Choice Probability');
-    title(title_text, 'fontSize', p.FS, 'FontWeight','bold');
-    xlabel('Time', 'fontSize', p.FS, 'FontWeight','bold')
-    ylabel('Relative Probability', 'fontSize', p.FS, 'FontWeight','bold')
-    set(gca,'FontSize',p.FS)
-end
+plotVerbalTemporalResponse(average, epochNum, PLOTALL)
+% figure()
+% plot(average.bas ./ (average.bas + average.baseline.bas))
