@@ -9,6 +9,8 @@
 *.mat
 *.xlsx
 *.m~
+*.csv
+*.zip
 
 patternGen/*.txt
 [oldFiles]/
