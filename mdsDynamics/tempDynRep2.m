@@ -4,13 +4,12 @@ clear variables;  clc; clf;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.SIMID = 'sim23.2_noise';
-% PATH.SIMID = 'sim25.2_noVisNoise';
-% PATH.SIMID = 'sim28.2_sym';
+PATH.SIMID = 'sim22.2_RSVP';
 PATH.SIMID = 'sim27.0_base';
 
-% FILENAME.ACT = 'verbal_normal_e20.txt';
-FILENAME.ACT = 'verbal_rapid_e04.txt';
-% FILENAME.ACT = 'verbalAll_e3.txt';
+FILENAME.ACT = 'verbal_normal_e08.txt';
+FILENAME.ACT = 'verbal_rapid_e08.txt';
+% FILENAME.ACT = 'verbalAll_e2.txt';
 
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 nTimePts = 25;
@@ -21,7 +20,7 @@ epochNum = 0;
 %% read data
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [p, proto] = readPrototype(PATH.PROTOTYPE);
-[data, nTimePts] = importData(PATH, FILENAME, p, nTimePts);
+data = importData(PATH, FILENAME, p, nTimePts);
 % generate index matrix (itermNumber x time)
 idx.full = reshape(1 : nTimePts * p.numStimuli, [nTimePts,p.numStimuli])';
 chunk = nTimePts * p.numStimuli / p.numCategory.sup;
@@ -36,9 +35,12 @@ baseline.sup = zeros(nTimePts, p.numCategory.sup);
 allSupUnitsRange = []; 
 allBasUnitRange = []; 
 for c = 1 : p.numCategory.sup
-    allSupUnitsRange = horzcat(allSupUnitsRange,(1:p.numUnits.sup) + p.numUnits.total * (c-1));
-    allBasUnitRange = horzcat(allBasUnitRange,((p.numUnits.sup+1):(p.numUnits.sup+p.numUnits.bas)) + p.numUnits.total * (c-1));
+    allSupUnitsRange = horzcat(allSupUnitsRange,...
+        (1:p.numUnits.sup) + p.numUnits.total * (c-1));
+    allBasUnitRange = horzcat(allBasUnitRange, ...
+        ((p.numUnits.sup+1):(p.numUnits.sup+p.numUnits.bas)) + p.numUnits.total * (c-1));
 end
+
 %% gather mean activation for each level of category 
 for c = 1 : p.numCategory.sup
     % SUP activation 
@@ -70,26 +72,39 @@ for c = 1 : p.numCategory.sup
     
 end
 
-%% take the mean of all activations 
-
-average.sup = mean(average.sup,2);
-average.bas = mean(average.bas,2);
-baseline.sup = mean(baseline.sup,2);
-baseline.bas = mean(baseline.bas,2);
 
 %% make plots 
+clf
+g.LW = 2; 
+g.FS = 14; 
+figure(1)
+% raw activation 
 subplot(121)
 hold on 
-plot(average.sup, 'linewidth',2)
-plot(average.bas, 'linewidth',2)
+plot(mean(average.sup,2), 'r', 'linewidth',g.LW)
+plot(mean(average.bas,2),'b', 'linewidth',g.LW)
+plot(mean(baseline.sup,2), '--r', 'linewidth',g.LW)
+plot(mean(baseline.bas,2), '--b','linewidth',g.LW)
 hold off 
-title('raw activation')
-set(gca,'FontSize',16)
+title('Verbal Layer Activation')
+xlabel('Time ticks');ylabel('Mean Activation')
+legend({'Sup-target','Basic-target','Sup-nontargets','Basic-nontarget'}, 'location', 'best')
+set(gca,'FontSize',g.FS)
+
+% luce choice probability 
 subplot(122)
 hold on 
-plot(average.sup ./ (average.sup + baseline.sup), 'linewidth',2)
-plot(average.bas./ (average.bas + baseline.bas), 'linewidth',2)
+plot(mean(average.sup,2) ./ (mean(average.sup,2) + sum(baseline.sup,2)), 'r', 'linewidth',g.LW)
+plot(mean(average.bas,2) ./ (mean(average.bas,2) + sum(baseline.bas,2)), 'b', 'linewidth',g.LW)
+plot(mean(baseline.sup,2) ./ (mean(average.sup,2) + sum(baseline.sup,2)), '--r', 'linewidth',g.LW)
+plot(mean(baseline.bas,2) ./ (mean(average.bas,2) + sum(baseline.bas,2)), '--b', 'linewidth',g.LW)
 hold off 
-title('luce choice')
-legend({'sup','bas'})
-set(gca,'FontSize',16)
+xlabel('Time ticks');ylabel('Probability w.r.t alternatives')
+title('Luce Probability')
+legend({'Sup-target','Basic-target','Sup-nontargets','Basic-nontarget'}, 'location', 'best')
+set(gca,'FontSize',g.FS)
+
+suptitle_text = strrep(sprintf('%s', FILENAME.ACT), '_', '-')
+suptitle(suptitle_text)
+%  text( -5, 0, suptitle_text, 'FontSize', g.FS+2, 'FontWeight', 'Bold', ...
+%       'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom' )
