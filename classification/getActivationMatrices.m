@@ -42,13 +42,12 @@ acts = cell(INTERVAL,1);    % pre-allocate
 % loop over all time points
 
 for t = 1: INTERVAL
-    % check number of total units
-    numTotalUnits = param.numCategory.sup * param.numUnits.total;
-    if numTotalUnits ~= size(data{i},2)
-        warning('number of total units mismatch');
-    end
+    % check number of total hidden units
+%     numTotalUnits = param.numCategory.sup * param.numUnits.total;
+%     if numTotalUnits ~= size(data{i},2)
+%         warning('number of total units mismatch');
+%     end
     
-%     temp = nan(param.numInstances, numTotalUnits);  % preallocate
     
     for i = 1 : param.numStimuli
 %         fprintf('Time: %d \t numInstace: %d\n',t,i)
