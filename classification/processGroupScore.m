@@ -7,8 +7,8 @@ clear; clc; clf;
 condition = 'randomSubset';
 condition = 'spatBlurring';
 % subDirName = 'sim22.2_RSVP_e2_30-Mar-2016_03';
-subDirName = 'sim23.2_noise_e2_22-Jun-2016';
-subDirName = 'sim27.0_maskAltLvs_rsvp_e1_01-Oct-2016';
+% subDirName = 'sim23.2_noise_e2_22-Jun-2016';
+subDirName = 'sim27.2_decay_rapid_e02_30-Oct-2016'
 
 % combine path name
 mainDirName = 'groupScores_class';

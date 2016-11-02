@@ -3,17 +3,17 @@
 % so we need a sample to establish average
 clear variables; clc;
 sampleSize = 20;
-timePoints = 15;
+timePoints = 25;
 saveData = 1;
 showPlot = 0; 
 
 %% Specify the Path information (user needs to do this!)
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.DATA_FOLDER = 'sim22.1_RSVP';
-PATH.DATA_FOLDER = 'sim27.0_maskAltLvs_rsvp';
+PATH.DATA_FOLDER = 'sim27.2_decay';
 % PATH.DATA_FOLDER = 'sim26.3_initCond';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hiddenAll_e1.txt';
+FILENAME.DATA = 'hidden_normal_e02.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 todayDate = date;
 

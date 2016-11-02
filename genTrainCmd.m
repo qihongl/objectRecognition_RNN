@@ -1,6 +1,7 @@
+
 clear all; clc
 
-trainModel = 0;
+trainModel = 1;
 
 modelName = 'network.txt';
 procFileName = '../procs.tcl';
@@ -23,6 +24,8 @@ for epochs = trainLength: trainLength: maxEpoch
     reload_text = sprintf('loadExamples %s; ', trainFileName);
     onestage = strcat(temp_train_text, temp_test_text, reload_text);
     allstages = strcat(allstages, onestage);
+    fprintf(onestage)
+    fprintf('\n')
 end
 output = sprintf('lens -n -c %s " source %s; %s exit"', modelName, procFileName, allstages);
 

@@ -5,13 +5,13 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID= 'sim24.2_noBias';
 PATH.SIMID = 'sim23.2_noise';
-% PATH.SIMID = 'sim25.2_noVisNoise';
+PATH.SIMID = 'sim22.2_RSVP';
 % PATH.SIMID = 'sim28.2_sym';
-PATH.SIMID = 'sim27.0_base';
+% PATH.SIMID = 'sim27.0_base';
 
-FILENAME.ACT = 'verbal_normal_e20.txt';
+% FILENAME.ACT = 'verbal_normal_e20.txt';
 % FILENAME.ACT = 'verbal_rapid_e20.txt';
-% FILENAME.ACT = 'verbalAll_e3.txt';
+FILENAME.ACT = 'verbalAll_e2.txt';
 
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 nTimePts = 25;

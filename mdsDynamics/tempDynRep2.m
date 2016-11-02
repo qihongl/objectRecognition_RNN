@@ -3,12 +3,13 @@
 clear variables;  clc; clf;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.SIMID = 'sim23.2_noise';
-PATH.SIMID = 'sim22.2_RSVP';
-PATH.SIMID = 'sim27.0_base';
+% PATH.SIMID = 'sim23.2_noise';
+% PATH.SIMID = 'sim22.2_RSVP';
+% PATH.SIMID = 'sim27.1_lessUnits';
+PATH.SIMID = 'sim27.2_decay';
 
-FILENAME.ACT = 'verbal_normal_e08.txt';
-FILENAME.ACT = 'verbal_rapid_e08.txt';
+FILENAME.ACT = 'verbal_normal_e02.txt';
+FILENAME.ACT = 'verbal_rapid_e02.txt';
 % FILENAME.ACT = 'verbalAll_e2.txt';
 
 FILENAME.PROTOTYPE = 'PROTO.xlsx';

@@ -1,13 +1,13 @@
 %% Generate the stimuli file for my PDP model for semantics
 clear variables; clc; close all;
 % set a seed (for replicability )
-envParam.seed = 2; rng(envParam.seed);% TODO consider move it to patternGen
+envParam.seed = 2; rng(envParam.seed); % TODO consider move it to patternGen
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
 
 %% Parameters
 % get full patterns
-protoName = 'PROTO3.xlsx';
+protoName = 'PROTO4.xlsx';
 trainFileName = 'train.txt';
 testFileName = 'test.txt';
 
