@@ -80,6 +80,18 @@ else
                 otherwise
                     error('ERROR: unrecognizable target type ');
             end
+        % dealing with verbal target 
+%         case 'visual'
+%             switch targetTypes{2}
+%                 case 'sup'
+%                     mask(1:param.numUnits.sup) = true; 
+%                 case 'bas+sup'
+%                     mask((param.numUnits.sup+1):(param.numUnits.sup+param.numUnits.bas)) = true; 
+%                 case 'all'
+%                     mask((param.numUnits.sup+param.numUnits.bas+1) : param.numUnits.total) = true; 
+%                 otherwise
+%                     error('ERROR: unrecognizable target type ');
+%             end            
             
         % dealing with verbal target 
         case 'verbal'
