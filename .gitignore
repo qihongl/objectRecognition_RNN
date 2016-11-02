@@ -5,12 +5,15 @@
 *.RData
 *.Rhistory
 *.wt
-*.txt
 *.mat
 *.xlsx
 *.m~
 *.csv
 *.zip
+
+hidden*.txt
+verbal*.txt
+e*.txt
 
 patternGen/*.txt
 [oldFiles]/
