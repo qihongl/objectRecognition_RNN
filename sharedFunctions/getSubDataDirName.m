@@ -3,9 +3,10 @@ function [ subDataDirName ] = getSubDataDirName( PATH,FILENAME )
 %   Detailed explanation goes here
 
 tempStrs = strsplit(FILENAME.DATA, '_');
-tempStrs = strsplit(tempStrs{2}, '.');
-epoch = tempStrs{1};
-subDataDirName = strcat(PATH.DATA_FOLDER, '_', epoch);
+epoch = strsplit(tempStrs{3}, '.');
+epoch = epoch{1};
+tempStrs = strcat(tempStrs{2},'_',epoch);
+subDataDirName = strcat(PATH.DATA_FOLDER, '_', tempStrs);
 
 end
 
