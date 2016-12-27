@@ -8,12 +8,12 @@ saveData = 1;
 showPlot = 0; 
 
 %% Specify the Path information (user needs to do this!)
-PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
+PATH.PROJECT = '../';
 % PATH.DATA_FOLDER = 'sim22.1_RSVP';
-PATH.DATA_FOLDER = 'sim27.2_decay';
+PATH.DATA_FOLDER = 'sim27.6_decay';
 % PATH.DATA_FOLDER = 'sim26.3_initCond';
 % provide the NAMEs of the data files (user need to set them mannually)
-FILENAME.DATA = 'hidden_normal_e02.txt';
+FILENAME.DATA = 'hidden_normal_e20.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 todayDate = date;
 

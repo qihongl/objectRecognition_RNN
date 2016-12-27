@@ -3,20 +3,20 @@
 clear variables; clf; close all; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-% PATH.SIMID = 'sim23.2_noise';
+PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim25.2_RSVP';
 % PATH.SIMID = 'sim27.2_maskAltLvs';
-PATH.SIMID = 'simtest';
-FILENAME.ACT = 'hiddenAll_e20.txt';
+% PATH.SIMID = 'simtest';
+FILENAME.ACT = 'hiddenAll_e2.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 
 % set parameters
 nTimePts = 25; 
 targetTimePt = 25;       % select from int[1,25]
 graph.turnOnAxis = false;
-graph.attachLabels = 0;
+graph.attachLabels = 1;
 doDynamicPlot = 0;
-graph.dimension = 3;
+graph.dimension = 2;
 % stimulate properties of EEG
 subsetSize = 10;
 % method = 'spatialBlurring';
@@ -35,7 +35,7 @@ sprintf('Method: %s.\n', method)
 %% read data
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [param, ~] = readPrototype(PATH.PROTOTYPE);
-[data, nTimePts] = importData( PATH, FILENAME, param, nTimePts);
+data = importData( PATH, FILENAME, param, nTimePts);
 nObjs = param.numStimuli;
 % generate index matrix (itermNumber x time)
 idx = reshape(1:size(data,1), [nTimePts,nObjs])';

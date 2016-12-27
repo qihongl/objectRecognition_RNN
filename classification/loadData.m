@@ -4,8 +4,10 @@ function [output, param] = loadData(PATH, FILENAME)
 % read the output data
 PATH.TEMP = [PATH.PROJECT PATH.DATA_FOLDER];
 % check if the data file exists
-if exist([PATH.TEMP '/' FILENAME.DATA], 'file') == 0
-    error([ 'File ' FILENAME.DATA ' not found.'])
+
+path_temp = fullfile(PATH.TEMP, FILENAME.DATA);
+if exist(path_temp, 'file') == 0
+    error([ 'File ' path_temp ' not found.'])
 end
 outputFile = tdfread([PATH.TEMP '/' FILENAME.DATA]);
 name = char(fieldnames(outputFile));

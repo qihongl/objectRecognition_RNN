@@ -1,13 +1,13 @@
-
+ls
 clear all; clc
 
-trainModel = 1;
+trainModel = 0;
 
 modelName = 'network.txt';
 procFileName = '../procs.tcl';
 trainFileName = 'train.txt';
 conditions = {'normal', 'rapid'};
-condition = conditions{1};
+condition = conditions{2};
 trainLength = 200;
 maxEpoch = 2000;
 

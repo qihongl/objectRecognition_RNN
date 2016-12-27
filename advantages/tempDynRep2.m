@@ -6,10 +6,9 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % PATH.SIMID = 'sim23.2_noise';
 % PATH.SIMID = 'sim22.2_RSVP';
 % PATH.SIMID = 'sim27.1_lessUnits';
-PATH.SIMID = 'sim27.2_decay';
-
-FILENAME.ACT = 'verbal_normal_e02.txt';
-FILENAME.ACT = 'verbal_rapid_e02.txt';
+PATH.SIMID = 'sim27.5_decay';
+FILENAME.ACT = 'verbal_normal_e20.txt';
+% FILENAME.ACT = 'verbal_rapid_e20.txt';
 % FILENAME.ACT = 'verbalAll_e2.txt';
 
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
@@ -87,9 +86,10 @@ plot(mean(average.bas,2),'b', 'linewidth',g.LW)
 plot(mean(baseline.sup,2), '--r', 'linewidth',g.LW)
 plot(mean(baseline.bas,2), '--b','linewidth',g.LW)
 hold off 
-title('Verbal Layer Activation')
+title('Verbal Activation')
 xlabel('Time ticks');ylabel('Mean Activation')
 legend({'Sup-target','Basic-target','Sup-nontargets','Basic-nontarget'}, 'location', 'best')
+% ylim([0 .7])
 set(gca,'FontSize',g.FS)
 
 % luce choice probability 
@@ -105,7 +105,5 @@ title('Luce Probability')
 legend({'Sup-target','Basic-target','Sup-nontargets','Basic-nontarget'}, 'location', 'best')
 set(gca,'FontSize',g.FS)
 
-suptitle_text = strrep(sprintf('%s', FILENAME.ACT), '_', '-')
+suptitle_text = strrep(sprintf('%s', FILENAME.ACT), '_', '-');
 suptitle(suptitle_text)
-%  text( -5, 0, suptitle_text, 'FontSize', g.FS+2, 'FontWeight', 'Bold', ...
-%       'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom' )
