@@ -28,12 +28,13 @@ for opt = 1 : length(optionChoice)
             group.falseRate(:,i) = gs.averageScore.falseRate; 
             fprintf('%2.d ',i);
         end
+        fprintf('\n')
         
         %% read metadata
         if saveData
             dataDirName = sprintf('groupScores_class/');
             subDataDirName = getSubDataDirName(PATH,FILENAME);
-            finalSavePath = strcat(dataDirName,subDataDirName,'_',todayDate);
+            finalSavePath = strcat(dataDirName,subDataDirName);
             %% save the results
             checkAndMkdir(dataDirName);
             checkAndMkdir(finalSavePath);
