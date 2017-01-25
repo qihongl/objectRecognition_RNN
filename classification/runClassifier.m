@@ -20,6 +20,11 @@ K = 3;
 % get activation matrices
 activationMatrix = getActivationMatrices(output, param);
 numTimePoints = size(activationMatrix,1);
+
+if numTimePoints~=logParam.nTimePoints
+    error_msg = sprintf('numTimePoints is %d(incorrect)!', numTimePoints); 
+    error(error_msg)
+end
 % get labels
 [~, Y] = getLabels(param);
 

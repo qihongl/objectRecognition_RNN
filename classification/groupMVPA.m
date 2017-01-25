@@ -1,5 +1,5 @@
 function [] = groupMVPA(PATH, FILENAME, propChoice, optionChoice,logParam,...
-    sampleSize,timePoints,saveData,showPlot)
+    sampleSize,nTimePoints,saveData,showPlot)
 
 % loop over all option choices
 for opt = 1 : length(optionChoice)
@@ -8,14 +8,15 @@ for opt = 1 : length(optionChoice)
     
     for p = 1: length(propChoice);
         logParam.subsetProp = propChoice(p);
+        logParam.nTimePoints = nTimePoints; 
         
         %% run the analysis
         % preallocate
-        group.accuracy = nan(timePoints,sampleSize);
-        group.deviation = nan(timePoints,sampleSize);
-        group.response = nan(timePoints,sampleSize);
-        group.hitRate = nan(timePoints,sampleSize);
-        group.falseRate = nan(timePoints,sampleSize);
+        group.accuracy = nan(nTimePoints,sampleSize);
+        group.deviation = nan(nTimePoints,sampleSize);
+        group.response = nan(nTimePoints,sampleSize);
+        group.hitRate = nan(nTimePoints,sampleSize);
+        group.falseRate = nan(nTimePoints,sampleSize);
         for i = 1 : sampleSize
             % run classifier and compute average
             [gs, ~] = runClassifier(logParam,PATH,FILENAME,showPlot);

@@ -4,7 +4,7 @@
 clear variables; clc;warning('off','all');
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 sampleSize = 20;
-timePoints = 25;
+nTimePoints = 25;
 propChoice = [.005 .01 .05 .15 .3];
 optionChoice = {'randomSubset', 'spatBlurring'};
 logParam.var = 0;
@@ -26,5 +26,5 @@ rep_idxs = 6 : 17
 for rep_idx = rep_idxs
     PATH.DATA_FOLDER = sprintf('sim%d.%d_%s', sim_idx, rep_idx, simName); 
     groupMVPA(PATH, FILENAME, propChoice, optionChoice,logParam,...
-        sampleSize,timePoints,saveData,showPlot)
+        sampleSize,nTimePoints,saveData,showPlot)
 end
