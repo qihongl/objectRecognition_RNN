@@ -59,7 +59,4 @@ for t = 1: INTERVAL
 end
 
 activationMatrix = acts;
-% save the activation matrices
-% save('activationMatrix', 'activationMatrix')
-% disp('done!')
 end
