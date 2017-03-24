@@ -7,9 +7,9 @@ addGroup VerbalIn 156 INPUT
 addGroup VisualIn 156 INPUT 
 addGroup VerbalRep 156 OUTPUT -BIASED
 addGroup VisualRep 156 OUTPUT -BIASED
-addGroup hidden 78 IN_NOISE OUT_NOISE
-addGroup visHidden 78 IN_NOISE OUT_NOISE
-addGroup verHidden 78 IN_NOISE OUT_NOISE
+addGroup hidden 26 IN_NOISE OUT_NOISE
+addGroup visHidden 26 IN_NOISE OUT_NOISE
+addGroup verHidden 26 IN_NOISE OUT_NOISE
 
 # establish the connectivity for verbal/ visual
 connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0

@@ -1,0 +1,5 @@
+the simulation is failed, the model is unable to learn the structure
+
+possible reasons:
+- the number of hidden units is not large enough 
+- training not enough

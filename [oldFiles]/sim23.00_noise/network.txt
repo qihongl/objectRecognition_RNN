@@ -25,9 +25,9 @@ connectGroups bias VisualIn -m -2 -r 0
 freezeWeights -type bias
 
 # add noise 
-noise hidden -r 0.1
-# noise VisualRep -r 0.1
-# noise VerbalRep -r 0.1
+noise hidden -flat -r 0.1
+# noise VisualRep -flat -r 0.1
+# noise VerbalRep -flat -r 0.1
 # lesionLinks * -r 0.1 -m
 
 
