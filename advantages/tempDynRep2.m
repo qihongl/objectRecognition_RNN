@@ -4,7 +4,8 @@ clear variables;  clc; clf; close all;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
 PATH.SIMID = 'sim27.6_decay';
-FILENAME.ACT = 'verbal_normal_e20.txt';
+% PATH.SIMID = 'sim28.0_deep/00';
+FILENAME.ACT = 'verbal_rapid_e20.txt';
 % FILENAME.ACT = 'verbal_rapid_e20.txt';
 % FILENAME.ACT = 'verbalAll_e2.txt';
 
@@ -20,6 +21,8 @@ data = importData(PATH, FILENAME, p, nTimePts);
 %% pre-compute values 
 [avg, prob] = compute_mean_prob(average,baseline, p);
 
-%% make plots 
+%% make plots 0-
 clf
 plotTempdyn(avg, prob, FILENAME)
+
+
