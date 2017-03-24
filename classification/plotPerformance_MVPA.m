@@ -7,30 +7,30 @@ legendNames = makeLegendNames(propUsed, condition);
 % constant
 d.FONTSIZE = 20;
 d.LW = 3;
-% % Plot the CV accuracies against time
-% % subplot(2,2,1)
+% Plot the CV accuracies against time
+subplot(121)
 % fig1 = figure(1);
 % set(fig1, 'Position', [1000 1000 600 500])
-% 
-% plot(data.mean.acc,'linewidth',d.LW)
-% % hold on
-% % for i = 1 : numFiles
-% %     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
-% % end
-% % hold off
-% 
-% legend(legendNames, 'location', 'SE', 'fontsize', d.FONTSIZE-2);
-% xlabel('time', 'FontSize', d.FONTSIZE)
-% ylabel('Classification accuracy (%)', 'FontSize', d.FONTSIZE)
-% title_text = sprintf('Logistic regression, Semantic units, %s', condition);
-% title(title_text, 'FontSize', d.FONTSIZE)
-% set(gca,'FontSize',d.FONTSIZE)
+
+plot(data.mean.acc,'linewidth',d.LW)
+% hold on
+% for i = 1 : numFiles
+%     errorbar(data.mean.acc(:,i),data.sd.acc(:,i),'linewidth',d.LW)
+% end
+% hold off
+
+legend(legendNames, 'location', 'SE', 'fontsize', d.FONTSIZE-2);
+xlabel('time', 'FontSize', d.FONTSIZE)
+ylabel('Classification accuracy (%)', 'FontSize', d.FONTSIZE)
+title_text = sprintf('Logistic regression, Semantic units, %s', condition);
+title(title_text, 'FontSize', d.FONTSIZE)
+set(gca,'FontSize',d.FONTSIZE)
 
 
 % Plot the sum of absolute deviations (on the test set) against time
-% subplot(2,2,2)
-fig2 = figure(2);
-set(fig2, 'Position', [1000 1000 600 500])
+subplot(122)
+% fig2 = figure(2);
+% set(fig2, 'Position', [1000 1000 600 500])
 plot(1 - data.mean.dev,'linewidth',d.LW)
 % hold on
 % for i = 1 : numFiles
@@ -41,7 +41,7 @@ legend(legendNames, 'location', 'southeast', 'fontsize', d.FONTSIZE-2)
 xlabel('time', 'FontSize', d.FONTSIZE)
 % ylabel(strcat( '$1 - \sum | \mathrm{deviation \hspace{2mm} from \hspace{2mm} targets}| ',...
 %     ' \hspace{.5cm} (target \in \{0,1\})$'), 'FontSize', d.FONTSIZE,'Interpreter','latex')
-ylabel('Absolute sum of deviation from the class label','FontSize', d.FONTSIZE);
+ylabel('reversed loss','FontSize', d.FONTSIZE);
 % title_text = sprintf(' ''Fit '' - %s ', condition);
 title_text = sprintf('Logistic regression, Fit | Semantic units | %s', condition);
 title(title_text, 'FontSize', d.FONTSIZE)

@@ -14,13 +14,11 @@ for i = 1:numFiles
     % compute means
     data.mean.acc(:,i) = mean(group.accuracy,2);
     data.mean.dev(:,i) = mean(group.deviation,2);
-    data.mean.rep(:,i) = mean(group.response,2);
     data.mean.hr(:,i) = mean(group.hitRate,2);
     data.mean.fr(:,i) = mean(group.falseRate,2);
     % compute std (to build CI)
     data.sd.acc(:,i) = std(group.accuracy,0,2);
     data.sd.dev(:,i) = std(group.deviation,0,2);
-    data.sd.rep(:,i) = std(group.response,0,2);
     data.sd.hr(:,i) = std(group.hitRate,0,2);
     data.sd.fr(:,i) = std(group.falseRate,0,2);
 end

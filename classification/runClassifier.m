@@ -8,8 +8,6 @@ if nargin == 0
 end
 
 %% set some paramters
-showresults = false;
-
 % specifiy the number of folds for CV
 K = 3;
 
@@ -39,23 +37,20 @@ for j = 1 : numCategories
     % preallocation
     accuracy = nan(numTimePoints, 1);
     deviation = nan(numTimePoints, 1);
-    response = nan(numTimePoints, 1);
     hitRate = nan(numTimePoints, 1);
     falseRate = nan(numTimePoints, 1);
     %% Run Logistic regression classification for all time points
     % loop over time
     for i = 1 : numTimePoints
         % compute the accuracy for every time points
-        result = logisticReg(data{i}, CVB, logParam, showresults);
+        result = logisticReg(data{i}, CVB, logParam);
         accuracy(i) = result.accuracy;
-        response(i) = result.response;
         deviation(i) = result.deviation;
         hitRate(i) = result.hitRate;
         falseRate(i) = result.falseRate;
     end
     gs.accuracy{j} = accuracy;
     gs.deviation{j} = deviation;
-    gs.response{j} = response;
     gs.hitRate{j} = hitRate;
     gs.falseRate{j} = falseRate;
 end
@@ -79,7 +74,6 @@ function [score] = averagingResults(gs,numCategories, numTimePoints)
 % preallocate
 accuracy = zeros(numTimePoints, 1);
 deviation = zeros(numTimePoints, 1);
-response =  zeros(numTimePoints, 1);
 hitRate =  zeros(numTimePoints, 1);
 falseRate =  zeros(numTimePoints, 1);
 
@@ -87,7 +81,6 @@ falseRate =  zeros(numTimePoints, 1);
 for i = 1 : numCategories
     accuracy = accuracy + gs.accuracy{i};
     deviation = deviation + gs.deviation{i};
-    response = response + gs.response{i};
     hitRate = hitRate  + gs.hitRate{i};
     falseRate = falseRate + gs.falseRate{i};
 end
@@ -95,7 +88,6 @@ end
 % take mean
 score.accuracy = accuracy / numCategories;
 score.deviation = deviation / numCategories;
-score.response = response / numCategories;
 score.hitRate = hitRate / numCategories;
 score.falseRate = falseRate / numCategories; 
 end
