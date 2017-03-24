@@ -1,26 +1,28 @@
 ls
 clear all; clc
 
-trainModel = 0;
+trainModel = 1;
 
 modelName = 'network.txt';
 procFileName = '../procs.tcl';
 trainFileName = 'train.txt';
 conditions = {'normal', 'rapid'};
-condition = conditions{2};
-trainLength = 200;
-maxEpoch = 2000;
+condition = conditions{1};
+trainLength = 500;
+maxEpoch = 10000;
+
+subFolderName = '00';
 
 
 allstages = '';
 for epochs = trainLength: trainLength: maxEpoch
     if trainModel
-        temp_train_text = sprintf('train %d; saveWeights e%.2d.wt -text; ', trainLength, epochs/100);
+        temp_train_text = sprintf('train %d; saveWeights %s/e%.2d.wt -text; ', trainLength, subFolderName, epochs/100);
     else
-        temp_train_text = sprintf('loadWeights e%.2d.wt; ', epochs/100);
+        temp_train_qtext = sprintf('loadWeights e%.2d.wt; ', epochs/100);
     end
-    temp_test_text = sprintf('testAllActs verbal_%s_e%.2d.txt VerbalRep; testAllActs hidden_%s_e%.2d.txt hidden; ', ...
-        condition, epochs/100, condition, epochs/100);
+    temp_test_text = sprintf('testAllActs %s/verbal_%s_e%.2d.txt VerbalRep; testAllActs %s/hidden_%s_e%.2d.txt hidden; ', ...
+        subFolderName, condition, epochs/100, subFolderName, condition, epochs/100);
     reload_text = sprintf('loadExamples %s; ', trainFileName);
     onestage = strcat(temp_train_text, temp_test_text, reload_text);
     allstages = strcat(allstages, onestage);
