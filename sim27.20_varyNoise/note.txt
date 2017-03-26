@@ -1,0 +1,3 @@
+the MVPA decay trend wasn’t significant in 27.0 
+- experiment with noise level to see if the decay magnitude is related with noise 
+- other hypo: effect of depth 
