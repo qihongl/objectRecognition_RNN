@@ -2,29 +2,35 @@
 % when simulating using random subset or normal noise, there is randomness
 % so we need a sample to establish average
 clear variables; clc;warning ('off','all');
-rng(1); 
+rng(1);
+PATH.PROJECT = '../';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 sampleSize = 20;
 nTimePoints = 25;
-propChoice = [.01 .05 .15 .3];
+propChoice = [.01 .025 .05 .1 .15];
 optionChoice = {'randomSubset', 'spatBlurring'};
-methodChoice = {'lasso','ridge','svm'}; 
-logParam.var = 0;
+methodChoice = {'lasso','ridge'};
 saveData = 1;
 showPlot = 0;
 
-%% Specify the Path information (user needs to do this!)
-PATH.PROJECT = '../';
-FILENAME.DATA = 'hidden_normal_e20.txt';
+logParam.var = 0;
+logParam.collapseTime = 1; 
 
-% provide the NAMEs of the data files (user need to set them mannually)
-simName = 'decay';
+
+%% Specify the Path information (user needs to do this!)
+FILENAME.DATA = 'hidden_normal_e20.txt';
+simName = 'varyNoise';
 sim_idx = 27;
-rep_idxs = 2:17
+sim_idxs_sub = [1];
+rep_idxs = 0:2;
 
 %% parameter for logistic regresison classifier
-for rep_idx = rep_idxs
-    PATH.DATA_FOLDER = sprintf('sim%d.%d_%s', sim_idx, rep_idx, simName); 
-    groupMVPA(PATH, FILENAME, propChoice, optionChoice, methodChoice, logParam,...
-        sampleSize,nTimePoints,saveData,showPlot)
+for sim_idx_sub = sim_idxs_sub
+    for rep_idx = rep_idxs
+        PATH.rep_idx = rep_idx; 
+        PATH.DATA_FOLDER = sprintf('sim%d.%d_%s', sim_idx, sim_idx_sub, simName);
+        
+        groupMVPA(PATH, FILENAME, propChoice, optionChoice, methodChoice, logParam,...
+            sampleSize,nTimePoints,saveData,showPlot)
+    end
 end
