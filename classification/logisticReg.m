@@ -57,8 +57,8 @@ elseif strcmp(param.method,'ridge')
     
     [beta, stats] = lassoglm(X_train,y_train,'binomial','Alpha',1e-4);
     best_idx = find(min(stats.Deviance) == stats.Deviance,1);
-    coef = [stats.Intercept(best_idx); beta(:,best_idx)];
-    y_hat = glmval(coef, X_test, 'logit');
+    beta = beta(:,best_idx);
+    y_hat = glmval([stats.Intercept(best_idx); beta], X_test, 'logit');
     result.beta = beta; 
 elseif strcmp(param.method,'svm')
     svmStruct = svmtrain(X_train, y_train);
