@@ -22,7 +22,7 @@ plot(data.mean.acc,'linewidth',d.LW)
 legend(legendNames, 'location', 'SE', 'fontsize', d.FONTSIZE-2);
 xlabel('time', 'FontSize', d.FONTSIZE)
 ylabel('Classification accuracy (%)', 'FontSize', d.FONTSIZE)
-title_text = sprintf('Logistic regression, Semantic units, %s', condition);
+title_text = sprintf('accuracy');
 title(title_text, 'FontSize', d.FONTSIZE)
 set(gca,'FontSize',d.FONTSIZE)
 
@@ -43,7 +43,7 @@ xlabel('time', 'FontSize', d.FONTSIZE)
 %     ' \hspace{.5cm} (target \in \{0,1\})$'), 'FontSize', d.FONTSIZE,'Interpreter','latex')
 ylabel('reversed loss','FontSize', d.FONTSIZE);
 % title_text = sprintf(' ''Fit '' - %s ', condition);
-title_text = sprintf('Logistic regression, Fit | Semantic units | %s', condition);
+title_text = sprintf('Fit');
 title(title_text, 'FontSize', d.FONTSIZE)
 set(gca,'FontSize',d.FONTSIZE)
 
@@ -78,7 +78,8 @@ set(gca,'FontSize',d.FONTSIZE)
 % % title(title_text, 'FontSize', d.FONTSIZE)
 % set(gca,'FontSize',d.FONTSIZE)
 
-
+suptitle_text = sprintf('semantic unit decoding - %s', condition);
+suptitle(suptitle_text)
 
 end
 
