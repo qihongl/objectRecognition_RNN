@@ -1,5 +1,8 @@
 %% read raw verbal dynamic data, compute mean bas, sup activation values
-function [average, baseline] = readData( data, p, nTimePts )
+function [average, baseline] = procData(data, p, nTimePts, proto)
+if p.numStimuli ~= size(data,1) / nTimePts
+    error('Data matrix dimension inconsistent with nTps')
+end
 
 % generate index matrix (itermNumber x time)
 idx.full = reshape(1 : nTimePts * p.numStimuli, [nTimePts,p.numStimuli])';
@@ -36,7 +39,7 @@ for c = 1 : p.numCategory.sup
     for i = 1 : p.numInstances;
         
         basUnitsIdx = ((1 + p.numUnits.sup*basClass(i)) : (p.numCategory.bas * (basClass(i)+1))) + p.numUnits.total * (c-1);
-
+        
         average.bas(:,c) = average.bas(:,c) + ...
             mean(data_chunk(idx.full(i,:),basUnitsIdx), 2);
         baseline.bas(:,c) = baseline.bas(:,c) + ...
@@ -45,15 +48,34 @@ for c = 1 : p.numCategory.sup
     
 end
 
-% normalize 
+% normalize
 average.sup = average.sup ./ p.numInstances;
 baseline.sup = baseline.sup ./ p.numInstances;
 average.bas = average.bas ./ p.numInstances;
 baseline.bas = baseline.bas ./ p.numInstances;
 
+
+% compute "RT"
+for i = 1 : p.numStimuli
+    % for the i-th stimuli ... 
+    % get the corresponding row trange 
+    tp_range = ((i-1) * nTimePts +1) : (i * nTimePts);
+    response = data(tp_range, :);
+    % get the sup and bas categories 
+    [cat.sup, cat.bas] = stimuli_idx_to_sup_category(i, p);
+    % get the target pattern 
+    target = getTargetPattern(cat, i, proto, p)
+    % TODO 
+    target - response
+    response == max(max(response))
+    imagesc(response)
 end
 
-%% get indices for all basic units and sup units
+end
+
+%% helper functions
+
+% get indices for all basic units and sup units
 function idxAll = getUnitIdx(nUnits, nSupCat)
 idxAll.sup = [];
 idxAll.bas = [];
@@ -62,5 +84,27 @@ for c = 1 : nSupCat
     idxAll.bas = horzcat(idxAll.bas, ((nUnits.sup+1):(nUnits.sup+nUnits.bas)) + nUnits.total * (c-1));
 end
 
+end
+
+% get the basic and sup category, given the stimuli idx (row idx)
+function [sup_category, bas_category] = stimuli_idx_to_sup_category(idx, p)
+% get the sup category of the input
+sup_category = ceil(idx / p.numInstances);
+% get the basic category of the input
+tmp = reshape(repmat(1 : p.numCategory.bas,[p.numCategory.bas,1]), p.numCategory.bas^2,1);
+idx2basCat = repmat(tmp, [p.numCategory.sup,1]);
+bas_category = idx2basCat(idx);
+end
+
+function target = getTargetPattern(cat, i, proto, p)
+% preallocate 
+nUnitsTotal = p.numUnits.total * p.numCategory.sup; 
+target = zeros(1,nUnitsTotal);
+% compute the index within a sup category 
+idx_within_sup_cat = mod(i,p.numInstances);
+% get the whole pattern 
+target_sub = proto(idx_within_sup_cat,:); 
+range_target_sub = ((cat.sup-1) * p.numUnits.total + 1) : cat.sup * p.numUnits.total; 
+target(range_target_sub) = target_sub; 
 end
 
