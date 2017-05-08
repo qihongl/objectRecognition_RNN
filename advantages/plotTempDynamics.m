@@ -1,4 +1,4 @@
-function [ output_args ] = plotTempdyn(avg, prob, FILENAME)
+function [ output_args ] = plotTempDynamics(avg, prob, FILENAME)
 
 
 g.LW = 2; 
