@@ -1,5 +1,5 @@
 %% read raw verbal dynamic data, compute mean bas, sup activation values
-function [average, baseline] = procData(data, p, nTimePts, proto)
+function [average, baseline, reactionTime] = procData(data, p, nTimePts, proto)
 if p.numStimuli ~= size(data,1) / nTimePts
     error('Data matrix dimension inconsistent with nTps')
 end
@@ -64,11 +64,11 @@ for i = 1 : p.numStimuli
     % get the sup and bas categories 
     [cat.sup, cat.bas] = stimuli_idx_to_sup_category(i, p);
     % get the target pattern 
-    target = getTargetPattern(cat, i, proto, p)
+    target = getTargetPattern(cat, i, proto, p); 
     % TODO 
-    target - response
-    response == max(max(response))
-    imagesc(response)
+    response = computeResponses(response, target); 
+    
+    reactionTime(i) = getReactionTime(response); 
 end
 
 end
@@ -101,10 +101,33 @@ function target = getTargetPattern(cat, i, proto, p)
 nUnitsTotal = p.numUnits.total * p.numCategory.sup; 
 target = zeros(1,nUnitsTotal);
 % compute the index within a sup category 
-idx_within_sup_cat = mod(i,p.numInstances);
+idx_within_sup_cat = mod(i-1,p.numInstances)+1;
 % get the whole pattern 
 target_sub = proto(idx_within_sup_cat,:); 
 range_target_sub = ((cat.sup-1) * p.numUnits.total + 1) : cat.sup * p.numUnits.total; 
 target(range_target_sub) = target_sub; 
 end
 
+% separate the response activity to 3 levels of categories 
+function response = computeResponses(response_raw, target)
+% constants ... CORRECT BUT BAD PRACTICE! 
+nSupTargs = 4;
+nBasTargs = 4; 
+nSubTargs = 2; 
+
+response.all = response_raw(:,logical(target));
+response.sup = response.all(:, 1: nSupTargs); 
+response.bas = response.all(:, (nSupTargs+1): (nSupTargs + nBasTargs)); 
+response.sub = response.all(:, (nSupTargs + nBasTargs +1) : (nSupTargs + nBasTargs + nSubTargs)); 
+
+end
+
+% get response time
+function rt = getReactionTime(response)
+% for sup cat 
+rt.sup = find(mean(response.sup,2) == max(mean(response.sup,2)),1); 
+% for bas cat 
+rt.bas = find(mean(response.bas,2) == max(mean(response.bas,2)),1); 
+% for sub cat 
+rt.sub = find(mean(response.sub,2) == max(mean(response.sub,2)),1); 
+end

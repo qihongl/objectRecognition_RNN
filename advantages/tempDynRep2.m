@@ -6,8 +6,8 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 PATH.SIMID = 'sim27.0_decay';
 PATH.SIMID = 'sim27.1_varyNoise';
 % PATH.SIMID = 'sim28.0_deep/00';
-FILENAME.ACT = 'verbal_rapid_e20.txt';
-FILENAME.ACT = 'verbal_normal_e20.txt';
+FILENAME.ACT = 'verbal_rapid_e10.txt';
+% FILENAME.ACT = 'verbal_normal_e20.txt';
 % FILENAME.ACT = 'verbalAll_e2.txt';
 PATH.rep_idx = 1; 
 
@@ -18,7 +18,7 @@ nTimePts = 25;
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [p, proto] = readPrototype(PATH.PROTOTYPE);
 data = importData(PATH, FILENAME, p, nTimePts);
-[average, baseline] = procData(data, p, nTimePts, proto); 
+[average, baseline, reactionTime] = procData(data, p, nTimePts, proto); 
 
 %% pre-compute values 
 [avg, prob] = compute_mean_prob(average,baseline, p);
