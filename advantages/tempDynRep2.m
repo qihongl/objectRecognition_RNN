@@ -26,3 +26,5 @@ data = importData(PATH, FILENAME, p, nTimePts);
 %% make plots 
 clf
 plotTempDynamics(avg, prob, FILENAME)
+
+plotReacTimeHist(reactionTime, nTimePts)
