@@ -7,7 +7,7 @@ PATH.SIMID = 'sim27.0_decay';
 PATH.SIMID = 'sim27.1_varyNoise';
 % PATH.SIMID = 'sim28.0_deep/00';
 FILENAME.ACT = 'verbal_rapid_e10.txt';
-% FILENAME.ACT = 'verbal_normal_e20.txt';
+FILENAME.ACT = 'verbal_normal_e20.txt';
 % FILENAME.ACT = 'verbalAll_e2.txt';
 PATH.rep_idx = 1; 
 
@@ -26,5 +26,4 @@ data = importData(PATH, FILENAME, p, nTimePts);
 %% make plots 
 clf
 plotTempDynamics(avg, prob, FILENAME)
-
 plotReacTimeHist(reactionTime, nTimePts)

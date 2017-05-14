@@ -2,7 +2,8 @@ function [ newData ] = eegSimulation( rawData, method, subsetSize, param )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %% select random subset or blurring 
-randPermOrder = randperm(param.numUnits.total * param.numCategory.sup);
+% randPermOrder = randperm(param.numUnits.total * param.numCategory.sup);
+randPermOrder = randperm(78); % TODO temp solution! wrong!
 if strcmp(method, 'randomSubset')
 %     sprintf('Method: randomSubset.\n')
     subsetIdx = randPermOrder(1:subsetSize);

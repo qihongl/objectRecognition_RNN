@@ -2,7 +2,7 @@ ls
 clear all; clc
 
 trainModel = 1;
-subFolderName = '02';
+subFolderName = '03';
 
 modelName = 'network.txt';
 procFileName = '../procs.tcl';
@@ -31,5 +31,3 @@ output = sprintf('lens -n -c %s " source %s; %s exit"', modelName, procFileName,
 fprintf('\n')
 fprintf(output)
 fprintf('\n')
-
-

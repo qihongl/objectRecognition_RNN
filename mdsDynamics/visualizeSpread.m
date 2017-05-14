@@ -5,15 +5,15 @@ PATH.PROJECT = '..';
 % provide the NAMEs of the data files (user need to set them mannually)
 % PATH.SIMID = 'sim22.2_RSVP';
 % PATH.SIMID = 'sim23.2_noise';
-PATH.SIMID = 'sim27.5_varyNoise';
+PATH.SIMID = 'sim27.1_varyNoise';
 FILENAME.ACT = 'hidden_normal_e20.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
-PATH.rep_idx = 4; 
+PATH.rep_idx = 0;
 
 % stimulate properties of EEG
 subsetSize = 2;
 method = 'spatialBlurring';
-% method = 'randomSubset';
+method = 'randomSubset';
 % method = 'normal';
 simSize = 100;
 nTimePts = 25; 
@@ -27,6 +27,7 @@ graph.LW = 3;
 %% start
 sprintf('Method: %s.\n', method)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% read data
 PATH.PROTOTYPE = genDataPath(PATH, FILENAME.PROTOTYPE);
 [param, ~] = readPrototype(PATH.PROTOTYPE);
@@ -110,22 +111,22 @@ tval = tinv(alpha, simSize - 1);
 % set(gca,'FontSize',graph.FS)
 
 
-% plot the between - within spread ratio ~= decodibility 
-subplot(1,2,1)
-hold on 
-plot(spRatio_byPath.mean, 'linewidth', graph.LW)
-errorbar(1:nTimePts, spRatio_byPath.mean, tval * spRatio_byPath.std / sqrt(simSize), ...
-    'b','linewidth', graph.LW/2);
-hold off
-xlim([1,nTimePts+1])
-
-title('Spread ratio by path: Bet/Within ', 'fontsize', graph.FS)
-xlabel('Time', 'fontsize', graph.FS)
-ylabel('Decodibility', 'fontsize', graph.FS)
-set(gca,'FontSize',graph.FS)
-
-% plot the between - within spread ratio | with pair-wise dist measure
-subplot(1,2,2)
+% % plot the between - within spread ratio ~= decodibility 
+% subplot(1,2,1)
+% hold on 
+% plot(spRatio_byPath.mean, 'linewidth', graph.LW)
+% errorbar(1:nTimePts, spRatio_byPath.mean, tval * spRatio_byPath.std / sqrt(simSize), ...
+%     'b','linewidth', graph.LW/2);
+% hold off
+% xlim([1,nTimePts+1])
+% 
+% title('Spread ratio by path: Bet/Within ', 'fontsize', graph.FS)
+% xlabel('Time', 'fontsize', graph.FS)
+% ylabel('Decodibility', 'fontsize', graph.FS)
+% set(gca,'FontSize',graph.FS)
+% 
+% % plot the between - within spread ratio | with pair-wise dist measure
+% subplot(1,2,2)
 hold on 
 plot(spRatio_byPDist.mean, 'linewidth', graph.LW);
 errorbar(1:nTimePts, spRatio_byPDist.mean, tval * spRatio_byPDist.std / sqrt(simSize),...

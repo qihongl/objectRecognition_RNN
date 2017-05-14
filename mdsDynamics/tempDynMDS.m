@@ -1,27 +1,26 @@
 %% Plot MDS solution over time
 % initialization
-clear variables; clf; close all; clc;
+clear variables; clf; clc;
 PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/';
 % provide the NAMEs of the data files (user need to set them mannually)
-PATH.SIMID = 'sim23.2_noise';
-% PATH.SIMID = 'sim25.2_RSVP';
-% PATH.SIMID = 'sim27.2_maskAltLvs';
+PATH.SIMID = 'sim27.1_varyNoise';s
 % PATH.SIMID = 'simtest';
-FILENAME.ACT = 'hiddenAll_e2.txt';
+FILENAME.ACT = 'hidden_normal_e20.txt';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
+PATH.rep_idx = 0; 
 
 % set parameters
 nTimePts = 25; 
 targetTimePt = 25;       % select from int[1,25]
 graph.turnOnAxis = false;
-graph.attachLabels = 1;
+graph.attachLabels = 0;
 doDynamicPlot = 0;
 graph.dimension = 2;
 % stimulate properties of EEG
-subsetSize = 10;
-% method = 'spatialBlurring';
+subsetSize = 2;
+method = 'spatialBlurring';
 method = 'randomSubset';
-method = 'normal';
+% method = 'normal';
 
 % set plotting constants
 graph.SCALE = 1.2;

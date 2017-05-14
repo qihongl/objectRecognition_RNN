@@ -3,8 +3,8 @@ clear; clc;
 %% load file and compute summarized data
 mainDirName = 'groupScores_class';
 condition = 'randomSubset';
-% condition = 'spatBlurring';
-method = 'lasso';
+condition = 'spatBlurring';
+method = 'ridge';
 %
 simNum = 27;
 presentation = 'normal';
@@ -12,7 +12,7 @@ presentation = 'normal';
 simName = 'varyNoise';
 ep = 20;
 simNum_sub = 1;
-rep_idx = 0;
+rep_idx = 2;
 
 % gather data
 data_sub = cell(length(simNum_sub),1);
@@ -34,8 +34,7 @@ for i = 1 : length(rep_idx)
         propUsed{j} = extractPropUsed(fileName, condition)/10;
         % compute means
         betas{j} = group.beta;
-    end
-    
+    end    
 end
 
 
@@ -46,5 +45,9 @@ for i = 1 : length(betas)
     mean_sims = mean(abs(betas{i}),2);
     mean_voxels = mean(reshape(mean_sims, nTps, size(betas{i},1)/ nTps), 2);
     plot(mean_voxels)
+    
+    if i == 1 
+        ylabel('mean weight size')
+        xlabel('small group')
+    end
 end
-

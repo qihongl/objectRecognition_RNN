@@ -10,16 +10,19 @@ condition = 'spatBlurring';
 method = 'svm'; 
 %
 simNum = 27;
-presentation = 'normal';
-simName = 'decay';
+presentation = 'rapid';
+% simName = 'decay';
+simName = 'varyNoise';
 ep = 20;
-simNum_sub = 2:17;
+simNum_sub = 1;
+rep_idx = 2; 
 
 % gather data 
 data_sub = cell(length(simNum_sub),1);
-for i = 1 : length(simNum_sub)
+for i = 1 : length(rep_idx)
     % get path name
-    subDirName = sprintf('sim%d.%d_%s_%s_e%d', simNum,simNum_sub(i),simName,presentation,ep);
+    subDirName = sprintf('sim%d.%d_%s_%s_e%d_%.2d', ...
+        simNum,simNum_sub,simName,presentation,ep, rep_idx(i));
     pathName = fullfile(mainDirName,subDirName,method);
     listing = dir([pathName '/gsClass_' condition '*.mat']);
     % summarize the data

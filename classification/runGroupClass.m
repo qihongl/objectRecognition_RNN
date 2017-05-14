@@ -9,16 +9,16 @@ sampleSize = 20;
 nTimePoints = 25;
 propChoice = [.01 .025 .05 .1 .15];
 optionChoice = {'randomSubset', 'spatBlurring'};
-methodChoice = {'lasso','ridge'};
+methodChoice = {'lasso','ridge', 'svm'};
 saveData = 1;
 showPlot = 0;
 
 logParam.var = 0;
-logParam.collapseTime = 1; 
+logParam.collapseTime = 0; 
 
 
 %% Specify the Path information (user needs to do this!)
-FILENAME.DATA = 'hidden_normal_e20.txt';
+FILENAME.DATA = 'hidden_rapid_e20.txt';
 simName = 'varyNoise';
 sim_idx = 27;
 sim_idxs_sub = [1];
