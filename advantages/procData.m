@@ -124,10 +124,29 @@ end
 
 % get response time
 function rt = getReactionTime(response)
-% for sup cat 
-rt.sup = find(mean(response.sup,2) == max(mean(response.sup,2)),1); 
-% for bas cat 
-rt.bas = find(mean(response.bas,2) == max(mean(response.bas,2)),1); 
-% for sub cat 
-rt.sub = find(mean(response.sub,2) == max(mean(response.sub,2)),1); 
+% find the reaction time for each level of category 
+rt.sup = getPeak(response.sup);
+rt.bas = getPeak(response.bas);
+rt.sub = getPeak(response.sub);
+
+    % helper function 
+    function peak = getPeak(seq)
+        [~, locs] = findpeaks(mean(seq,2));
+        peak = min(locs); 
+        if isempty(locs)
+            % if monotone decreasing 
+            if all(diff(mean(seq,2))<=0)
+                peak = nan; 
+            % if monotone increasing 
+            elseif all(diff(mean(seq,2))>=0)
+                peak = size(seq,1); 
+            else
+                disp('what???!!!')
+            end
+            
+        end
+    end
 end
+
+
+
