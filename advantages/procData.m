@@ -125,28 +125,41 @@ end
 % get response time
 function rt = getReactionTime(response)
 % find the reaction time for each level of category 
-rt.sup = getPeak(response.sup);
-rt.bas = getPeak(response.bas);
-rt.sub = getPeak(response.sub);
+[rt.sup] = getPeak(response.sup);
+[rt.bas] = getPeak(response.bas);
+[rt.sub] = getPeak(response.sub);
 
-    % helper function 
-    function peak = getPeak(seq)
-        [~, locs] = findpeaks(mean(seq,2));
-        peak = min(locs); 
+% rt
+% plot(response.all)
+% temp = 0; 
+
+    % helper function that identifies the "response time"  
+    function [peakIdx] = getPeak(seq)
+        % find max response 
+        [maxVal, idxMaxVal]= max(mean(seq,2)); 
+        % find the 1st local max 
+        [pks, locs] = findpeaks(mean(seq,2));
+        
+        % if no local max => monotone or convex? 
         if isempty(locs)
             % if monotone decreasing 
             if all(diff(mean(seq,2))<=0)
-                peak = nan; 
+                peakIdx = nan; 
             % if monotone increasing 
             elseif all(diff(mean(seq,2))>=0)
-                peak = size(seq,1); 
+                peakIdx = size(seq,1); 
             else
-                disp('what???!!!')
+                error('Convex? is that possible?')
             end
-            
+        else
+            % if the non-boundary local max is different than the global
+            % max (perhaps occured at the last time pt)
+            peakIdx = min(locs); 
+            peakVal = pks(peakIdx == locs); 
+            if maxVal > peakVal
+                % then take the global max as the peak
+                peakIdx = idxMaxVal;
+            end
         end
-    end
+    end % end of the definition of "getPeak"
 end
-
-
-
