@@ -1,13 +1,14 @@
-function [proto] = protoFileGen(nActUnits, nSupCat, nLevels)
+function [proto] = protoFileGen(fname, nActUnits, nSupCat, nLevels)
 if nLevels < 2
     error('The number of level must be larger than 2')
 end
 
-nInstances = 2^(nLevels-1);
 % generate the parameters
-nUnits = paramGen(nActUnits, nLevels);
+[nUnits, nInstances] = paramGen(nActUnits, nLevels);
 % generate the prototype pattern
 proto = genProtoType(nInstances, nActUnits, nSupCat, nUnits, nLevels);
+% write to a csv file 
+writeToFile(fname, proto, nUnits, nSupCat)
 % print info
 printProtoInfo(proto, nInstances, nActUnits, nSupCat, nUnits);
 end
@@ -15,15 +16,16 @@ end
 %% helper functions
 
 %% generate parameters
-function nUnits = paramGen(nActUnits, nLevels)
+function [nUnits, nInstances] = paramGen(nActUnits, nLevels)
 % compute the number of units designated for each level of concept
 nUnits = nActUnits * 2 .^ (0 : nLevels-1);
+nInstances = 2^(nLevels-1);
 end
 
 %% generate prototype given the parameters
 function proto_all = genProtoType(nInstances, nActUnits, nSupCat, nUnits, nLevels)
 % fill in the patterns 
-proto = cell(nLevels,1);
+proto = cell(1,nLevels);
 proto{1} = ones(nInstances, nUnits(1));
 for l = 2 : nLevels
     proto{l} = zeros(nInstances, nUnits(l));
@@ -35,12 +37,7 @@ for l = 2 : nLevels
 end
 
 % concatenate across levels to get the prototype within one sup cat
-temp = proto{1}; 
-for l = 2 : length(proto)
-    temp = horzcat(temp, proto{l}); 
-end
-proto = temp; 
-
+proto = cell2mat(proto); 
 % repeat the pattern across sup cats
 for i = 1 : nSupCat
     if i == 1
@@ -52,6 +49,20 @@ end
 
 end
 
+
+% write to a csv file 
+function writeToFile(fname, proto, nUnits, nSupCat)
+idx = 1 : size(proto,2); 
+header = horzcat(nUnits, nSupCat, 2, 2); 
+header = horzcat(header, zeros(1,size(proto,2) - length(header))); 
+% write
+fname = sprintf('%s', fname);
+xlswrite(fname,vertcat(header,idx,proto))
+
+end
+
+
+% print info 
 function printProtoInfo(proto, nInstances, nActUnits, nSupCat, nUnits)
 fprintf('Summary:\n')
 fprintf('nUnits of the input layer = %d\n', size(proto,2))
@@ -61,5 +72,5 @@ fprintf('nInstances for each sup = %d\n', nInstances)
 fprintf('nActivated Units = %d\n', nActUnits)
 fprintf('nSupCat  = %d\n', nSupCat)
 fprintf('nUnitsEachSup = %d\n', sum(nUnits))
-
 end
+
