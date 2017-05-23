@@ -30,7 +30,7 @@ end
 
 %% get blurred patterns
 % get a random matrix, where entries are given by uniform[0,1]
-randomMatrix = rand(size(prototype,1),size(prototype,2));
+randomMatrix = rand(size(prototype));
 % blur prototype pattern
 distortedProto = bsxfun(@gt, mask, randomMatrix);
 

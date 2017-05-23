@@ -7,7 +7,7 @@ PATH.PROJECT = '/Users/Qihong/Dropbox/github/categorization_PDP/patternGen';
 
 %% Parameters
 % get full patterns
-protoName = 'PROTO4.xlsx';
+protoName = 'PROTO.csv';
 trainFileName = 'train.txt';
 testFileName = 'test.txt';
 
@@ -39,7 +39,7 @@ allTargetTypes = {'visual_sup', 'visual_bas_sup', 'visual_all', ...
 
 
 %% get patterns
-[param, prototype] = readPrototype (protoName);
+[param, prototype] = readPrototype(protoName);
 param.thingsToBeMasked = envParam.thingsToBeMasked;
 [visualPatterns] = patternGen(param, prototype, envParam.visualThres);
 [verbalPatterns] = patternGen(param, prototype, envParam.verbalThres);

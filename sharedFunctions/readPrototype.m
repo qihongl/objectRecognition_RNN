@@ -1,4 +1,4 @@
-function [param, prototype] = readPrototype (filename)
+function [param, prototype] = readPrototype(filename)
 %READPROTOTYPE 
 %   this function takes a prototype pattern and returns the following: 
 % 

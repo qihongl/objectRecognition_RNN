@@ -116,7 +116,8 @@ end
 
 %% construct the final target pattern
 if strcmp(thingsToBeMasked, 'otherLevels')
-    mask = vertcat(mask,mask,mask);
+    
+    mask = getMask(mask,param.numCategory.sup);
     modifiedTarget = nan(1, length(mask));
     modifiedTarget(mask) = target(mask);
     
@@ -141,5 +142,12 @@ else
     error('ERROR: unrecognized mask.')
 end
 
+end
 
+function finalmask = getMask(mask, ncats)
+if ncats < 2 
+    error('Number of sup cat should be larger than 1');
+else
+    finalmask = repmat(mask, ncats, 1); 
+end
 end

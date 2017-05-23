@@ -6,6 +6,5 @@ nCat = 2;
 nLevels = 3; 
 fname = 'PROTO'; 
 
-% gen param 
+% gen prototype
 proto = protoFileGen(fname, nActUnits, nCat, nLevels);
-imagesc(proto); 
