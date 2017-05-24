@@ -1,8 +1,7 @@
 %% run a bunch of classifier
 % when simulating using random subset or normal noise, there is randomness
 % so we need a sample to establish average
-clear variables; clc;warning ('off','all');
-rng(1);
+clear variables; clc;warning ('off','all'); rng(1);
 PATH.PROJECT = '../';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 sampleSize = 20;
@@ -13,9 +12,9 @@ methodChoice = {'lasso','ridge', 'svm'};
 saveData = 1;
 showPlot = 0;
 
-logParam.var = 0;
-logParam.collapseTime = 0; 
-
+param.var = 0;
+param.collapseTime = 0; 
+param.dynamicCode = 1; 
 
 %% Specify the Path information (user needs to do this!)
 FILENAME.DATA = 'hidden_rapid_e20.txt';
@@ -30,7 +29,7 @@ for sim_idx_sub = sim_idxs_sub
         PATH.rep_idx = rep_idx; 
         PATH.DATA_FOLDER = sprintf('sim%d.%d_%s', sim_idx, sim_idx_sub, simName);
         
-        groupMVPA(PATH, FILENAME, propChoice, optionChoice, methodChoice, logParam,...
+        groupMVPA(PATH, FILENAME, propChoice, optionChoice, methodChoice, param,...
             sampleSize,nTimePoints,saveData,showPlot)
     end
 end
