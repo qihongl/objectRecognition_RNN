@@ -15,16 +15,17 @@ for method_idx = 1 : length(methodChoice)
             
             %% run classificaiton
             group = preallocate(logParam, nTimePoints, sampleSize);
+            result_dc = cell(sampleSize,1); 
             for i = 1 : sampleSize
                 % run classifier and compute average
                 [gs_cur, gs_dc, ~] = runClassifier(logParam,PATH,FILENAME,showPlot);
                 group = recordResult(group, gs_cur, logParam, i);
                 if logParam.dynamicCode
-                    result{i} = summarize_dc_across_sup_cat(gs_dc);
+                    result_dc{i} = summarize_dc_across_sup_cat(gs_dc);
                 end
                 fprintf('%2.d ',i);
             end
-            result = summarize_dc_across_sample(result);
+            result_dc = summarize_dc_across_sample(result_dc);
             fprintf('\n')
             
             %% save data
@@ -35,10 +36,12 @@ for method_idx = 1 : length(methodChoice)
                 finalSavePath = fullfile(dataDirName,subDataDirName,logParam.method);
                 checkAndMkdir(dataDirName);
                 checkAndMkdir(finalSavePath);
-                dataFileName = sprintf('gsClass_%s%.3d.mat', ...
-                    logParam.classOpt, logParam.subsetProp * 1000);
                 % save data 
-                save([finalSavePath '/' dataFileName],'group')
+                data_gp_fileName = sprintf('gs_%s%.3d.mat', ...
+                    logParam.classOpt, logParam.subsetProp * 1000);
+                save([finalSavePath '/' data_gp_fileName],'result_dc')
+                data_dc_filename = sprintf('dc_%s%.3d.mat', ...
+                    logParam.classOpt, logParam.subsetProp * 1000);
             end
         end
     end
@@ -46,7 +49,9 @@ end
 
 end
 
-% helper function: resource preallocation
+%% helper functions 
+
+% resource preallocation
 function group = preallocate(param, nTimePoints, sampleSize)
 if param.collapseTime
     group.accuracy = nan(1,sampleSize);
@@ -62,7 +67,7 @@ else
 end
 end
 
-% helper function: record the classification results
+% record the classification results
 function r = recordResult(r, result, logParam, i)
 if logParam.collapseTime
     r.accuracy(i) = result.accuracy;
@@ -78,7 +83,7 @@ else
 end
 end
 
-% helper function: summary the data for dynamic code
+% for dynamic code: summarize data across sup cats 
 function r = summarize_dc_across_sup_cat(result)
 [nTps,nCats] = size(result);
 r = cell(nTps, 1);
@@ -103,7 +108,7 @@ for t = 1 : nTps
 end
 end
 
-%
+% for dynamic code: summarize data across the simulation sample 
 function r = summarize_dc_across_sample(result)
 % get params
 n = length(result);

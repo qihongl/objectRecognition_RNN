@@ -62,7 +62,7 @@ elseif strcmp(param.method,'ridge')
 elseif strcmp(param.method,'svm')
     svmStruct = svmtrain(X_train, y_train);
     y_hat = svmclassify(svmStruct,X_test);
-    result.svmStrcut = svmStruct; 
+    result.svmStruct = svmStruct; 
 else
     error('classification method: unrecognized input')
 end

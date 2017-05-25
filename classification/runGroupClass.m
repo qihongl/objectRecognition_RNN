@@ -8,7 +8,7 @@ sampleSize = 20;
 nTimePoints = 25;
 propChoice = [.01 .025 .05 .1 .15];
 optionChoice = {'randomSubset', 'spatBlurring'};
-methodChoice = {'lasso','ridge', 'svm'};
+methodChoice = {'svm','lasso'};
 saveData = 1;
 showPlot = 0;
 
