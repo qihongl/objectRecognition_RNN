@@ -114,6 +114,9 @@ function response = computeResponses(response_raw, target)
 nSupTargs = 4;
 nBasTargs = 4; 
 nSubTargs = 2; 
+% nSupTargs = 2; 
+% nBasTargs = 2; 
+% nSubTargs = 2; 
 
 response.all = response_raw(:,logical(target));
 response.sup = response.all(:, 1: nSupTargs); 

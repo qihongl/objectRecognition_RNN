@@ -2,7 +2,7 @@ ls
 clear all; clc
 
 trainModel = 1;
-subFolderName = '03';
+subFolderName = '00';
 
 modelName = 'network.txt';
 procFileName = '../procs.tcl';
@@ -10,7 +10,7 @@ trainFileName = 'train.txt';
 conditions = {'normal', 'rapid'};
 condition = conditions{1};
 trainLength = 200;
-maxEpoch = 2000;
+maxEpoch = 4000;
 
 allstages = '';
 for epochs = trainLength: trainLength: maxEpoch
