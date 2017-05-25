@@ -1,0 +1,3 @@
+- simplify the pattern, use minimal units and minimal instances
+- it also equates the number of active units across levels 
+

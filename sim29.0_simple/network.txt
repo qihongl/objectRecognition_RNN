@@ -3,23 +3,19 @@ addNet EM -t 5 -i 5 CONTINUOUS
 
 
 # specify all layers
-addGroup VerbalIn 156 INPUT 
-addGroup VisualIn 156 INPUT 
-addGroup VerbalRep 156 OUTPUT -BIASED
-addGroup VisualRep 156 OUTPUT -BIASED
-addGroup hidden 78 IN_NOISE OUT_NOISE
-addGroup visHidden 78 IN_NOISE OUT_NOISE
-addGroup verHidden 78 IN_NOISE OUT_NOISE
+addGroup VerbalIn 28 INPUT 
+addGroup VisualIn 28 INPUT 
+addGroup VerbalRep 28 OUTPUT -BIASED
+addGroup VisualRep 28 OUTPUT -BIASED
+addGroup hidden 14 IN_NOISE
 
 # establish the connectivity for verbal/ visual
 connectGroups VerbalIn VerbalRep -projection ONE_TO_ONE -m 5 -r 0
 connectGroups VisualIn VisualRep -projection ONE_TO_ONE -m 5 -r 0
 
 # establish the connectivity for the hidden layer with verbal/visual
-connectGroups VerbalRep verHidden -bidirectional
-connectGroups VisualRep visHidden -bidirectional
-connectGroups verHidden hidden -bidirectional
-connectGroups visHidden hidden -bidirectional
+connectGroups VerbalRep hidden -bidirectional
+connectGroups VisualRep hidden -bidirectional
 connectGroups hidden hidden
 
 # bias unit
@@ -29,9 +25,7 @@ connectGroups bias VisualIn -m -2 -r 0
 freezeWeights -type bias
 
 # add noise 
-noise hidden -r 0.1
-noise visHidden -r 0.1
-noise verHidden -r 0.1
+noise hidden -r 2.0
 
 # load example file
 loadExamples train.txt -exmode PERMUTED
@@ -41,7 +35,7 @@ loadExamples test.txt
 train -algorithm steepest -setOnly
 
 # set learning and display parameters
-setObj learningRate 0.001
+setObj learningRate 0.003
 setObj momentum     0.0
 setObj weightDecay  0.01
 setObj batchSize    0
