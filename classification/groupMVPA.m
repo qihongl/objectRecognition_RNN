@@ -42,6 +42,7 @@ for method_idx = 1 : length(methodChoice)
                 save([finalSavePath '/' data_gp_fileName],'result_dc')
                 data_dc_filename = sprintf('dc_%s%.3d.mat', ...
                     logParam.classOpt, logParam.subsetProp * 1000);
+                save([finalSavePath '/' data_dc_filename],'result_dc')
             end
         end
     end
