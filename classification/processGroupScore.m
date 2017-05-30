@@ -5,12 +5,12 @@ clear; clc; close all;
 mainDirName = 'groupScores_class';
 
 OPTIONS = {'get_group_MVPA', 'get_dynamic_code'};
-opts = OPTIONS{2};
+opts = OPTIONS{1};
 
 %% load file and compute summarized data
 condition = 'randomSubset';
 condition = 'spatBlurring';
-method = 'svm';
+method = 'lasso';
 %
 simNum = 27;
 presentation = 'normal';
@@ -18,7 +18,7 @@ presentation = 'normal';
 simName = 'varyNoise';
 ep = 20;
 simNum_sub = 1;
-rep_idx = 2;
+rep_idx = 0;
 
 % gather data
 results = cell(length(simNum_sub),1);

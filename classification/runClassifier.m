@@ -33,9 +33,9 @@ else
         error('numTimePoints is %d(incorrect)!', nTimePts);
     end
     
-    % preallocate for the dynamic code analysis 
+    % preallocate for the dynamic code analysis
     gs_dc = cell(nTimePts, numCategories);
-
+    
     % 1. regular classification
     for j = 1 : numCategories
         %% set up Cross validation blocks
@@ -48,8 +48,9 @@ else
         %% Run Logistic regression classification for all time points
         % loop over time
         for t = 1 : nTimePts
+            X = preprocess(actMats{t}, param);
             % compute the accuracy for every time points
-            result = logisticReg(actMats{t}, Y(:,j), CVB, param);
+            result = logisticReg(X, Y(:,j), CVB, param);
             accuracy(t) = result.accuracy;
             deviation(t) = result.deviation;
             hitRate(t) = result.hitRate;
@@ -58,11 +59,18 @@ else
             % 2. explore dynamic code
             if param.dynamicCode
                 result_dc = cell(nTimePts,1);
-                % run the classification with fixed model over all tps 
+                % run the classification with fixed model over all tps
                 for tt = 1 : nTimePts
-                    result_dc{tt} = evalModel(result, actMats{tt}, Y(:,j), CVB, param);
+                    % no need to fit the model for the same tp again 
+                    if t == tt
+                        result_dc{tt} = result;
+                    else
+                        % fit model for other tps 
+                        XX = preprocess(actMats{tt}, param);
+                        result_dc{tt} = evalModel(result, XX, Y(:,j), CVB, param);
+                    end
                 end
-                % re-org data 
+                % re-org data
                 gs_dc{t,j} = summarizeResultsOverTime(result_dc);
             end
         end

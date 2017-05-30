@@ -11,19 +11,19 @@ end
 if param.collapseTime
     for t = 1 : length(X)
         % spatial blur or random subset
-        X{t} = preprocess(X{t}, param);
+        X{t} = preprocess_support(X{t}, param);
     end
     % collapse all activation matrices over time
     X = cell2mat(X);
 else
     % spatial blur or random subset
-    X = preprocess(X, param);
+    X = preprocess_support(X, param);
 end
 
 end
 
 
-function preprocess_support(X, param)
+function X = preprocess_support(X, param)
 
 % impose normal noise, which simulates "measurement noise"
 X = X + param.var * randn(size(X));
