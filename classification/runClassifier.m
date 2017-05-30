@@ -47,23 +47,23 @@ else
         falseRate = nan(nTimePts, 1);
         %% Run Logistic regression classification for all time points
         % loop over time
-        for i = 1 : nTimePts
+        for t = 1 : nTimePts
             % compute the accuracy for every time points
-            result = logisticReg(actMats{i}, Y(:,j), CVB, param);
-            accuracy(i) = result.accuracy;
-            deviation(i) = result.deviation;
-            hitRate(i) = result.hitRate;
-            falseRate(i) = result.falseRate;
+            result = logisticReg(actMats{t}, Y(:,j), CVB, param);
+            accuracy(t) = result.accuracy;
+            deviation(t) = result.deviation;
+            hitRate(t) = result.hitRate;
+            falseRate(t) = result.falseRate;
             
             % 2. explore dynamic code
             if param.dynamicCode
                 result_dc = cell(nTimePts,1);
                 % run the classification with fixed model over all tps 
-                for t = 1 : nTimePts
-                    result_dc{t} = evalModel(result, actMats{t}, Y(:,j), CVB, param);
+                for tt = 1 : nTimePts
+                    result_dc{tt} = evalModel(result, actMats{tt}, Y(:,j), CVB, param);
                 end
                 % re-org data 
-                gs_dc{i,j} = summarizeResultsOverTime(result_dc);
+                gs_dc{t,j} = summarizeResultsOverTime(result_dc);
             end
         end
         gs.accuracy{j} = accuracy;
