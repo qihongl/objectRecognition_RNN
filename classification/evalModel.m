@@ -1,21 +1,4 @@
 function [result] = evalModel(model, X, y, CVB, param)
-if param.subsetProp > 1
-    error('ERROR: subset Proportion should be less than 1!')
-end
-
-%% pre-process the data
-if param.collapseTime
-    for t = 1 : length(X)
-        % spatial blur or random subset
-        X{t} = preprocess(X{t}, param);s
-    end
-    % collapse all activation matrices over time
-    X = cell2mat(X);
-else
-    % spatial blur or random subset
-    X = preprocess(X, param);
-end
-
 %% separate the training and testing sets
 X_test = X(CVB,:);
 y_test = y(CVB,:);

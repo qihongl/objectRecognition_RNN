@@ -3,6 +3,28 @@ function X = preprocess(X, param)
 % input     X: design matrix, stimulus by voxel
 % ouput     X: post processed design matrix with a different dimension
 
+if param.subsetProp > 1
+    error('ERROR: subset Proportion should be less than 1!')
+end
+
+%% pre-process the data
+if param.collapseTime
+    for t = 1 : length(X)
+        % spatial blur or random subset
+        X{t} = preprocess(X{t}, param);
+    end
+    % collapse all activation matrices over time
+    X = cell2mat(X);
+else
+    % spatial blur or random subset
+    X = preprocess(X, param);
+end
+
+end
+
+
+function preprocess_support(X, param)
+
 % impose normal noise, which simulates "measurement noise"
 X = X + param.var * randn(size(X));
 
