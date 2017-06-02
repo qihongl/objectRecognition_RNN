@@ -63,12 +63,16 @@ else
                 for tt = 1 : nTimePts
                     % no need to fit the model for the same tp again 
                     if t == tt
-                        result_dc{tt} = result;
+                        XX = X;
                     else
                         % fit model for other tps 
                         XX = preprocess(actMats{tt}, param);
-                        result_dc{tt} = evalModel(result, XX, Y(:,j), CVB, param);
                     end
+                    result_dc{tt} = evalModel(result, XX, Y(:,j), CVB, param);
+                    if t == tt && result_dc{t}.accuracy ~= result.accuracy
+                        disp('wtf')
+                    end
+
                 end
                 % re-org data
                 gs_dc{t,j} = summarizeResultsOverTime(result_dc);

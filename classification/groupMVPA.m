@@ -39,7 +39,7 @@ for method_idx = 1 : length(methodChoice)
                 % save data 
                 data_gp_fileName = sprintf('gs_%s%.3d.mat', ...
                     logParam.classOpt, logParam.subsetProp * 1000);
-                save([finalSavePath '/' data_gp_fileName],'result_dc')
+                save([finalSavePath '/' data_gp_fileName],'group')
                 data_dc_filename = sprintf('dc_%s%.3d.mat', ...
                     logParam.classOpt, logParam.subsetProp * 1000);
                 save([finalSavePath '/' data_dc_filename],'result_dc')

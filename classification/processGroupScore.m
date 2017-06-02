@@ -5,12 +5,14 @@ clear; clc; close all;
 mainDirName = 'groupScores_class';
 
 OPTIONS = {'get_group_MVPA', 'get_dynamic_code'};
-opts = OPTIONS{1};
+opts = OPTIONS{2};
+% spec number of clusters
+K = 25;
 
 %% load file and compute summarized data
 condition = 'randomSubset';
 condition = 'spatBlurring';
-method = 'lasso';
+method = 'svm';
 %
 simNum = 27;
 presentation = 'normal';
@@ -18,7 +20,7 @@ presentation = 'normal';
 simName = 'varyNoise';
 ep = 20;
 simNum_sub = 1;
-rep_idx = 0;
+rep_idx = 2;
 
 % gather data
 results = cell(length(simNum_sub),1);
@@ -29,7 +31,7 @@ for i = 1 : length(rep_idx)
     pathName = fullfile(mainDirName,subDirName,method);
     % summarize data according to the option
     if strcmp(opts, 'get_group_MVPA')
-        result_filename = 'gsClass';
+        result_filename = 'gs';
         listing = dir(strcat(fullfile(pathName, strcat(result_filename, '_',condition)),'*.mat'));
         [results{i}, propUsed] = summarizeData_gm(listing, pathName, condition);
     elseif strcmp(opts, 'get_dynamic_code')
@@ -46,7 +48,7 @@ if strcmp(opts, 'get_group_MVPA')
     data = computeAvg_acrossSims(results);
     plotPerformance_MVPA(data, propUsed, condition)
 elseif strcmp(opts, 'get_dynamic_code')
-    plotResults_dynCode(results, propUsed, condition)
+    plotResults_dynCode(results, propUsed, condition, K)
 else
     error('unrecognizable analysis option');
 end

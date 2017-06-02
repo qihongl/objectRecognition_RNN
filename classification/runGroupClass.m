@@ -6,9 +6,9 @@ PATH.PROJECT = '../';
 FILENAME.PROTOTYPE = 'PROTO.xlsx';
 sampleSize = 20;
 nTimePoints = 25;
-propChoice = [.01 .025 .05 .1 .15];
+propChoice = [.01 .025 .05 .1 .15 1];
 optionChoice = {'randomSubset', 'spatBlurring'};
-methodChoice = {'svm','lasso'};
+methodChoice = {'lasso','svm'};
 saveData = 1;
 showPlot = 0;
 

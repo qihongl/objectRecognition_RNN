@@ -1,9 +1,5 @@
 %% plot the decoding profiles for the dynamic code analysis
-function [] = plotResults_dynCode(results, propUsed, condition)
-
-% spec number of clusters
-K = 5;
-
+function [] = plotResults_dynCode(results, propUsed, condition, K)
 %% summarize the data
 data = preallocate(results);
 % sum
@@ -32,6 +28,8 @@ for c = 1 : step_size : nConds
     title_text = sprintf('hit-false (%d%%)',propUsed{c});
     plotDecodingCurvesByCluster(data(c).hmf, K, title_text)
 end
+suptitle_text = sprintf('%s, K means (K == %d)', condition, K); 
+suptitle(suptitle_text); 
 
 end
 
