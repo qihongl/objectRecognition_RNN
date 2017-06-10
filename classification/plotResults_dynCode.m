@@ -18,20 +18,35 @@ end
 
 %% visualize the results
 step_size = 2; 
+figure(1)
 for c = 1 : step_size : nConds
     % plot accuracy 
     subplot(ceil(nConds/step_size),2,c)
     title_text = sprintf('accuracy (%d%%)',propUsed{c});
     plotDecodingCurvesByCluster(data(c).acc, K, title_text)
-    
     % plot hit-false rate 
     subplot(ceil(nConds/step_size),2,c+1)
     title_text = sprintf('hit-false (%d%%)',propUsed{c});
     plotDecodingCurvesByCluster(data(c).hmf, K, title_text)
 end
 suptitle_text = sprintf('%s, K means (K == %d)', condition, K); 
-suptitle(suptitle_text); 
+% suptitle(suptitle_text); 
 
+
+figure(2)
+for c = 1 : step_size : nConds
+    subplot(ceil(nConds/step_size),2,c)
+    [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).acc)))); 
+    title_text = sprintf('acc (%d%%)',propUsed{c});
+    title(title_text);
+    
+    subplot(ceil(nConds/step_size),2,c+1)
+    [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).hmf)))); 
+    title_text = sprintf('hit-false (%d%%)',propUsed{c});
+    title(title_text);
+end
+suptitle_text = sprintf('%s, HC', condition); 
+suptitle(suptitle_text); 
 end
 
 
@@ -50,6 +65,7 @@ end
 % clustering their decoding accuracy profile with kmeans
 function plotDecodingCurvesByCluster(X, K, title_text)
 g.LW = 2;
+% compute a clustering 
 clusters_idx = kmeans(X,K);
 line_colors = varycolor(K); 
 hold on
@@ -89,3 +105,8 @@ end
 
 
 
+% % hierarchical clustering 
+% function clusters_idx = hc(X)
+% 
+% 
+% end
