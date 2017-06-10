@@ -7,12 +7,12 @@ mainDirName = 'groupScores_class';
 OPTIONS = {'get_group_MVPA', 'get_dynamic_code'};
 opts = OPTIONS{2};
 % spec number of clusters
-K = 25;
+K = 10;
 
 %% load file and compute summarized data
 condition = 'randomSubset';
-condition = 'spatBlurring';
-method = 'svm';
+% condition = 'spatBlurring';
+method = 'lasso';
 %
 simNum = 27;
 presentation = 'normal';
