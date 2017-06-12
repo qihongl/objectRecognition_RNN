@@ -13,7 +13,7 @@ for method_idx = 1 : length(methodChoice)
         for p = 1: length(propChoice);
             logParam.subsetProp = propChoice(p);
             
-            %% run classificaiton
+            % run classificaiton
             group = preallocate(logParam, nTimePoints, sampleSize);
             result_dc = cell(sampleSize,1); 
             for i = 1 : sampleSize
@@ -36,10 +36,11 @@ for method_idx = 1 : length(methodChoice)
                 finalSavePath = fullfile(dataDirName,subDataDirName,logParam.method);
                 checkAndMkdir(dataDirName);
                 checkAndMkdir(finalSavePath);
-                % save data 
+                % save group mvpa result 
                 data_gp_fileName = sprintf('gs_%s%.3d.mat', ...
                     logParam.classOpt, logParam.subsetProp * 1000);
                 save([finalSavePath '/' data_gp_fileName],'group')
+                % save dynamic coding result 
                 data_dc_filename = sprintf('dc_%s%.3d.mat', ...
                     logParam.classOpt, logParam.subsetProp * 1000);
                 save([finalSavePath '/' data_dc_filename],'result_dc')

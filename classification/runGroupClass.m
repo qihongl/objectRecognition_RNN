@@ -17,7 +17,7 @@ param.collapseTime = 0;
 param.dynamicCode = 1; 
 
 %% Specify the Path information (user needs to do this!)
-FILENAME.DATA = 'hidden_rapid_e20.txt';
+FILENAME.DATA = 'hidden_normal_e20.txt';
 simName = 'varyNoise';
 sim_idx = 27;
 sim_idxs_sub = [1];
