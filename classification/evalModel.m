@@ -15,12 +15,7 @@ elseif strcmp(param.method,'svm');
 else
     error('classification method: unrecognized input')
 end
-%% compute the mean performance
-result.accuracy = sum(round(y_hat) == y_test) / length(y_test);
-% deviation = L1 normDiff(prediction values, truth),more sensitive than accuracy
-result.deviation = sum(abs(y_hat - y_test)) / length(y_test);
-% hit rate and false alarm rate
-result.hitRate = sum(y_hat & y_test) / sum(y_test);
-result.falseRate = sum(y_hat & ~y_test) / sum(~y_test);
+
+result = computeClassifierPerformance(y_hat, y_test); 
 
 end
