@@ -56,25 +56,10 @@ else
             hitRate(t) = result.hitRate;
             falseRate(t) = result.falseRate;
             
-            % 2. explore dynamic code
+            % 2. analysis - dynamic code
             if param.dynamicCode
-                result_dc = cell(nTimePts,1);
                 % run the classification with fixed model over all tps
-                for tt = 1 : nTimePts
-                    % no need to fit the model for the same tp again 
-                    if t == tt
-                        XX = X;
-                    else
-                        % fit model for other tps 
-                        XX = preprocess(actMats{tt}, param);
-                    end
-                    result_dc{tt} = evalModel(result, XX, Y(:,j), CVB, param);
-                    if t == tt && result_dc{t}.accuracy ~= result.accuracy
-                        disp('wtf')
-                    end
-
-                end
-                % re-org data
+                result_dc = evalModel_forAllTps(result, actMats, Y, j, t, X, CVB, param, nTimePts); 
                 gs_dc{t,j} = summarizeResultsOverTime(result_dc);
             end
         end
@@ -137,5 +122,22 @@ for t = 1 : nTps
     r.deviation(t) = result_dc{t}.deviation;
     r.hitRate(t) = result_dc{t}.hitRate;
     r.falseRate(t) = result_dc{t}.falseRate;
+end
+end
+
+
+%% eval model for all time pts
+function result = evalModel_forAllTps(model, actMats, Y, targetCatIdx, t_cur, X_cur, CVB, param, nTimePts)
+result = cell(nTimePts,1);
+% run the classification with fixed model over all tps
+for t = 1 : nTimePts
+    % no need to fit the model for the same tp again
+    if t == t_cur 
+        XX = X_cur;
+    else
+        % fit model for other tps
+        XX = preprocess(actMats{t}, param);
+    end
+    result{t} = evalModel(model, XX, Y(:,targetCatIdx), CVB, param);
 end
 end
