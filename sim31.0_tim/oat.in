@@ -1,0 +1,41 @@
+addNet oat -i 5 -t 4 CONTINUOUS
+
+addGroup visin 98 INPUT
+addGroup verbin 102 INPUT
+
+addGroup visrep 98 -BIASED OUTPUT SUM_SQUARED
+addGroup verbrep 102 -BIASED OUTPUT SUM_SQUARED
+
+addGroup vishid 25
+addGroup hidden 25
+addGroup verbhid 25
+
+#Set biases on feature units to -3
+connectGroups bias visrep  -m -3 -r 0
+connectGroups bias verbrep -m -3 -r 0
+
+#Make sure biases on feature units can't learn
+freezeWeights -g {visrep verbrep} -t bias
+
+connectGroups visin visrep   -p ONE_TO_ONE -m 6 -r 0
+connectGroups verbin verbrep -p ONE_TO_ONE -m 6 -r 0
+
+connectGroups visrep  vishid -bi
+connectGroups verbrep verbhid -bi
+connectGroups vishid hidden -bi
+connectGroups verbhid hidden -bi
+connectGroups hidden  hidden
+connectGroups vishid vishid
+connectGroups verbhid verbhid
+
+
+setObj learningRate 0.002
+setObj numUpdates 10000
+
+setObj trainGroupCrit 0.2
+
+source mr_procs.tcl
+
+loadExamples oat_train_p9_e0.txt -exmode PER
+loadExamples oat_test.ex -exmode ORD
+

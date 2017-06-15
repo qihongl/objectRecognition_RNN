@@ -1,0 +1,41 @@
+addNet oat -i 5 -t 4 CONTINUOUS
+
+addGroup visin 156 INPUT
+addGroup verbin 156 INPUT
+
+addGroup VisualRep 156 -BIASED OUTPUT SUM_SQUARED
+addGroup VerbalRep 156 -BIASED OUTPUT SUM_SQUARED
+
+addGroup vishid 25
+addGroup hidden 25
+addGroup verbhid 25
+
+#Set biases on feature units to -3
+connectGroups bias VisualRep  -m -3 -r 0
+connectGroups bias VerbalRep -m -3 -r 0
+
+#Make sure biases on feature units can't learn
+freezeWeights -g {VisualRep VerbalRep} -t bias
+
+connectGroups visin VisualRep   -p ONE_TO_ONE -m 6 -r 0
+connectGroups verbin VerbalRep -p ONE_TO_ONE -m 6 -r 0
+
+connectGroups VisualRep  vishid -bi
+connectGroups VerbalRep verbhid -bi
+connectGroups vishid hidden -bi
+connectGroups verbhid hidden -bi
+connectGroups hidden  hidden
+connectGroups vishid vishid
+connectGroups verbhid verbhid
+
+
+setObj learningRate 0.002
+setObj numUpdates 10000
+
+setObj trainGroupCrit 0.2
+
+# source mr_procs.tcl
+
+loadExamples train.txt -exmode PER
+loadExamples test.txt -exmode ORD
+
