@@ -10,7 +10,7 @@ end
 %% load the data and the prototype
 [output, data_param] = loadData(PATH, FILENAME);
 
-%% data preprocessing
+%% data preproc
 % get X, Y
 actMats = getActivationMatrices(output, data_param);
 [~, Y] = getLabels(data_param);
@@ -48,7 +48,7 @@ else
         %% Run Logistic regression classification for all time points
         % loop over time
         for t = 1 : nTimePts
-            X = preprocess(actMats{t}, param);
+            [X, info] = preprocess(actMats{t}, param);
             % compute the accuracy for every time points
             result = logisticReg(X, Y(:,j), CVB, param);
             accuracy(t) = result.accuracy;
@@ -59,7 +59,7 @@ else
             % 2. analysis - dynamic code
             if param.dynamicCode
                 % run the classification with fixed model over all tps
-                result_dc = evalModel_forAllTps(result, Y, j, X, CVB, param, nTimePts);
+                result_dc = evalModel_forAllTps(result, Y(:,j), actMats, CVB, param, nTimePts, info);
                 gs_dc{t,j} = summarizeResultsOverTime(result_dc);
             end
         end
@@ -127,18 +127,11 @@ end
 
 
 %% eval model for all time pts
-function result = evalModel_forAllTps(model, Y, targetCatIdx, X, CVB, param, nTimePts)
+function result = evalModel_forAllTps(model, Y, Xs, CVB, param, nTimePts, info)
 result = cell(nTimePts,1);
 % run the classification with fixed model over all tps
 for t = 1 : nTimePts
-    %     % no need to fit the model for the same tp again
-    %     if t == t_cur
-    %         XX = X_cur;
-    %     else
-    %         % fit model for other tps
-    %         XX = preprocess(actMats{t}, param);
-    %     end
-    %     result{t} = evalModel(model, XX, Y(:,targetCatIdx), CVB, param);
-    result{t} = evalModel(model, X, Y(:,targetCatIdx), CVB, param);
+    X = preprocess_rep(Xs{t}, info, param.classOpt); 
+    result{t} = evalModel(model, X, Y, CVB, param);
 end
 end
