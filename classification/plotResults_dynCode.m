@@ -17,36 +17,47 @@ for c = 1 : length(results{i})
 end
 
 %% visualize the results
-step_size = 2; 
+step_size = 2;
 figure(1)
-for c = 1 : step_size : nConds
-    % plot accuracy 
-    subplot(ceil(nConds/step_size),2,c)
-    title_text = sprintf('accuracy (%d%%)',propUsed{c});
-    plotDecodingCurvesByCluster(data(c).acc, K, title_text)
-    % plot hit-false rate 
-    subplot(ceil(nConds/step_size),2,c+1)
-    title_text = sprintf('hit-false (%d%%)',propUsed{c});
-    plotDecodingCurvesByCluster(data(c).hmf, K, title_text)
-end
-suptitle_text = sprintf('%s, K means (K == %d)', condition, K); 
-% suptitle(suptitle_text); 
+% plot both accuracy and hit - false 
+% for c = 1 : step_size : nConds
+%     % plot accuracy
+%     subplot(ceil(nConds/step_size),2,c)
+%     title_text = sprintf('accuracy (%d%%)',propUsed{c});
+%     plotDecodingCurvesByCluster(data(c).acc, K, title_text)
+%     % plot hit-false rate
+%     subplot(ceil(nConds/step_size),2,c+1)
+%     title_text = sprintf('hit-false (%d%%)',propUsed{c});
+%     plotDecodingCurvesByCluster(data(c).hmf, K, title_text)
+% end
+% suptitle_text = sprintf('%s, K means (K == %d)', condition, K);
+% suptitle(suptitle_text);
 
-
-figure(2)
-for c = 1 : step_size : nConds
-    subplot(ceil(nConds/step_size),2,c)
-    [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).acc)))); 
-    title_text = sprintf('acc (%d%%)',propUsed{c});
-    title(title_text);
-    
-    subplot(ceil(nConds/step_size),2,c+1)
-    [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).hmf)))); 
-    title_text = sprintf('hit-false (%d%%)',propUsed{c});
-    title(title_text);
+cs = [1,3,5]; 
+for i = 1 : ceil(nConds / step_size)
+    % plot hit-false rate
+    subplot(ceil(nConds / step_size), 1, i)
+    title_text = sprintf('hit-false (%.1f%%)',propUsed{cs(i)});
+    plotDecodingCurvesByCluster(data(cs(i)).hmf, K, title_text)
 end
-suptitle_text = sprintf('%s, HC', condition); 
-suptitle(suptitle_text); 
+suptitle_text = sprintf('%s, K means (K == %d)', condition, K);
+suptitle(suptitle_text);
+
+% HC
+% figure(2)
+% for c = 1 : step_size : nConds
+%     subplot(ceil(nConds/step_size),2,c)
+%     [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).acc))));
+%     title_text = sprintf('acc (%d%%)',propUsed{c});
+%     title(title_text);
+%     
+%     subplot(ceil(nConds/step_size),2,c+1)
+%     [hout,T,perm] = dendrogram(linkage(squareform(pdist(data(c).hmf))));
+%     title_text = sprintf('hit-false (%d%%)',propUsed{c});
+%     title(title_text);
+% end
+% suptitle_text = sprintf('%s, HC', condition);
+% suptitle(suptitle_text);
 end
 
 
@@ -65,48 +76,72 @@ end
 % clustering their decoding accuracy profile with kmeans
 function plotDecodingCurvesByCluster(X, K, title_text)
 g.LW = 2;
-% compute a clustering 
+% compute a clustering
 clusters_idx = kmeans(X,K);
-line_colors = varycolor(K); 
+[leg, indices] = getLegend(clusters_idx);
+line_colors = varycolor(K);
 hold on
 for k = 1 : K
     % plor the accuracy profile by cluter
     mean_mvpa_profile_within_cluter = mean(X(clusters_idx == k,:),1);
-    plot(mean_mvpa_profile_within_cluter, 'linewidth', g.LW, 'color', line_colors(k,:))
+    plot(mean_mvpa_profile_within_cluter, ...
+        'linewidth', g.LW, 'color', line_colors(indices(k),:))
     % error bar
-    % ... 
-    
+    % ...
+    plot(leg.int{k}, 1.05,'.','markersize',30,'color', line_colors(indices(k),:))
 end
-legend(getLegend(clusters_idx))
+ylim([0 1.05])
+% legend(leg.str)
 hold off
 title(title_text)
 xlabel('Time ticks')
+end
 
-
-    function leg = getLegend(clusters_idx)
-        nClusters = max(clusters_idx); 
-        leg = cell(nClusters,1);
-        for i = 1 : nClusters
-            temp_idx = find(clusters_idx==i); 
-            
-            % create the legend for the i-th cluster 
-            temp_leg = '';
-            for ii = 1 : length(temp_idx)
-                temp_leg = strcat(temp_leg, num2str(temp_idx(ii))); 
-                if ii ~= length(temp_idx)
-                    temp_leg = strcat(temp_leg, ','); 
-                end
-            end
-            leg{i} = temp_leg; 
+function [leg, indices] = getLegend(clusters_idx)
+nClusters = max(clusters_idx);
+leg.str = cell(nClusters,1);
+leg.int = cell(nClusters,1);
+for i = 1 : nClusters
+    temp_idx = find(clusters_idx==i);
+    
+    % create the legend for the i-th cluster
+    temp_leg.str = '';
+    temp_leg.int = [];
+    for ii = 1 : length(temp_idx)
+        % get the next legend
+        temp_leg.str = strcat(temp_leg.str, num2str(temp_idx(ii)));
+        temp_leg.int = [temp_leg.int, temp_idx(ii)];
+        if ii ~= length(temp_idx)
+            temp_leg.str = strcat(temp_leg.str, ',');
         end
-        
     end
+    leg.str{i} = temp_leg.str;
+    leg.int{i} = temp_leg.int;
+end
+
+indices = sort_cluster_by_time(leg.int);
+end
+
+
+function indices = sort_cluster_by_time(cluster_leg_int)
+nClusters = length(cluster_leg_int);
+
+cluster_mean_time = nan(nClusters,1);
+for i = 1 : nClusters
+    cluster_mean_time(i) = mean(cluster_leg_int{i});
+end
+cluster_mean_time_sorted = sort(cluster_mean_time);
+
+indices = nan(nClusters,1);
+for i = 1 : nClusters
+    indices(i) = find(cluster_mean_time(i) == cluster_mean_time_sorted);
+end
 end
 
 
 
-% % hierarchical clustering 
+% % hierarchical clustering
 % function clusters_idx = hc(X)
-% 
-% 
+%
+%
 % end
